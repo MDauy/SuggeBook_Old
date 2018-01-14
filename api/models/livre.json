@@ -1,0 +1,74 @@
+{
+    "Livres":[ {
+        "Titre": "L'ombre du vent",
+        "Auteurs": "Carlos Ruiz Zafon",
+        "Edition": {
+            "Maison d'édition": "Le Livre de Poche",
+            "Date": "1991"
+        },
+        "Note": "17/20",
+        "Catégories": [
+            "Fantastique",
+            "Contemporain"
+        ]
+    },
+    {
+        "Titre": "Miss Pérégrine et les enfants particuliers",
+        "Auteurs": "Ransom Riggs",
+        "Edition": {
+            "Maison d'édition": "Bayard",
+            "Date": "2014"
+        },
+        "Note": "18/20",
+        "Catégories": [
+            "Fantastique",
+            "Young Adult"
+        ]
+    }],
+
+    "Maison d'édition":[{
+        "Nom":"Le Livre de Poche",
+        "Origine":"France"
+    },
+    {
+        "Nom":"Bayard",
+        "Origine":"France"
+    }
+],
+
+    "Conseils" : [
+        {
+            "Id": "1",
+            "Titre": "trop bien",
+            "Utilisateur":"Blogueur 236",
+            "Livre":{
+                "Titre":"L'ombre du vent",
+                "Auteurs":"Carlos Ruiz Zafon"
+            },
+            "Avis":"blabla pendant 250 caractères",
+            "Note":"20/20"
+        },
+        {
+            "Id": "2",
+            "Titre": "bizarre",
+            "Utilisateur":"Blogueur 236",
+            "Livre":{
+                "Titre":"Miss Pérégrine et les enfants particuliers",
+                "Auteurs":"Ransom Riggs"
+            },
+            "Avis":"blabla pendant 250 caractères",
+            "Note":"12/20"
+        }
+       
+    ],
+    "Utilisateur":{
+        "Pseudo":"Blogueur 236",
+        "Nom":"Lincoln",
+        "Prénom":"Abraham",
+        "Mail": "kikoo@kikooland.com",
+        "Mot de passe":"azertuiop",
+        "Conseils":[
+            1,2
+        ]
+    }
+}
