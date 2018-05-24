@@ -60,3 +60,10 @@ typings/
 # dotenv environment variables file
 .env
 
+/netcore/SuggeBook.Api/SuggeBook.Api/bin/Debug/netcoreapp2.0
+/netcore/SuggeBook.Api/SuggeBook.Api/obj
+/netcore/SuggeBook.Api/SuggeBook.Dal/obj
+/netcore/SuggeBook.Api/SuggeBook.Mocks/bin/Debug/netcoreapp2.0
+/netcore/SuggeBook.Api/SuggeBook.Mocks/obj
+/netcore/SuggeBook.Api/.vs/SuggeBook/v15
+/.vs

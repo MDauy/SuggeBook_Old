@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuggeBook.Api", "SuggeBook.Api\SuggeBook.Api.csproj", "{61C2FC56-7BC9-4A8F-A118-28C48321DCCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuggeBook.Dal", "SuggeBook.Dal\SuggeBook.Dal.csproj", "{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61C2FC56-7BC9-4A8F-A118-28C48321DCCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61C2FC56-7BC9-4A8F-A118-28C48321DCCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61C2FC56-7BC9-4A8F-A118-28C48321DCCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61C2FC56-7BC9-4A8F-A118-28C48321DCCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {313952E1-64BC-4681-85FA-461308C227D6}
+	EndGlobalSection
+EndGlobal
