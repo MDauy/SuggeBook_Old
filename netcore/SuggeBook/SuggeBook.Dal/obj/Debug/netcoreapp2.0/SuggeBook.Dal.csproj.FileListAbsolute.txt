@@ -1,9 +1,0 @@
-C:\Users\mdaussy\Documents\SuggeBook\netcore\SuggeBook\SuggeBook.Dal\obj\Debug\netcoreapp2.0\SuggeBook.Dal.csproj.CoreCompileInputs.cache
-C:\Users\mdaussy\Documents\SuggeBook\netcore\SuggeBook\SuggeBook.Dal\obj\Debug\netcoreapp2.0\SuggeBook.Dal.AssemblyInfoInputs.cache
-C:\Users\mdaussy\Documents\SuggeBook\netcore\SuggeBook\SuggeBook.Dal\obj\Debug\netcoreapp2.0\SuggeBook.Dal.AssemblyInfo.cs
-C:\Users\mdaussy\Documents\SuggeBook\netcore\SuggeBook\SuggeBook.Dal\bin\Debug\netcoreapp2.0\SuggeBook.Dal.deps.json
-C:\Users\mdaussy\Documents\SuggeBook\netcore\SuggeBook\SuggeBook.Dal\bin\Debug\netcoreapp2.0\SuggeBook.Dal.dll
-C:\Users\mdaussy\Documents\SuggeBook\netcore\SuggeBook\SuggeBook.Dal\bin\Debug\netcoreapp2.0\SuggeBook.Dal.pdb
-C:\Users\mdaussy\Documents\SuggeBook\netcore\SuggeBook\SuggeBook.Dal\obj\Debug\netcoreapp2.0\SuggeBook.Dal.csprojAssemblyReference.cache
-C:\Users\mdaussy\Documents\SuggeBook\netcore\SuggeBook\SuggeBook.Dal\obj\Debug\netcoreapp2.0\SuggeBook.Dal.dll
-C:\Users\mdaussy\Documents\SuggeBook\netcore\SuggeBook\SuggeBook.Dal\obj\Debug\netcoreapp2.0\SuggeBook.Dal.pdb
