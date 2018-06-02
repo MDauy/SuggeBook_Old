@@ -12,16 +12,16 @@ namespace SuggeBook.Api.Controllers
     [Route ("book")]
     public class BookController : Controller
     {
-        private IFakeBooksService _fakeBooksService;
-        public BookController(IFakeBooksService fakeBooksService)
+        private ITestsBank _testsBank;
+        public BookController(ITestsBank testsBank)
         {
-            this._fakeBooksService = fakeBooksService;
+            this._testsBank = testsBank;
         }
 
         [Route("{bookId}")]
         public JsonResult GetBook (int bookId)
         {
-            return new JsonResult(_fakeBooksService.Generate(1));
+            return new JsonResult(_testsBank.Book());
         }
 
 

@@ -10,10 +10,10 @@ namespace SuggeBook.Api.Controllers
     [Route("suggestion")]
     public class SuggestionController : Controller
     {
-        private IFakeSuggestionsService _fakeSuggestionService;
-        public SuggestionController(IFakeSuggestionsService fakeSuggestionService)
+        private ITestsBank _testsBank;
+        public SuggestionController(ITestsBank testsBank)
         {
-            this._fakeSuggestionService = fakeSuggestionService;
+            _testsBank = testsBank;
         }
 
         [HttpGet]
@@ -21,7 +21,7 @@ namespace SuggeBook.Api.Controllers
         public JsonResult Home(int userId)
         {
             //TODO : Appel à la DAL ici 
-            var testSuggestions = _fakeSuggestionService.Generate(30);
+            var testSuggestions = _testsBank.Suggestions(30);
             return new JsonResult(testSuggestions);
         }
 

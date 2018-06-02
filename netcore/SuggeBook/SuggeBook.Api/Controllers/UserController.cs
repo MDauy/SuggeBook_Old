@@ -12,11 +12,11 @@ namespace SuggeBook.Api.Controllers
     [Route("user")]
     public class UserController : Controller
     {
-        private IFakeUserService _fakeUserService;
+        private ITestsBank _testsBank;
 
-        public UserController (IFakeUserService fakeUserService)
+        public UserController (ITestsBank testsBank)
         {
-            this._fakeUserService = fakeUserService;
+            _testsBank = testsBank ;
         }
        
 
@@ -24,7 +24,7 @@ namespace SuggeBook.Api.Controllers
         [Route("{userId}")]
        public JsonResult GetUser (int id)
         {
-            return new JsonResult(this._fakeUserService.Generate(1));
+            return new JsonResult(_testsBank.User());
         }
 
         [HttpPost]

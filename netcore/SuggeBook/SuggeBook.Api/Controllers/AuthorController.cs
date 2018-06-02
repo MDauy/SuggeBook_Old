@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SuggeBook.Dao.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,11 @@ namespace SuggeBook.Api.Controllers
 {
     public class AuthorController : Controller
     {
-        public AuthorController()
-        {
+        private IFakeAuthorService _fakeAuthorService;
 
+        public AuthorController(IFakeAuthorService fakeAuthorService)
+        {
+            this._fakeAuthorService = fakeAuthorService;
         }
 
 

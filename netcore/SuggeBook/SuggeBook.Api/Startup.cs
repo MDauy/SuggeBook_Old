@@ -21,6 +21,8 @@ namespace SuggeBook.Api
             services.AddMvc(); services.AddSingleton<IFakeSuggestionsService, FakeSuggestionsService>();
             services.AddSingleton<IFakeBooksService, FakeBooksService>();
             services.AddSingleton<IFakeUserService, FakeUserService>();
+            services.AddSingleton<IFakeAuthorService, FakeAuthorService>();
+            services.AddSingleton<ITestsBank, TestsBank>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
