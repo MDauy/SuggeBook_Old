@@ -5,9 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\**" />
-    <EmbeddedResource Remove="Models\**" />
-    <None Remove="Models\**" />
+    <PackageReference Include="Bogus" Version="22.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Creation\" />
   </ItemGroup>
 
 </Project>
