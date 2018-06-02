@@ -16,5 +16,7 @@ namespace SuggeBook.Dao.Models
         public string CreatorUsername { get; set; }
 
         public string OpinionText { get; set; }
+
+        public List<Category> Categories { get; set; }
     }
 }

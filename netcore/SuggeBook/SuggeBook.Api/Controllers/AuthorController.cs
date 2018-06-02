@@ -9,11 +9,11 @@ namespace SuggeBook.Api.Controllers
 {
     public class AuthorController : Controller
     {
-        private IFakeAuthorService _fakeAuthorService;
+        private ITestsBank _banksTest;
 
-        public AuthorController(IFakeAuthorService fakeAuthorService)
+        public AuthorController(ITestsBank banksTest)
         {
-            this._fakeAuthorService = fakeAuthorService;
+            this._banksTest = banksTest;
         }
 
 
@@ -21,7 +21,7 @@ namespace SuggeBook.Api.Controllers
         [Route("{id}")]
         public JsonResult GetAuthor (int id)
         {
-            return null;
+           return new JsonResult(_banksTest.Author());
         }
     }
 }
