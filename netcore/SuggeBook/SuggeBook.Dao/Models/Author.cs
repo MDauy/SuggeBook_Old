@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SuggeBook.Dao.Models
+namespace SuggeBook.Dto.Models
 {
     public class Author
     {
@@ -21,6 +21,17 @@ namespace SuggeBook.Dao.Models
 
         public List<Book> Books { get; set; }
 
+        public struct Book
+        {
+            public int Id { get; set; }
 
+            public string Title { get; set; }
+
+            public int Year { get; set; }
+
+            public string NumberOfSuggestions { get; set; }
+        }
     }
+
+    
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
-using SuggeBook.Dao.Mocks;
-using SuggeBook.Dao.Models;
+using SuggeBook.Dto.Mocks;
+using SuggeBook.Dto.Models;
 using System;
 
 namespace SuggeBook.Api.Controllers

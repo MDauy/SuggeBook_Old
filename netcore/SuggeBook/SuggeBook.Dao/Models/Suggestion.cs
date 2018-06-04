@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SuggeBook.Dao.Models
+namespace SuggeBook.Dto.Models
 {
     public class Suggestion
     {
@@ -18,5 +18,10 @@ namespace SuggeBook.Dao.Models
         public string OpinionText { get; set; }
 
         public List<Category> Categories { get; set; }
+
+        public struct Category
+        {
+            public string Label { get; set; }
+        }
     }
 }

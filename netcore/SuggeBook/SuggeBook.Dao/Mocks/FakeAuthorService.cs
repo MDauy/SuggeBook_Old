@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Bogus;
-using SuggeBook.Dao.Models;
+using SuggeBook.Dto.Models;
 
-namespace SuggeBook.Dao.Mocks
+namespace SuggeBook.Dto.Mocks
 {
     public class FakeAuthorService : IFakeAuthorService
     {
@@ -18,14 +16,16 @@ namespace SuggeBook.Dao.Mocks
 
         public List<Author> Generate(int howMany)
         {
-            var booksTest = new Faker<Author>().StrictMode(true)
-                .RuleFor(a => a.FirstName, f => f.Name.FirstName())
-                .RuleFor(a => a.LastName, f => f.Name.LastName())
-                .RuleFor(a => a.Books, () => _booksService.Generate(7));
+            //var booksTest = new Faker<Author>().StrictMode(true)
+            //    .RuleFor(a => a.FirstName, f => f.Name.FirstName())
+            //    .RuleFor(a => a.LastName, f => f.Name.LastName())
+            //    .RuleFor(a => a.Books, () => _booksService.Generate(7));
 
-            var books = booksTest.Generate(howMany);
+            //var books = booksTest.Generate(howMany);
 
-            return books;
+            //return books;
+
+            return null;
         }
     }
 }

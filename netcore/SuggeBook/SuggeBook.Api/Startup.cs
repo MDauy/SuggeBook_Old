@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SuggeBook.Dao.Mocks;
+using SuggeBook.Dto.Mocks;
 
 namespace SuggeBook.Api
 {

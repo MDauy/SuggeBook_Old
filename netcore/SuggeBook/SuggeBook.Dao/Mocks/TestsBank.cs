@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuggeBook.Dao.Models;
+using SuggeBook.Dto.Models;
 
-namespace SuggeBook.Dao.Mocks
+namespace SuggeBook.Dto.Mocks
 {
     public class TestsBank : ITestsBank
     {

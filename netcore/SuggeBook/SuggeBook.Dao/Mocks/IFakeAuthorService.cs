@@ -1,9 +1,9 @@
-﻿using SuggeBook.Dao.Models;
+﻿using SuggeBook.Dto.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SuggeBook.Dao.Mocks
+namespace SuggeBook.Dto.Mocks
 {
     public interface IFakeAuthorService
     {

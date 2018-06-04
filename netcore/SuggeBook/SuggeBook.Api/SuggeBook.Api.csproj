@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SuggeBook.Dao\SuggeBook.Dao.csproj" />
+    <ProjectReference Include="..\SuggeBook.Dao\SuggeBook.Dto.csproj" />
   </ItemGroup>
 
 </Project>

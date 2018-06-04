@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SuggeBook.Dao.Mocks;
-using SuggeBook.Dao.Models;
+using SuggeBook.Dto.Mocks;
+using SuggeBook.Dto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,10 +1,8 @@
 ﻿using Bogus;
-using SuggeBook.Dao.Models;
-using System;
+using SuggeBook.Dto.Models;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SuggeBook.Dao.Mocks
+namespace SuggeBook.Dto.Mocks
 {
     public static class BooksSamples
     {
@@ -42,17 +40,17 @@ namespace SuggeBook.Dao.Mocks
         /// </summary>
         /// <param name="categoriesNumber"></param>
         /// <returns></returns>
-        public static List<Category> GetCategories(int categoriesNumber)
+        public static List<string> GetCategories(int categoriesNumber)
         {
-            var categories = new List<Category>();
+            var categories = new List<string>();
             var faker = new Faker();
             for (int i = 0; i < categoriesNumber - 1; i++)
             {
-                var cat = faker.PickRandom<Category>();
+                var cat = faker.PickRandom<CategoryEnum>();
 
-                if (!categories.Contains(cat))
+                if (!categories.Contains(cat.ToString()))
                 {
-                    categories.Add(cat);
+                    categories.Add(cat.ToString());
                 }
                 else
                 {

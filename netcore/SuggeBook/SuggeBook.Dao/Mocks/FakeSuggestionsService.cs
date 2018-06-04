@@ -1,9 +1,9 @@
 ﻿using Bogus;
 using Bogus.DataSets;
-using SuggeBook.Dao.Models;
+using SuggeBook.Dto.Models;
 using System.Collections.Generic;
 
-namespace SuggeBook.Dao.Mocks
+namespace SuggeBook.Dto.Mocks
 {
     public class FakeSuggestionsService : IFakeSuggestionsService
     {
