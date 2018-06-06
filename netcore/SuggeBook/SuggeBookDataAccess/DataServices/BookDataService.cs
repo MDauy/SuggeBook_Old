@@ -26,6 +26,8 @@ namespace SuggeBookDataAccess.DataServices
 			return book;
 		}
 
+		//TODO : supprimer la rechercher par ISBN --> ON METTRA LES ISBN EN CLES PRIMAIRES
+
 		public Dao.Book GetBook(string isbn)
 		{
 			var found = _booksCollection.Find<Book>(b => b.ISBN == isbn);
