@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SuggeBookDataAccess.Dao
 {
-    public class UserDao
+    public class User
     {
     }
 }
