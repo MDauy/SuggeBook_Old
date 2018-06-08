@@ -1,15 +1,12 @@
 ﻿using MongoDB.Bson;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SuggeBookDataAccess.DataServices
 {
 	public interface IBookDataService
 	{
-		IEnumerable<Dao.Book> GetBooks(List<string> isbns);
-
-		IEnumerable<Dao.Book> GetBooks(List<ObjectId> ids);
-
-		Dao.Book GetBook(string isbn);
+		Task<IEnumerable<Dao.Book>> GetBooks(List<ObjectId> ids);
 
 		Dao.Book GetBook(ObjectId id);
 

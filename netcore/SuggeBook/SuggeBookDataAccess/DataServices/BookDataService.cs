@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using SuggeBookDataAccess.Dao;
@@ -9,66 +10,57 @@ namespace SuggeBookDataAccess.DataServices
 {
 	public class BookDataService : IBookDataService
 	{
+		private IMongoCollection<Book> _usersCollection;
 		private IMongoDatabase _db;
-		private IMongoCollection<Dao.Book> _booksCollection;
 
-		public BookDataService ()
+		public IMongoCollection<Book> BooksCollection
 		{
-			_db = DataBaseAccess.Db;
-			_booksCollection = _db.GetCollection<Book>("Books");
-		}
+			get
+			{
+				if (_usersCollection == null)
+				{
+					_usersCollection = _db.GetCollection<Book>("Books");
+					if (_usersCollection == null)
+					{
+						_db.CreateCollection("Books");
+					}
+				}
+				return _usersCollection;
 
+			}
+		}
 
 		public Dao.Book Create(Dao.Book book)
 		{
-			_booksCollection.InsertOne(book);
+			BooksCollection.InsertOne(book);
 
 			return book;
 		}
-
-		//TODO : supprimer la rechercher par ISBN --> ON METTRA LES ISBN EN CLES PRIMAIRES
-
-		public Dao.Book GetBook(string isbn)
-		{
-			var found = _booksCollection.Find<Book>(b => b.ISBN == isbn);
-
-			if (found.Count() > 1)
-			{
-				throw new Exception(string.Format("Several books with same ISBN : {0}", isbn));
-			}
-
-			return found.FirstOrDefault();
-		}
-
+	
 		public Dao.Book GetBook(ObjectId id)
 		{
-			var found = _booksCollection.Find<Book>(b => b.Id == id);
+			var found = BooksCollection.Find<Book>(b => b.Id == id);
 
 			if (found.Count() > 1)
 			{
 				throw new Exception(string.Format("Several books with same ObjectId : {0}", id));
 			}
-
 			return found.FirstOrDefault();
 		}	
-		public IEnumerable<Dao.Book> GetBooks(List<string> isbns)
-		{
-			throw new NotImplementedException();
-		}
 
-		public IEnumerable<Dao.Book> GetBooks(List<ObjectId> ids)
+		public async Task<IEnumerable<Dao.Book>> GetBooks(List<ObjectId> ids)
 		{
-			throw new NotImplementedException();
+			return await BooksCollection.Find<Book>(b => ids.Contains(b.Id)).ToListAsync();
 		}
 
 		public void Remove(ObjectId id)
 		{
-			throw new NotImplementedException();
+			BooksCollection.DeleteOneAsync<Book>(b => b.Id == id);
 		}
 
 		public void Update(ObjectId id, Dao.Book book)
 		{
-			throw new NotImplementedException();
+			BooksCollection.ReplaceOneAsync<Book>(b => b.Id == id, book);
 		}
 	}
 }
