@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SuggeBookDataAccess.DataServices
+namespace SuggeBookDataAccess.DataServices.Contracts
 {
 	public interface IBookDataService
 	{

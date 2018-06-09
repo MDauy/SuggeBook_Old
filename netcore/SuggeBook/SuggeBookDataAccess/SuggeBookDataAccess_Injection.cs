@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SuggeBookDataAccess.DataServices;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SuggeBookDataAccess.DataServices.Contracts;
+using SuggeBookDataAccess.DataServices.Implementations;
 
 namespace SuggeBookDataAccess
 {

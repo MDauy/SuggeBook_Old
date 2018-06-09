@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using SuggeBookDataAccess.Dao;
+using SuggeBookDataAccess.DataServices.Contracts;
 
-namespace SuggeBookDataAccess.DataServices
+namespace SuggeBookDataAccess.DataServices.Implementations
 {
     public class SuggestionDataService : ISuggestionDataService
     {

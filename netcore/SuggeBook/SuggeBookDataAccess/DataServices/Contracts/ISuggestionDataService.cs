@@ -1,11 +1,8 @@
 ﻿using MongoDB.Bson;
 using SuggeBookDataAccess.Dao;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace SuggeBookDataAccess.DataServices
+namespace SuggeBookDataAccess.DataServices.Contracts
 {
     public interface ISuggestionDataService
     {
