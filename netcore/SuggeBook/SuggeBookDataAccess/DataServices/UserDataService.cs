@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -8,7 +7,7 @@ using SuggeBookDataAccess.Dao;
 
 namespace SuggeBookDataAccess.DataServices
 {
-	public class UserDataService : IUserDataService
+    public class UserDataService : IUserDataService
 	{
 		private IMongoCollection<User> _usersCollection;
 		private IMongoDatabase _db;
@@ -28,6 +27,11 @@ namespace SuggeBookDataAccess.DataServices
 				return _usersCollection;
 			}
 		}
+
+        public UserDataService ()
+        {
+            _db = DataBaseAccess.Db;
+        }
 
 		public async Task<User> Create(User user)
 		{
@@ -49,14 +53,32 @@ namespace SuggeBookDataAccess.DataServices
 			return users.ToList();
 		}
 
-		public async Task Remove(ObjectId id)
+		public async Task<bool> Remove(ObjectId id)
 		{
-            await UsersCollection.DeleteOneAsync(user => user.Id == id);
-		}
+           var result =  await UsersCollection.DeleteOneAsync(user => user.Id == id);
 
-		public async Task Update(ObjectId id, User user)
+            if (result.DeletedCount == 1)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception(string.Format("Update with user {0} went wrong : maybe not found or two many suggestions with same id", id));
+            }
+        }
+
+		public async Task<bool> Update(ObjectId id, User user)
 		{
-			await UsersCollection.ReplaceOneAsync<User> (b => b.Id == id, user);
-		}
+			var result = await UsersCollection.ReplaceOneAsync<User> (b => b.Id == id, user);
+
+            if (result.IsModifiedCountAvailable && result.ModifiedCount == 1)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception(string.Format("Update with user {0} went wrong : maybe not found or two many suggestions with same id", id));
+            }
+        }
 	}
 }

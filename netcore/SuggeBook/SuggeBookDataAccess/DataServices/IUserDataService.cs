@@ -14,8 +14,8 @@ namespace SuggeBookDataAccess.DataServices
 
 		Task<Dao.User> Create(Dao.User user);
 
-		Task Update(ObjectId id, Dao.User user);
+		Task<bool> Update(ObjectId id, Dao.User user);
 
-		Task Remove(ObjectId id);
+		Task<bool> Remove(ObjectId id);
 	}
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SuggeBook.Dto.Mocks;
+using SuggeBookDataAccess;
 
 namespace SuggeBook.Api
 {
@@ -18,11 +19,8 @@ namespace SuggeBook.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(); services.AddSingleton<IFakeSuggestionsService, FakeSuggestionsService>();
-            services.AddSingleton<IFakeBooksService, FakeBooksService>();
-            services.AddSingleton<IFakeUserService, FakeUserService>();
-            services.AddSingleton<IFakeAuthorService, FakeAuthorService>();
-            services.AddSingleton<ITestsBank, TestsBank>();
+            services.AddMvc(); 
+            services.Add_SuggeBookDataAccess();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

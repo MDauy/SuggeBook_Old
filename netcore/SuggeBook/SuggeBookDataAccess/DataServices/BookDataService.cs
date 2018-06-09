@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -10,24 +9,29 @@ namespace SuggeBookDataAccess.DataServices
 {
     public class BookDataService : IBookDataService
     {
-        private IMongoCollection<Book> _usersCollection;
+        private IMongoCollection<Book> _booksCollection;
         private IMongoDatabase _db;
 
         public IMongoCollection<Book> BooksCollection
         {
             get
             {
-                if (_usersCollection == null)
+                if (_booksCollection == null)
                 {
-                    _usersCollection = _db.GetCollection<Book>("Books");
-                    if (_usersCollection == null)
+                    _booksCollection = _db.GetCollection<Book>("Books");
+                    if (_booksCollection == null)
                     {
                         _db.CreateCollection("Books");
                     }
                 }
-                return _usersCollection;
+                return _booksCollection;
 
             }
+        }
+
+        public BookDataService ()
+        {
+            _db = DataBaseAccess.Db;
         }
 
         public async Task<Dao.Book> Create(Dao.Book book)
@@ -53,14 +57,32 @@ namespace SuggeBookDataAccess.DataServices
             return await BooksCollection.Find<Book>(b => ids.Contains(b.Id)).ToListAsync();
         }
 
-        public async Task Remove(ObjectId id)
+        public async Task<bool> Remove(ObjectId id)
         {
-            await BooksCollection.DeleteOneAsync<Book>(b => b.Id == id);
+            var result = await BooksCollection.DeleteOneAsync<Book>(b => b.Id == id);
+
+            if (result.DeletedCount == 1)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception(string.Format("Update with book {0} went wrong : maybe not found or two many suggestions with same id", id));
+            }
         }
 
-        public async Task Update(ObjectId id, Dao.Book book)
+        public async Task<bool> Update(ObjectId id, Dao.Book book)
         {
-            await BooksCollection.ReplaceOneAsync<Book>(b => b.Id == id, book);
+            var result = await BooksCollection.ReplaceOneAsync<Book>(b => b.Id == id, book);
+
+            if (result.IsModifiedCountAvailable && result.ModifiedCount == 1)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception(string.Format("Update with book {0} went wrong : maybe not found or two many suggestions with same id", id));
+            }
         }
     }
 }

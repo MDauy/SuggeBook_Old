@@ -11,13 +11,13 @@ namespace SuggeBookDataAccess.Dao
         public ObjectId Id { get; set; }
 
         [BsonElement("UserId")]
-        public int UserId { get; set; }
+        public ObjectId UserId { get; set; }
 
         [BsonElement("Title")]
         public string Title { get; set; }
 
         [BsonElement("BookId")]
-        public int BookId { get; set; }
+        public ObjectId BookId { get; set; }
 
     }
 }
