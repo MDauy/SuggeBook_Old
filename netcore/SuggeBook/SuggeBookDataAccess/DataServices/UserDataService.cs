@@ -51,12 +51,12 @@ namespace SuggeBookDataAccess.DataServices
 
 		public async Task Remove(ObjectId id)
 		{
-			await UsersCollection.DeleteOneAsync(user => user.Id == id)
+            await UsersCollection.DeleteOneAsync(user => user.Id == id);
 		}
 
-		public void Update(ObjectId id, User user)
+		public async Task Update(ObjectId id, User user)
 		{
-			throw new NotImplementedException();
+			await UsersCollection.ReplaceOneAsync<User> (b => b.Id == id, user);
 		}
 	}
 }

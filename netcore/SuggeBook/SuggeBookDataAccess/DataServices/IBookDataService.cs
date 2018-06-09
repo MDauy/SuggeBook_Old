@@ -8,12 +8,12 @@ namespace SuggeBookDataAccess.DataServices
 	{
 		Task<IEnumerable<Dao.Book>> GetBooks(List<ObjectId> ids);
 
-		Dao.Book GetBook(ObjectId id);
+		Task<Dao.Book> GetBook(ObjectId id);
 
-		Dao.Book Create(Dao.Book book);
+		Task<Dao.Book> Create(Dao.Book book);
 
-		void Update(ObjectId id, Dao.Book book);
+		Task Update(ObjectId id, Dao.Book book);
 
-		void Remove(ObjectId id);
+		Task Remove(ObjectId id);
 	}
 }

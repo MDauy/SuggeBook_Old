@@ -10,12 +10,12 @@ namespace SuggeBookDataAccess.DataServices
     {
 		Task<IEnumerable<Dao.User>> GetUsers(List<ObjectId> ids);
 
-		Dao.User GetUser(ObjectId id);
+		Task<Dao.User> GetUser(ObjectId id);
 
-		Dao.User Create(Dao.User user);
+		Task<Dao.User> Create(Dao.User user);
 
-		void Update(ObjectId id, Dao.User user);
+		Task Update(ObjectId id, Dao.User user);
 
-		void Remove(ObjectId id);
+		Task Remove(ObjectId id);
 	}
 }
