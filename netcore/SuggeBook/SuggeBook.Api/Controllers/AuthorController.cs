@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuggeBook.Dto.Mocks;
+using SuggeBook.Dto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers
 {
+    [Route("author")]
     public class AuthorController : Controller
     {
         private ITestsBank _banksTest;
@@ -22,6 +24,13 @@ namespace SuggeBook.Api.Controllers
         public JsonResult GetAuthor (int id)
         {
            return new JsonResult(_banksTest.Author());
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public ActionResult CreateAuthor ([FromBody] Author author)
+        {
+            return Ok(author);
         }
     }
 }

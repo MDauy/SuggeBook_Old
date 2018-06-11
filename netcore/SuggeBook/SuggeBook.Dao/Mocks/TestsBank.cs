@@ -24,7 +24,7 @@ namespace SuggeBook.Dto.Mocks
 
         public Author Author()
         {
-            return Authors(1).First();
+            return Authors(1).FirstOrDefault();
         }
 
         public List<Author> Authors(int howMany)
