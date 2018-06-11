@@ -2,6 +2,7 @@
 using Bogus.DataSets;
 using Bogus;
 using SuggeBook.Dto.Models;
+using System;
 
 namespace SuggeBook.Dto.Mocks
 {
@@ -21,9 +22,9 @@ namespace SuggeBook.Dto.Mocks
                  RuleFor(b => b.Title, f => f.PickRandom(BooksSamples.BooksTitles))
                  .RuleFor(b => b.Categories, () => BooksSamples.GetCategories(3))
                  .RuleFor(b => b.AuthorFullName, f => f.Name.FullName())
-            .RuleFor(b => b.Resume, () => Lorem.Sentence(87))
-            .RuleFor(b => b.Year, () => "1998")
-            .RuleFor(b => b.Edition, () => "Actes Sud");
+                 .RuleFor(b => b.ISBN, f => Guid.NewGuid())
+                 .RuleFor(b => b.NumberOfSuggestions, f => f.Random.Number(1, 100));
+
 
             var books = testBooks.Generate(howMany);
 

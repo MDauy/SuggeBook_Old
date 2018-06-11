@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
 using System;
@@ -27,11 +28,11 @@ namespace SuggeBook.Api.Controllers
 
         [HttpPost]
         [Route("add")]
-        public void AddBook (string bookJson)
+        public JsonResult AddBook ([FromBody] Book book)
         {
             try
             {
-                Book book = JsonConvert.DeserializeObject<Book>(bookJson);
+                return new JsonResult(book);
             }
             catch (Exception)
             {

@@ -21,6 +21,7 @@ namespace SuggeBook.Api
         {
             services.AddMvc(); 
             services.Add_SuggeBookDataAccess();
+            services.Add_MocksServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

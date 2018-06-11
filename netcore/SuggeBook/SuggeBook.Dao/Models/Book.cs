@@ -11,15 +11,11 @@ namespace SuggeBook.Dto.Models
 
         public string AuthorFullName { get; set; }
 
-        public string Resume { get; set; }
-
-        public string Edition { get; set; }
-
-        public string Year { get; set; }
-
         public int NumberOfSuggestions { get; set; }
 
         public List<string> Categories { get; set; }
+
+        public Guid ISBN { get; set; }
     }
 
 }
