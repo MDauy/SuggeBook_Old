@@ -16,12 +16,6 @@ namespace SuggeBook.Dto.Mocks
             this._fakeBooksService = fakeBooksService;
         }
 
-        public FakeUserService()
-        {
-
-        }
-
-
         /// <summary>
         /// Génère un certain nombre d'utilisateurs au hasard
         /// </summary>
