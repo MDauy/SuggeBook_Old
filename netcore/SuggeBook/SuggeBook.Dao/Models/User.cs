@@ -15,7 +15,7 @@ namespace SuggeBook.Dto.Models
 
         public List<Suggestion> Suggestions { get; set; }
 
-        public List<Category> FavoriteCategories{ get; set; }
+        public List<string> FavoriteCategories{ get; set; }
 
         public struct Book
         {
@@ -32,7 +32,12 @@ namespace SuggeBook.Dto.Models
         {
             public string Title { get; set; }
 
-            public string BookName { get; set; }
-        }       
+            public string BookTitle { get; set; }
+        }  
+        
+        public struct Category
+        {
+            public string Label { get; set; }
+        }
     }
 }

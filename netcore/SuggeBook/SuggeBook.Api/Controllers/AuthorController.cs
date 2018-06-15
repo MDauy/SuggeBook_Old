@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
 using System;
@@ -30,7 +31,15 @@ namespace SuggeBook.Api.Controllers
         [Route("add")]
         public ActionResult CreateAuthor ([FromBody] Author author)
         {
-            return Ok(author);
+            try
+            {              
+                return new JsonResult(author);
+            }
+            catch
+            {
+                throw;
+            }
+
         }
     }
 }

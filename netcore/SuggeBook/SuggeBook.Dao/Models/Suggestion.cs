@@ -17,7 +17,8 @@ namespace SuggeBook.Dto.Models
 
         public string OpinionText { get; set; }
 
-        public List<Category> Categories { get; set; }
+        //A remplacer par un objet de type Category ?
+        public List<string> Categories { get; set; }
 
         public struct Category
         {

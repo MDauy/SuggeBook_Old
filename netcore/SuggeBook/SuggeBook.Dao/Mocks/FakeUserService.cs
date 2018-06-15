@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Bogus;
 using SuggeBook.Dto.Models;
+using SuggeBook.Framework;
 
 namespace SuggeBook.Dto.Mocks
 {
@@ -23,10 +24,14 @@ namespace SuggeBook.Dto.Mocks
         /// <returns></returns>
         public List<User> Generate(int howMany)
         {
-            //var testUser = new Faker<User>().StrictMode(true).RuleFor(u => u.UserName, f => f.Name.FirstName(Bogus.DataSets.Name.Gender.Male))         
+            var testUser = new Faker<User>().StrictMode(true)
+                .RuleFor(u => u.UserName, f => f.Name.FirstName(Bogus.DataSets.Name.Gender.Male))
+                .RuleFor(u => u.Books, f => CustomAutoMapper.MapLists<Book, User.Book>(_fakeBooksService.Generate(6)))
+                .RuleFor(u => u.Suggestions, f => CustomAutoMapper.MapLists<Suggestion, User.Suggestion>(_fakeSuggestionsService.Generate(6)))
+                .RuleFor (u => u.FavoriteCategories, f => BooksSamples.GetCategories(3));
 
-            //return testUser.Generate(howMany);
-            return null;
+            return testUser.Generate(howMany);
+            
             
         }
         

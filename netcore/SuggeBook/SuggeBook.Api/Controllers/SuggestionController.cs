@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
 using System;
@@ -17,8 +18,8 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpGet]
-        [Route ("home/{userId}")]
-        public JsonResult Home(int userId)
+        [Route ("/home")]
+        public JsonResult Home([FromQuery] int uId)
         {
             //TODO : Appel à la DAL ici 
             var testSuggestions = _testsBank.Suggestions(30);
@@ -26,12 +27,14 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpPost]
-        [Route ("create")]
-        public void Create(string jsonSuggestion, int userId)
+        [Route ("add")]
+        public JsonResult Add([FromBody] JObject data)
         {
             try
             {
-                var suggestion = JsonConvert.DeserializeObject<Suggestion>(jsonSuggestion);                
+                return new JsonResult(new {
+                suggestion = data["suggestion"],
+                userId = data["userId"]});
             }
             catch (Exception)
             {

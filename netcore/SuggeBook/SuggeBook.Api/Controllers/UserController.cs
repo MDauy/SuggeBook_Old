@@ -29,11 +29,11 @@ namespace SuggeBook.Api.Controllers
 
         [HttpPost]
         [Route("add")]
-        public void AddUser (string userJson)
+        public JsonResult AddUser ([FromBody] User user)
         {
             try
             {
-                User user = JsonConvert.DeserializeObject<User>(userJson);
+                return new JsonResult(user);
             }
             catch (Exception)
             {
