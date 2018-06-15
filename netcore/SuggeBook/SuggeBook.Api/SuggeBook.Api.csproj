@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SuggeBook.Dao\SuggeBook.Dto.csproj" />
-    <ProjectReference Include="..\SuggeBookDataAccess\SuggeBookDataAccess.csproj" />
+    <ProjectReference Include="..\SuggeBookDataAccess\SuggeBookDAL.csproj" />
   </ItemGroup>
 
 </Project>

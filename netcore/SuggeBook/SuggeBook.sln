@@ -5,13 +5,11 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Api", "SuggeBook.Api\SuggeBook.Api.csproj", "{61C2FC56-7BC9-4A8F-A118-28C48321DCCB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Dal", "SuggeBook.Dal\SuggeBook.Dal.csproj", "{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Dto", "SuggeBook.Dao\SuggeBook.Dto.csproj", "{160245C2-8A2A-4E2A-84B6-51B79F03F6D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Framework", "SuggeBook.Framework\SuggeBook.Framework.csproj", "{38133577-FE38-4FAC-B52D-AF15846D649D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBookDataAccess", "SuggeBookDataAccess\SuggeBookDataAccess.csproj", "{1137A8D1-CB48-4840-A5C2-C23DFDB6EBE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBookDAL", "SuggeBookDataAccess\SuggeBookDAL.csproj", "{1137A8D1-CB48-4840-A5C2-C23DFDB6EBE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{61C2FC56-7BC9-4A8F-A118-28C48321DCCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61C2FC56-7BC9-4A8F-A118-28C48321DCCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61C2FC56-7BC9-4A8F-A118-28C48321DCCB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8694937F-2FC3-4DC3-A06A-C4EE52629CC7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{160245C2-8A2A-4E2A-84B6-51B79F03F6D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{160245C2-8A2A-4E2A-84B6-51B79F03F6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{160245C2-8A2A-4E2A-84B6-51B79F03F6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU

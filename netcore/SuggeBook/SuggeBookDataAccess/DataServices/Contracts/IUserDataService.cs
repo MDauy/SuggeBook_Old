@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuggeBookDataAccess.DataServices.Contracts
+namespace SuggeBookDAL.DataServices.Contracts
 {
     public interface IUserDataService
     {

@@ -1,13 +1,13 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using SuggeBookDataAccess.Dao;
-using SuggeBookDataAccess.DataServices.Contracts;
+using SuggeBookDAL.Dao;
+using SuggeBookDAL.DataServices.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuggeBookDataAccess.DataServices.Implementations
+namespace SuggeBookDAL.DataServices.Implementations
 {
     public class AuthorDataService : IAuthorDataService
     {

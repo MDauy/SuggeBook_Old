@@ -10,7 +10,7 @@ namespace SuggeBook.Dto.Models
 
         public string LastName { get; set; }
 
-        public string MyProperty
+        public string FullName
         {
             get
             {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using SuggeBookDataAccess.Dao;
-using SuggeBookDataAccess.DataServices.Contracts;
+using SuggeBookDAL.Dao;
+using SuggeBookDAL.DataServices.Contracts;
 
-namespace SuggeBookDataAccess.DataServices.Implementations
+namespace SuggeBookDAL.DataServices.Implementations
 {
     public class UserDataService : IUserDataService
 	{

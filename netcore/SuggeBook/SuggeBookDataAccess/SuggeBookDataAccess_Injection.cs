@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SuggeBookDataAccess.DataServices.Contracts;
-using SuggeBookDataAccess.DataServices.Implementations;
+using SuggeBookDAL.DataServices.Contracts;
+using SuggeBookDAL.DataServices.Implementations;
 
-namespace SuggeBookDataAccess
+namespace SuggeBookDAL
 {
-    public static class SuggeBookDataAccess_Injection
+    public static class SuggeBookDAL_Injection
     {
-        public static void Add_SuggeBookDataAccess(this IServiceCollection services)
+        public static void Add_SuggeBookDAL(this IServiceCollection services)
         {
             services.AddSingleton<IBookDataService, BookDataService>();
             services.AddSingleton<IUserDataService, UserDataService>();

@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace SuggeBookDataAccess.Dao
+namespace SuggeBookDAL.Dao
 {
 	public class Book
 	{

@@ -1,11 +1,8 @@
 ﻿using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SuggeBookDataAccess.Dao
+namespace SuggeBookDAL.Dao
 {
-    public class User
+	public class User
     {
 		public ObjectId Id { get; set; }
 
