@@ -2,9 +2,10 @@
   "name": "suggebook.front",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "suggebook.front",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "set PORT=3006 && react-scripts start"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,8 @@
   },
   "homepage": "https://github.com/MDauy/SuggeBook#readme",
   "dependencies": {
-    "webpack": "^4.12.0"
-  },
-  "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
+    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-latest": "^6.24.1",
@@ -29,9 +28,14 @@
     "css-loader": "^0.28.11",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "json-loader": "^0.5.7",
+    "node": "^10.5.0",
     "node-sass": "^4.9.0",
+    "react-redux": "^5.0.7",
+    "react-scripts": "^1.1.4",
+    "redux": "^4.0.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
-    "url-loader": "^1.0.1"
+    "url-loader": "^1.0.1",
+    "yarn": "^1.7.0"
   }
 }
