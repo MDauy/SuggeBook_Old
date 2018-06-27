@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react'
-import AddSuggestionForm from './components/addSuggestionForm'
+import AddSuggestionForm from './components/suggestionForm'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import suggestionReducer from './reducers/suggestionReducer'

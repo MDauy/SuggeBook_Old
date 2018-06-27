@@ -2,13 +2,14 @@ import { addSuggestion } from "../actions/suggestionActions"
 import { Component } from "react"
 import React from "react"
 import { connect } from "react-redux"
+import styles from "../styles/suggestionForm.css"
 
 
 const mapDispatchToProps = dispatch => {
     addSuggestion: suggestion => dispatch(addSuggestion(suggestion));
 }
 
-class ConnectedAddSuggestionForm extends Component {
+class ConnectedSuggestionForm extends Component {
     constructor(props) {
         super(props);
 
@@ -51,14 +52,22 @@ class ConnectedAddSuggestionForm extends Component {
 
     render() {
         return (
+            <div id={styles.suggestionFormPopin}>
             <form class="addSuggestionForm">
-                <input type="text" onChange={this.onTitleChange} />
-                <textarea rows="4" cols="50" onChange={this.onTextAreaChange} />
+                <div class="form-group">
+                    <label for="suggestionTitleInput">Qu'en avez-vous pensé ?</label>
+                    <input class="form-control" id="suggestionTitleInput" type="text" onChange={this.onTitleChange} />
+                </div>
+                <div class="form-group">
+                <label for="suggestionSummaryInput">Un dernier mot ?</label>
+                    <textarea class="form-control" id="suggestionSummaryInput" rows="4" cols="50" onChange={this.onTextAreaChange} />
+                </div>
             </form>
+            </div>
         )
     }
 }
 
-var AddSuggestionForm = connect(null, mapDispatchToProps)(ConnectedAddSuggestionForm);
+var SuggestionForm = connect(null, mapDispatchToProps)(ConnectedSuggestionForm);
 
-export default AddSuggestionForm
+export default SuggestionForm
