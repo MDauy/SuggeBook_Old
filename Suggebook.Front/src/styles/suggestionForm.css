@@ -1,3 +1,7 @@
-#suggestionFormPopin{
-    width : 30%;
+#addSuggestionForm{
+    width : 50%;
+}
+
+textarea{
+    resize:none
 }

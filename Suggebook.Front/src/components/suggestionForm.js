@@ -3,11 +3,13 @@ import { Component } from "react"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "../styles/suggestionForm.css"
-
+import {PureComponent} from "react-redux-popup"
 
 const mapDispatchToProps = dispatch => {
     addSuggestion: suggestion => dispatch(addSuggestion(suggestion));
 }
+
+
 
 class ConnectedSuggestionForm extends Component {
     constructor(props) {
@@ -53,7 +55,7 @@ class ConnectedSuggestionForm extends Component {
     render() {
         return (
             <div id={styles.suggestionFormPopin}>
-            <form class="addSuggestionForm">
+            <form id="addSuggestionForm">
                 <div class="form-group">
                     <label for="suggestionTitleInput">Qu'en avez-vous pensé ?</label>
                     <input class="form-control" id="suggestionTitleInput" type="text" onChange={this.onTitleChange} />
@@ -67,6 +69,7 @@ class ConnectedSuggestionForm extends Component {
         )
     }
 }
+
 
 var SuggestionForm = connect(null, mapDispatchToProps)(ConnectedSuggestionForm);
 
