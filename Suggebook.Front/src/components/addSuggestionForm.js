@@ -71,6 +71,6 @@ class ConnectedSuggestionForm extends Component {
 }
 
 
-var SuggestionForm = connect(null, mapDispatchToProps)(ConnectedSuggestionForm);
+var AddSuggestionForm = connect(null, mapDispatchToProps)(ConnectedSuggestionForm);
 
-export default SuggestionForm
+export default AddSuggestionForm
