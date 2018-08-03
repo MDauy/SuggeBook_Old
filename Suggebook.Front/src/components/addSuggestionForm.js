@@ -3,7 +3,7 @@ import { Component } from "react"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "../styles/suggestionForm.css"
-import {PureComponent} from "react-redux-popup"
+import Popup from "reactjs-popup"
 
 const mapDispatchToProps = dispatch => {
     addSuggestion: suggestion => dispatch(addSuggestion(suggestion));
@@ -54,18 +54,26 @@ class ConnectedSuggestionForm extends Component {
 
     render() {
         return (
-            <div id={styles.suggestionFormPopin}>
-            <form id="addSuggestionForm">
-                <div class="form-group">
-                    <label for="suggestionTitleInput">Qu'en avez-vous pensé ?</label>
-                    <input class="form-control" id="suggestionTitleInput" type="text" onChange={this.onTitleChange} />
+            <Popup trigger={<button>Ajouter une suggestion</button>} modal position="center" closeOnDocumentClick>
+            {close => (
+                <div class="form-container">
+                    <div className="header" id="addSuggestionHeader">Un livre à suggérer ?</div>
+                    <div id={styles.suggestionFormPopin} className="content">
+                        <form id="addSuggestionForm">
+                            <div class="form-group">
+                                <label for="suggestionTitleInput">Qu'en avez-vous pensé ?</label>
+                                <input class="form-control" id="suggestionTitleInput" type="text" onChange={this.onTitleChange} />
+                            </div>
+                            <div class="form-group">
+                                <label for="suggestionSummaryInput">Un dernier mot ?</label>
+                                <textarea class="form-control" id="suggestionSummaryInput" rows="4" cols="50" onChange={this.onTextAreaChange} />
+                            </div>
+                            <button type="submit" id="addButton" onClick={() => {this.onSubmit(); close();}}>Ajouter</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="form-group">
-                <label for="suggestionSummaryInput">Un dernier mot ?</label>
-                    <textarea class="form-control" id="suggestionSummaryInput" rows="4" cols="50" onChange={this.onTextAreaChange} />
-                </div>
-            </form>
-            </div>
+                )}
+            </Popup>
         )
     }
 }
