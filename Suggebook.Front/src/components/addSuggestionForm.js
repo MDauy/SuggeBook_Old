@@ -68,7 +68,7 @@ class ConnectedSuggestionForm extends Component {
                                 <label for="suggestionSummaryInput">Un dernier mot ?</label>
                                 <textarea class="form-control" id="suggestionSummaryInput" rows="4" cols="50" onChange={this.onTextAreaChange} />
                             </div>
-                            <button type="submit" id="addButton" onClick={() => {this.onSubmit(); close();}}>Ajouter</button>
+                            <button type="submit" id="addButton" class="btn btn-default" onClick={() => {this.onSubmit(); close();}}>Ajouter</button>
                         </form>
                     </div>
                 </div>
