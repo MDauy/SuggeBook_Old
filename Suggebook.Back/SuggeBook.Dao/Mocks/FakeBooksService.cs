@@ -15,10 +15,10 @@ namespace SuggeBook.Dto.Mocks
 
 
 		public Randomizer Randomizer { get; set; }
-		public List<Book> Generate(int howMany)
+		public List<BookDto> Generate(int howMany)
 		{
 			var Lorem = new Lorem(locale: "fr");
-			var testBooks = new Faker<Book>().StrictMode(true).RuleFor(b => b.AuthorFullName, f => f.PickRandom(BooksSamples.BooksAuthors)).
+			var testBooks = new Faker<BookDto>().StrictMode(true).RuleFor(b => b.AuthorFullName, f => f.PickRandom(BooksSamples.BooksAuthors)).
 					 RuleFor(b => b.Title, f => f.PickRandom(BooksSamples.BooksTitles))
 					 .RuleFor(b => b.Categories, () => BooksSamples.GetCategories(3))
 					 .RuleFor(b => b.AuthorFullName, f => f.Name.FullName())

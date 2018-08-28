@@ -11,9 +11,9 @@ namespace SuggeBook.Dto.Mocks
 
         List<Author> Authors(int howMany);
 
-        Book Book();
+        BookDto Book();
 
-        List<Book> Books(int howMany);
+        List<BookDto> Books(int howMany);
 
         Suggestion Suggestion();
 

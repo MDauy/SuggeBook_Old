@@ -6,13 +6,13 @@ namespace SuggeBookDAL.DataServices.Contracts
 {
 	public interface IBookDataService
 	{
-		Task<IEnumerable<Dao.Book>> GetBooks(List<ObjectId> ids);
+		IEnumerable<Dao.BookDao> GetBooks(List<string> ids);
 
-		Task<Dao.Book> GetBook(ObjectId id);
+		Dao.BookDao GetBook(string id);
 
-		Task<Dao.Book> Create(Dao.Book book);
+		Task<Dto.Book> Create(Dao.BookDao book);
 
-		Task<bool> Update(ObjectId id, Dao.Book book);
+		Task<bool> Update(ObjectId id, Dao.BookDao book);
 
 		Task<bool> Remove(ObjectId id);
 	}

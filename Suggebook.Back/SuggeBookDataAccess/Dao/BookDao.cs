@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace SuggeBookDAL.Dao
 {
-	public class Book
+	public class BookDao
 	{
 		public ObjectId Id { get; set; }
 

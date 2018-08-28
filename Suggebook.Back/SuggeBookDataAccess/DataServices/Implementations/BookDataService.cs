@@ -10,16 +10,16 @@ namespace SuggeBookDAL.DataServices.Implementations
 {
     public class BookDataService : IBookDataService
     {
-        private IMongoCollection<Book> _booksCollection;
+        private IMongoCollection<BookDao> _booksCollection;
         private IMongoDatabase _db;
 
-        public IMongoCollection<Book> BooksCollection
+        public IMongoCollection<BookDao> BooksCollection
         {
             get
             {
                 if (_booksCollection == null)
                 {
-                    _booksCollection = _db.GetCollection<Book>("Books");
+                    _booksCollection = _db.GetCollection<BookDao>("Books");
                     if (_booksCollection == null)
                     {
                         _db.CreateCollection("Books");
@@ -35,16 +35,16 @@ namespace SuggeBookDAL.DataServices.Implementations
             _db = DataBaseAccess.Db;
         }
 
-        public async Task<Dao.Book> Create(Dao.Book book)
+        public async Task<Dao.BookDao> Create(Dao.BookDao book)
         {
             await BooksCollection.InsertOneAsync (book);
 
             return book;
         }
 
-        public async Task<Dao.Book> GetBook(ObjectId id)
+        public Dao.BookDao GetBook(string id)
         {
-            var found = await BooksCollection.FindAsync<Book>(b => b.Id == id);
+            var found = BooksCollection.Find<BookDao>(b => b.Id == ObjectId.Parse(id));
 
             if (found.ToList().Count > 1)
             {
@@ -53,14 +53,14 @@ namespace SuggeBookDAL.DataServices.Implementations
             return found.FirstOrDefault();
         }
 
-        public async Task<IEnumerable<Dao.Book>> GetBooks(List<ObjectId> ids)
+        public IEnumerable<Dao.BookDao> GetBooks(List<string> ids)
         {
-            return await BooksCollection.Find<Book>(b => ids.Contains(b.Id)).ToListAsync();
+            return BooksCollection.Find<BookDao>(b => ids.Contains(b.Id.ToString())).ToList();
         }
 
         public async Task<bool> Remove(ObjectId id)
         {
-            var result = await BooksCollection.DeleteOneAsync<Book>(b => b.Id == id);
+            var result = await BooksCollection.DeleteOneAsync<BookDao>(b => b.Id == id);
 
             if (result.DeletedCount == 1)
             {
@@ -72,9 +72,9 @@ namespace SuggeBookDAL.DataServices.Implementations
             }
         }
 
-        public async Task<bool> Update(ObjectId id, Dao.Book book)
+        public async Task<bool> Update(ObjectId id, Dao.BookDao book)
         {
-            var result = await BooksCollection.ReplaceOneAsync<Book>(b => b.Id == id, book);
+            var result = await BooksCollection.ReplaceOneAsync<BookDao>(b => b.Id == id, book);
 
             if (result.IsModifiedCountAvailable && result.ModifiedCount == 1)
             {

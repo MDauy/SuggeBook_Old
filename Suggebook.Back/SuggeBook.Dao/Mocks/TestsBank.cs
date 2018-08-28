@@ -32,12 +32,12 @@ namespace SuggeBook.Dto.Mocks
             return _fakeAuthorService.Generate(howMany);        
         }
 
-        public Book Book()
+        public BookDto Book()
         {
             return Books(1).FirstOrDefault();
         }
 
-        public List<Book> Books(int howMany)
+        public List<BookDto> Books(int howMany)
         {
             return _fakeBooksService.Generate(howMany);
         }
