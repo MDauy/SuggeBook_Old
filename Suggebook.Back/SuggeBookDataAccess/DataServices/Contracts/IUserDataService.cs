@@ -8,13 +8,13 @@ namespace SuggeBookDAL.DataServices.Contracts
 {
     public interface IUserDataService
     {
-		Task<IEnumerable<Dao.User>> GetUsers(List<ObjectId> ids);
+		Task<IEnumerable<Dao.UserDao>> GetUsers(List<ObjectId> ids);
 
-		Task<Dao.User> GetUser(ObjectId id);
+		Task<Dao.UserDao> GetUser(ObjectId id);
 
-		Task<Dao.User> Create(Dao.User user);
+		Task<Dao.UserDao> Create(Dao.UserDao user);
 
-		Task<bool> Update(ObjectId id, Dao.User user);
+		Task<bool> Update(ObjectId id, Dao.UserDao user);
 
 		Task<bool> Remove(ObjectId id);
 	}

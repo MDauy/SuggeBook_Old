@@ -6,10 +6,8 @@ using System.Text;
 
 namespace SuggeBookDAL.Dao
 {
-    public class Suggestion
+    public class SuggestionDao : BaseDao
     {
-        public ObjectId Id { get; set; }
-
         [BsonElement("UserId")]
         public ObjectId UserId { get; set; }
 

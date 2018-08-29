@@ -6,12 +6,12 @@ namespace SuggeBookDAL.DataServices.Contracts
 {
     public interface IAuthorDataService
     {
-        Task<Author> Get(ObjectId id);
+        Task<AuthorDao> Get(ObjectId id);
 
-        Task<Author> Create(Author author);
+        Task<AuthorDao> Create(AuthorDao author);
 
         Task<bool> Remove(ObjectId id);
 
-        Task<bool> Update(ObjectId id, Suggestion suggestion);
+        Task<bool> Update(ObjectId id, SuggestionDao suggestion);
     }
 }

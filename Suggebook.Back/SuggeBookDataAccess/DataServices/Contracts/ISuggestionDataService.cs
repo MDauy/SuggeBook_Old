@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+﻿
 using SuggeBookDAL.Dao;
 using System.Threading.Tasks;
 
@@ -6,12 +6,10 @@ namespace SuggeBookDAL.DataServices.Contracts
 {
     public interface ISuggestionDataService
     {
-        Task<Suggestion> Get(ObjectId id);
+        Task<SuggestionDao> Get(string id);
+        Task<bool> Delete(SuggestionDao dao);
+        Task Insert(SuggestionDao dao);
+        Task<bool> Update(SuggestionDao dao);
 
-        Task<Suggestion> Create(Suggestion suggestion);
-
-        Task<bool> Remove(ObjectId id);
-
-        Task<bool> Update(ObjectId id, Suggestion suggestion);
     }
 }

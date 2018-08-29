@@ -3,10 +3,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace SuggeBookDAL.Dao
 {
-	public class BookDao
+	public class BookDao : BaseDao
 	{
-		public ObjectId Id { get; set; }
-
 		[BsonElement("Title")]
 		public string Title { get; set; }
 

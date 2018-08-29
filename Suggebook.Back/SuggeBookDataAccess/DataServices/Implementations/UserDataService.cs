@@ -10,16 +10,16 @@ namespace SuggeBookDAL.DataServices.Implementations
 {
     public class UserDataService : IUserDataService
 	{
-		private IMongoCollection<User> _usersCollection;
+		private IMongoCollection<UserDao> _usersCollection;
 		private IMongoDatabase _db;
 
-		public IMongoCollection<User> UsersCollection
+		public IMongoCollection<UserDao> UsersCollection
 		{
 			get
 			{
 				if (_usersCollection == null)
 				{
-					_usersCollection = _db.GetCollection<User>("Users");
+					_usersCollection = _db.GetCollection<UserDao>("Users");
 					if (_usersCollection == null)
 					{
 						_db.CreateCollection("Users");
@@ -34,22 +34,22 @@ namespace SuggeBookDAL.DataServices.Implementations
             _db = DataBaseAccess.Db;
         }
 
-		public async Task<User> Create(User user)
+		public async Task<UserDao> Create(UserDao user)
 		{
 			await UsersCollection.InsertOneAsync(user);
 
 			return user;
 		}
 
-		public async Task<User> GetUser(ObjectId id)
+		public async Task<UserDao> GetUser(ObjectId id)
 		{
-			var t = await UsersCollection.FindAsync<User>(user => user.Id == id);
+			var t = await UsersCollection.FindAsync<UserDao>(user => user.Id == id);
 			return t.First();
 		}
 
-		public async Task<IEnumerable<User>> GetUsers(List<ObjectId> ids)
+		public async Task<IEnumerable<UserDao>> GetUsers(List<ObjectId> ids)
 		{
-			var users = await UsersCollection.FindAsync<User>(user => ids.Contains(user.Id));
+			var users = await UsersCollection.FindAsync<UserDao>(user => ids.Contains(user.Id));
 
 			return users.ToList();
 		}
@@ -68,9 +68,9 @@ namespace SuggeBookDAL.DataServices.Implementations
             }
         }
 
-		public async Task<bool> Update(ObjectId id, User user)
+		public async Task<bool> Update(ObjectId id, UserDao user)
 		{
-			var result = await UsersCollection.ReplaceOneAsync<User> (b => b.Id == id, user);
+			var result = await UsersCollection.ReplaceOneAsync<UserDao> (b => b.Id == id, user);
 
             if (result.IsModifiedCountAvailable && result.ModifiedCount == 1)
             {

@@ -10,7 +10,7 @@ namespace SuggeBookDAL.DataServices.Contracts
 
 		Dao.BookDao GetBook(string id);
 
-		Task<Dto.Book> Create(Dao.BookDao book);
+		Task Insert(Dao.BookDao book);
 
 		Task<bool> Update(ObjectId id, Dao.BookDao book);
 

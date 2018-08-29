@@ -2,10 +2,8 @@
 
 namespace SuggeBookDAL.Dao
 {
-	public class User
+	public class UserDao : BaseDao
     {
-		public ObjectId Id { get; set; }
-
 		public string Firstname { get; set; }
 
 		public string Lastname { get; set; }

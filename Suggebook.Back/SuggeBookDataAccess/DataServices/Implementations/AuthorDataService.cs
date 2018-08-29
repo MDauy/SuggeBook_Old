@@ -11,16 +11,16 @@ namespace SuggeBookDAL.DataServices.Implementations
 {
     public class AuthorDataService : IAuthorDataService
     {
-        private IMongoCollection<Author> _authorsCollection;
+        private IMongoCollection<AuthorDao> _authorsCollection;
         private IMongoDatabase _db;
 
-        public IMongoCollection<Author> AuthorsCollection
+        public IMongoCollection<AuthorDao> AuthorsCollection
         {
             get
             {
                 if (_authorsCollection == null)
                 {
-                    _authorsCollection = _db.GetCollection<Author>("Authors");
+                    _authorsCollection = _db.GetCollection<AuthorDao>("Authors");
                     if (_authorsCollection == null)
                     {
                         _db.CreateCollection("Authors");
@@ -31,16 +31,16 @@ namespace SuggeBookDAL.DataServices.Implementations
         }
 
 
-        public async Task<Author> Create(Author author)
+        public async Task<AuthorDao> Create(AuthorDao author)
         {
             await AuthorsCollection.InsertOneAsync(author);
 
             return author;
         }
 
-        public async Task<Author> Get(ObjectId id)
+        public async Task<AuthorDao> Get(ObjectId id)
         {
-            var result = await AuthorsCollection.FindAsync<Author>(a => a.Id == id);
+            var result = await AuthorsCollection.FindAsync<AuthorDao>(a => a.Id == id);
 
             return result.FirstOrDefault();
         }
@@ -50,7 +50,7 @@ namespace SuggeBookDAL.DataServices.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<bool> Update(ObjectId id, Suggestion suggestion)
+        public Task<bool> Update(ObjectId id, SuggestionDao suggestion)
         {
             throw new NotImplementedException();
         }
