@@ -8,12 +8,28 @@ using SuggeBookDAL.DataServices.Contracts;
 
 namespace SuggeBookDAL.DataServices.Implementations
 {
-    public class BaseDataService<T> : IBaseDataService<T> where T : BaseDao
+    public class BaseDataService<T> : IBaseDataService<T> where T : BaseDao, new()
     {
         private IMongoCollection<T> _collection;
         private IMongoDatabase _db;
         private string CollectionName;
 
+        public string GetCollectionName(BaseDao dao)
+        {
+            switch (dao)
+            {
+                case SuggestionDao o:
+                    return "Suggestion";
+                case AuthorDao o:
+                    return "Author";
+                case UserDao o:
+                    return "o";
+                case BookDao o:
+                default:
+                    return "Book";
+
+            }
+        }
         public IMongoCollection<T> Collection
         {
             get
@@ -31,10 +47,10 @@ namespace SuggeBookDAL.DataServices.Implementations
             }
         }
 
-        public BaseDataService(string collection)
+        public BaseDataService()
         {
             _db = DataBaseAccess.Db;
-            this.CollectionName = collection;
+            this.CollectionName = GetCollectionName(new T());
         }
 
         public async Task<T> Get(string id)
@@ -73,7 +89,7 @@ namespace SuggeBookDAL.DataServices.Implementations
             }
             else
             {
-                throw new Exception(string.Format("Update with suggestion {0} went wrong : maybe not found or two many suggestions with same id", dao.Id));
+                throw new Exception(string.Format("Update with {0} {1} went wrong : maybe not found or two many suggestions with same id", dao.GetType().ToString(), dao.Id));
             }
         }
     }
