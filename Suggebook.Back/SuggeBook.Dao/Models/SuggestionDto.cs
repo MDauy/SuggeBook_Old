@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SuggeBook.Dto.Models
 {
-    public class SuggestionDto
+    public class SuggestionDto : BaseDto
     {
         public string Title { get; set; }
 

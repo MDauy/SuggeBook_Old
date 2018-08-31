@@ -1,9 +1,10 @@
 ﻿using SuggeBookDAL.Dao;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SuggeBookDAL.DataServices.Contracts
 {
-    public interface IBaseDataService<T> where T : BaseDao
+    public interface IBaseRepository<T> where T : BaseDao
     {
         Task<T> Get(string id);
 
@@ -12,5 +13,7 @@ namespace SuggeBookDAL.DataServices.Contracts
         Task<bool> Update(T dao);
 
         Task<bool> Delete(T dao);
+
+        Task<List<T>> GetSeveral(List<string> ids);
     }
 }

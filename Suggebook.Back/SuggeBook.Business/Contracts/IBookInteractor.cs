@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Contracts
 {
     public interface IBookInteractor
     {
-        BookDto GetBook(string bookId);
+        Task<BookDto> GetBook(string bookId);
     }
 }

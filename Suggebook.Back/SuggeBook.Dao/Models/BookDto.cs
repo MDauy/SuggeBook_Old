@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SuggeBook.Dto.Models
 {
-    public class BookDto
+    public class BookDto : BaseDto
     {
         public BookDto()
         {
@@ -14,9 +14,8 @@ namespace SuggeBook.Dto.Models
 
         public BookDto (BookDao dao)
         {
-            CustomAutoMapper.Map<BookDao, BookDto>(dao);
+            SuggeBookAutoMapper.Map<BookDao, BookDto>(dao);
         }
-        public string Id { get; set; }
 
         public string Title { get; set; }
 

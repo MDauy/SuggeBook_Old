@@ -3,25 +3,15 @@ using SuggeBook.Dto.Models;
 using SuggeBook.Framework;
 using SuggeBookDAL.Dao;
 using SuggeBookDAL.DataServices.Contracts;
+using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Implementations
 {
-    public class BookInteractor : IBookInteractor
+    public class BookInteractor : BaseInteractor<BookDao, BookDto>
     {
-        private readonly IBookDataService _bookDataService;
-
-        public BookInteractor(IBookDataService bookDataService)
+        public BookInteractor(IBaseRepository<BookDao> repository)
         {
-            _bookDataService = bookDataService;
-        }
-
-        public BookDto GetBook(string bookId)
-        {
-            var dao = _bookDataService.GetBook(bookId);
-            var book = CustomAutoMapper.Map<BookDao, BookDto>(dao);
-            book.Id = dao.Id.ToString();
-
-            return book;
+            _repo = repository;
         }
     }
 }

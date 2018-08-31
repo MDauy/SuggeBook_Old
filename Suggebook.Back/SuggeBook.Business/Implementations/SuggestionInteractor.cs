@@ -1,22 +1,15 @@
 ﻿using SuggeBook.Business.Contracts;
 using SuggeBook.Dto.Models;
+using SuggeBookDAL.Dao;
 using SuggeBookDAL.DataServices.Contracts;
 
 namespace SuggeBook.Business.Implementations
 {
-    public class SuggestionInteractor : BaseInteractor, ISuggestionInteractor
+    public class SuggestionInteractor : BaseInteractor<SuggestionDao, SuggestionDto>
     {
-        private readonly ISuggestionDataService _suggestionDataService;
-
-        public SuggestionInteractor (ISuggestionDataService suggestionDataService)
+        public SuggestionInteractor (IBaseRepository<SuggestionDao> repository)
         {
-            _suggestionDataService = suggestionDataService;
+            _repo = repository;
         }
-
-        public SuggestionDto GetSuggestion(string id)
-        {
-            var dao = _suggestionDataService.Get(id);
-        }
-
     }
 }

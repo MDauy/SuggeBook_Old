@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -8,7 +9,7 @@ using SuggeBookDAL.DataServices.Contracts;
 
 namespace SuggeBookDAL.DataServices.Implementations
 {
-    public class BaseDataService<T> : IBaseDataService<T> where T : BaseDao, new()
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseDao, new()
     {
         private IMongoCollection<T> _collection;
         private IMongoDatabase _db;
@@ -47,7 +48,7 @@ namespace SuggeBookDAL.DataServices.Implementations
             }
         }
 
-        public BaseDataService()
+        public BaseRepository()
         {
             _db = DataBaseAccess.Db;
             this.CollectionName = GetCollectionName(new T());
@@ -91,6 +92,17 @@ namespace SuggeBookDAL.DataServices.Implementations
             {
                 throw new Exception(string.Format("Update with {0} {1} went wrong : maybe not found or two many suggestions with same id", dao.GetType().ToString(), dao.Id));
             }
+        }
+
+        public async Task<List<T>> GetSeveral(List<string> ids)
+        {
+            var result = new List<T>();
+
+            foreach (var id in ids)
+            {
+                result.Add(await Get(id));
+            }
+            return result;
         }
     }
 }

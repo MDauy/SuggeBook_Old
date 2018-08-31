@@ -7,9 +7,9 @@ namespace SuggeBook.Dto.Mocks
 {
     public interface ITestsBank
     {
-        Author Author();
+        AuthorDto Author();
 
-        List<Author> Authors(int howMany);
+        List<AuthorDto> Authors(int howMany);
 
         BookDto Book();
 

@@ -29,7 +29,7 @@ namespace SuggeBook.Api.Controllers
 
         [HttpPost]
         [Route("add")]
-        public ActionResult CreateAuthor ([FromBody] Author author)
+        public ActionResult CreateAuthor ([FromBody] AuthorDto author)
         {
             try
             {              

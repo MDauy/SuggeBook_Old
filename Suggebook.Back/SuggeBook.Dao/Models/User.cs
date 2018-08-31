@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SuggeBook.Dto.Models
 {
     /// <summary>
     /// User tel qu'on voudrait l'afficher sur sa page user
     /// </summary>
-    public class User
+    public class User : BaseDto
     {
         public string UserName { get; set; }
 

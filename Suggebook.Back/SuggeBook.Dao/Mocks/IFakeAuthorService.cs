@@ -7,6 +7,6 @@ namespace SuggeBook.Dto.Mocks
 {
     public interface IFakeAuthorService
     {
-        List<Author> Generate(int howMany);
+        List<AuthorDto> Generate(int howMany);
     }
 }

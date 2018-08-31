@@ -22,12 +22,12 @@ namespace SuggeBook.Dto.Mocks
             _fakeAuthorService = fakeAuthorService;
         }
 
-        public Author Author()
+        public AuthorDto Author()
         {
             return Authors(1).FirstOrDefault();
         }
 
-        public List<Author> Authors(int howMany)
+        public List<AuthorDto> Authors(int howMany)
         {
             return _fakeAuthorService.Generate(howMany);        
         }

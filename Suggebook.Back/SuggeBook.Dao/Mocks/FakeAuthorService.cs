@@ -16,12 +16,12 @@ namespace SuggeBook.Dto.Mocks
 		}
 
 
-		public List<Author> Generate(int howMany)
+		public List<AuthorDto> Generate(int howMany)
 		{
 			var books = _booksService.Generate(7);
-            var authorBooks = CustomAutoMapper.MapLists<BookDto, Author.Book>(books);
+            var authorBooks = CustomAutoMapper.MapLists<BookDto, AuthorDto.Book>(books);
 
-			var bookstest = new Faker<Author>().StrictMode(true)
+			var bookstest = new Faker<AuthorDto>().StrictMode(true)
 					.RuleFor(a => a.FirstName, f => f.Name.FirstName())
 					.RuleFor(a => a.LastName, f => f.Name.LastName())
 					.RuleFor(a => a.Books, f => authorBooks);

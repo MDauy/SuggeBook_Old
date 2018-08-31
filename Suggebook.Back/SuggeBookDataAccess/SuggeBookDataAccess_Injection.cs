@@ -8,9 +8,9 @@ namespace SuggeBookDAL
     {
         public static void Add_SuggeBookDAL(this IServiceCollection services)
         {
-            services.AddSingleton<IBookDataService, BookDataService>();
-            services.AddSingleton<IUserDataService, UserDataService>();
-            services.AddSingleton<ISuggestionDataService, SuggestionDataService>();
+            services.AddSingleton<IBookRepository, BookRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<ISuggestionRepository, SuggestionRepository>();
         }
     }
 }

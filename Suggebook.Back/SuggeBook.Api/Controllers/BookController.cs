@@ -15,8 +15,8 @@ namespace SuggeBook.Api.Controllers
     public class BookController : Controller
     {
         private ITestsBank _testsBank;
-        private readonly IBookDataService _bookService;
-        public BookController(IBookDataService bookService)
+        private readonly IBookRepository _bookService;
+        public BookController(IBookRepository bookService)
         {
             this._bookService = bookService;
         }

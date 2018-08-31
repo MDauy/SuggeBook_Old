@@ -4,8 +4,8 @@ using System.Text;
 
 namespace SuggeBook.Dto.Models
 {
-    public class CategoryDto : BaseDto
+    public abstract class BaseDto
     {
-        public string Label { get; set; }
+        public string Id { get; set; }
     }
 }

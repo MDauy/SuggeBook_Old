@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SuggeBook.Dto.Models
 {
-	public class Author
+	public class AuthorDto : BaseDto
 	{
 		public string FirstName { get; set; }
 
