@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SuggeBook.Framework\SuggeBook.Framework.csproj" />
+    <ProjectReference Include="..\SuggeBookDataAccess\SuggeBookDAL.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,16 +2,17 @@
 using SuggeBook.Dto.Models;
 using SuggeBook.Framework;
 using SuggeBookDAL.Dao;
-using SuggeBookDAL.DataServices.Contracts;
+using SuggeBookDAL.Repositories.Contracts;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Implementations
 {
-    public class BookInteractor : BaseInteractor<BookDao, BookDto>
+    public class BookInteractor : BaseInteractor<BookDao, BookDto>, IBookInteractor
     {
         public BookInteractor(IBaseRepository<BookDao> repository)
         {
             _repo = repository;
         }
+             
     }
 }

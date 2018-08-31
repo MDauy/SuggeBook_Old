@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SuggeBookDAL.DataServices.Contracts;
-using SuggeBookDAL.DataServices.Implementations;
+using SuggeBookDAL.Repositories.Contracts;
+using SuggeBookDAL.Repositories.Implementations;
 
 namespace SuggeBookDAL
 {
@@ -8,9 +8,11 @@ namespace SuggeBookDAL
     {
         public static void Add_SuggeBookDAL(this IServiceCollection services)
         {
+            services.AddSingleton(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<ISuggestionRepository, SuggestionRepository>();
+            services.AddSingleton<IAuthorRepository, AuthorRepository>();
         }
     }
 }

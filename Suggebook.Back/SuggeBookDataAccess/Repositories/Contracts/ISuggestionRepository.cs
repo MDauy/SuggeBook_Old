@@ -3,7 +3,7 @@ using SuggeBookDAL.Dao;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SuggeBookDAL.DataServices.Contracts
+namespace SuggeBookDAL.Repositories.Contracts
 {
     public interface ISuggestionRepository
     {

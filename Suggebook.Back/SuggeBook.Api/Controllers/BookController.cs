@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
-using SuggeBookDAL.DataServices.Contracts;
+using SuggeBookDAL.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

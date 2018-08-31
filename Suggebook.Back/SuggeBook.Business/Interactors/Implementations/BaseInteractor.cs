@@ -1,7 +1,7 @@
 ﻿using SuggeBook.Dto.Models;
 using SuggeBook.Framework;
 using SuggeBookDAL.Dao;
-using SuggeBookDAL.DataServices.Contracts;
+using SuggeBookDAL.Repositories.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

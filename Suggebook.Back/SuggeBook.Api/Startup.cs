@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SuggeBook.Business;
 using SuggeBook.Dto.Mocks;
 using SuggeBookDAL;
 
@@ -22,6 +23,7 @@ namespace SuggeBook.Api
             services.AddMvc(); 
             services.Add_SuggeBookDAL();
             services.Add_MocksServices();
+            services.Add_Business();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

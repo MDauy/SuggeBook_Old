@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Contracts
 {
-    public interface ISuggestionInteractor
+    public interface IBookInteractor
     {
-        SuggestionDto GetSuggestion(string id);
+       
     }
 }

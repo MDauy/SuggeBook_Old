@@ -11,10 +11,8 @@ namespace SuggeBook.Api.Controllers
     [Route("suggestion")]
     public class SuggestionController : Controller
     {
-        private ITestsBank _testsBank;
-        public SuggestionController(ITestsBank testsBank)
+        public SuggestionController()
         {
-            _testsBank = testsBank;
         }
 
         [HttpGet]
@@ -22,19 +20,16 @@ namespace SuggeBook.Api.Controllers
         public JsonResult Home([FromQuery] int uId)
         {
             //TODO : Appel à la DAL ici 
-            var testSuggestions = _testsBank.Suggestions(30);
-            return new JsonResult(testSuggestions);
+            return null;
         }
 
         [HttpPost]
         [Route ("add")]
-        public JsonResult Add([FromBody] JObject data)
+        public JsonResult Insert([FromBody] InsertSuggestionDto dto)
         {
             try
             {
-                return new JsonResult(new {
-                suggestion = data["suggestion"],
-                userId = data["userId"]});
+                return null;
             }
             catch (Exception)
             {

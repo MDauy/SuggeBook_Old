@@ -1,4 +1,4 @@
-﻿using SuggeBookDAL.DataServices.Contracts;
+﻿using SuggeBookDAL.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;

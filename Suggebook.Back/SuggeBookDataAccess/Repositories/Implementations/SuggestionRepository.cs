@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SuggeBookDAL.Dao;
-using SuggeBookDAL.DataServices.Contracts;
+using SuggeBookDAL.Repositories.Contracts;
 
-namespace SuggeBookDAL.DataServices.Implementations
+namespace SuggeBookDAL.Repositories.Implementations
 {
     public class SuggestionRepository : ISuggestionRepository
     {

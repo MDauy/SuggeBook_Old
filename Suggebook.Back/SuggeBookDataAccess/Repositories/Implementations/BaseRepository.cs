@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using SuggeBookDAL.Dao;
-using SuggeBookDAL.DataServices.Contracts;
+using SuggeBookDAL.Repositories.Contracts;
 
-namespace SuggeBookDAL.DataServices.Implementations
+namespace SuggeBookDAL.Repositories.Implementations
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseDao, new()
     {

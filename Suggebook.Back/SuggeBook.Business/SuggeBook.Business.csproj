@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SuggeBook.Dao\SuggeBook.Dto.csproj" />
+    <ProjectReference Include="..\SuggeBook.Framework\SuggeBook.Framework.csproj" />
+    <ProjectReference Include="..\SuggeBookDataAccess\SuggeBookDAL.csproj" />
   </ItemGroup>
 
 </Project>
