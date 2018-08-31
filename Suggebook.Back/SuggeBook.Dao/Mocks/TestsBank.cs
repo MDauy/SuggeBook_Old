@@ -42,12 +42,12 @@ namespace SuggeBook.Dto.Mocks
             return _fakeBooksService.Generate(howMany);
         }
 
-        public Suggestion Suggestion()
+        public SuggestionDto Suggestion()
         {
             return Suggestions(1).FirstOrDefault();
         }
 
-        public List<Suggestion> Suggestions(int howMany)
+        public List<SuggestionDto> Suggestions(int howMany)
         {
             return _fakeSuggestionsService.Generate(howMany);
         }

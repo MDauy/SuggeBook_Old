@@ -22,9 +22,11 @@ namespace SuggeBook.Api.Controllers
         }
 
         [Route("{bookId}")]
-        public async Task<JsonResult> GetBook (int bookId)
+        public async Task<JsonResult> Get (string bookId)
         {
-            var book = _bookService.GetBook(bookId);
+            var book = await _bookService.Get(bookId);
+
+            return new JsonResult(book);
         }
 
 

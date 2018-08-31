@@ -8,6 +8,6 @@ namespace SuggeBook.Dto.Mocks
 {
     public interface IFakeSuggestionsService
     {
-        List<Suggestion> Generate(int howMany);
+        List<SuggestionDto> Generate(int howMany);
     }
 }

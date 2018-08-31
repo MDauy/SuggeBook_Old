@@ -26,8 +26,8 @@ namespace SuggeBook.Dto.Mocks
         {
             var testUser = new Faker<User>().StrictMode(true)
                 .RuleFor(u => u.UserName, f => f.Name.FirstName(Bogus.DataSets.Name.Gender.Male))
-                .RuleFor(u => u.Books, f => CustomAutoMapper.MapLists<BookDto, User.Book>(_fakeBooksService.Generate(6)))
-                .RuleFor(u => u.Suggestions, f => CustomAutoMapper.MapLists<Suggestion, User.Suggestion>(_fakeSuggestionsService.Generate(6)))
+                .RuleFor(u => u.Books, f => SuggeBookAutoMapper.MapLists<BookDto, User.Book>(_fakeBooksService.Generate(6)))
+                .RuleFor(u => u.Suggestions, f => SuggeBookAutoMapper.MapLists<SuggestionDto, User.Suggestion>(_fakeSuggestionsService.Generate(6)))
                 .RuleFor (u => u.FavoriteCategories, f => BooksSamples.GetCategories(3));
 
             return testUser.Generate(howMany);
