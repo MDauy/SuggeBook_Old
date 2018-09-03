@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using SuggeBook.Dto.Mocks;
+using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Models;
 using System;
 
@@ -11,8 +9,11 @@ namespace SuggeBook.Api.Controllers
     [Route("suggestion")]
     public class SuggestionController : Controller
     {
-        public SuggestionController()
+        private ISuggestionService _service;
+
+        public SuggestionController(ISuggestionService service)
         {
+            _service = service;
         }
 
         [HttpGet]
@@ -29,7 +30,8 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                return null;
+                _service.Insert(dto);
+                return new JsonResult("true");
             }
             catch (Exception)
             {

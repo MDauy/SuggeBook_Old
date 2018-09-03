@@ -16,7 +16,7 @@ namespace SuggeBookDAL
 			{
 				if (_client == null)
 				{
-					_client = new MongoClient("http://localhost:27017");
+					_client = new MongoClient("mongodb://suggebook:27017");
 				}
 				return _client;
 			}
@@ -29,7 +29,7 @@ namespace SuggeBookDAL
 			{
 				if (_db == null)
 				{
-					_db = _client.GetDatabase("SuggeBook");
+					_db = Client.GetDatabase("SuggeBook");
 				};
 
 				return _db;

@@ -32,7 +32,7 @@ namespace SuggeBookDAL.Repositories.Implementations
 
         public async Task Insert(SuggestionDao dao)
         {
-            await _repo.Delete(dao);
+            await _repo.Insert(dao);
         }
 
         public async Task<bool> Update(SuggestionDao dao)
