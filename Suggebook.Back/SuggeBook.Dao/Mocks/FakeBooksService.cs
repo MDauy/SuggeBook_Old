@@ -18,13 +18,13 @@ namespace SuggeBook.Dto.Mocks
 		public List<BookDto> Generate(int howMany)
 		{
 			var Lorem = new Lorem(locale: "fr");
-			var testBooks = new Faker<BookDto>().StrictMode(true).RuleFor(b => b.AuthorFullName, f => f.PickRandom(BooksSamples.BooksAuthors)).
-					 RuleFor(b => b.Title, f => f.PickRandom(BooksSamples.BooksTitles))
-					 .RuleFor(b => b.Categories, () => BooksSamples.GetCategories(3))
-					 .RuleFor(b => b.AuthorFullName, f => f.Name.FullName())
-					 .RuleFor(b => b.ISBN, f => Guid.NewGuid())
-					 .RuleFor(b => b.NumberOfSuggestions, f => f.Random.Number(1, 100))
-			.RuleFor(b => b.Year, f => f.Date.Past().Year);
+            var testBooks = new Faker<BookDto>().StrictMode(true).RuleFor(b => b.AuthorFullName, f => f.PickRandom(BooksSamples.BooksAuthors)).
+                     RuleFor(b => b.Title, f => f.PickRandom(BooksSamples.BooksTitles))
+                     .RuleFor(b => b.Categories, () => BooksSamples.GetCategories(3))
+                     .RuleFor(b => b.ISBN, f => Guid.NewGuid())
+                     .RuleFor(b => b.NumberOfSuggestions, f => f.Random.Number(1, 100))
+            .RuleFor(b => b.Year, f => f.Date.Past().Year)
+            .RuleFor(b => b.Id, "");
 
 
 			var books = testBooks.Generate(howMany);

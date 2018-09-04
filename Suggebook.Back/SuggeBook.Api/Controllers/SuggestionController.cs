@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using SuggeBook.Business.Services.Contracts;
+using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
 using System;
 
@@ -10,10 +11,11 @@ namespace SuggeBook.Api.Controllers
     public class SuggestionController : Controller
     {
         private ISuggestionService _service;
-
-        public SuggestionController(ISuggestionService service)
+        private readonly IFakeSuggestionsService _fakeSuggestionsService;
+        public SuggestionController(ISuggestionService service, IFakeSuggestionsService fakeSuggestionsService)
         {
             _service = service;
+            _fakeSuggestionsService = fakeSuggestionsService;
         }
 
         [HttpGet]

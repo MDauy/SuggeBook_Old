@@ -16,7 +16,7 @@ namespace SuggeBookDAL
 			{
 				if (_client == null)
 				{
-					_client = new MongoClient("mongodb://suggebook:27017");
+					_client = new MongoClient("mongodb://sbUser:toto4126@localhost:27017/SuggeBook");
 				}
 				return _client;
 			}

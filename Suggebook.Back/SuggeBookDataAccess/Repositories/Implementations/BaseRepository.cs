@@ -13,21 +13,21 @@ namespace SuggeBookDAL.Repositories.Implementations
     {
         private IMongoCollection<T> _collection;
         private IMongoDatabase _db;
-        private string CollectionName;
+        private string _collectionName;
 
         public string GetCollectionName(BaseDao dao)
         {
             switch (dao)
             {
                 case SuggestionDao o:
-                    return "Suggestion";
+                    return "Suggestions";
                 case AuthorDao o:
-                    return "Author";
+                    return "Authors";
                 case UserDao o:
-                    return "o";
+                    return "Users";
                 case BookDao o:
                 default:
-                    return "Book";
+                    return "Books";
 
             }
         }
@@ -37,10 +37,10 @@ namespace SuggeBookDAL.Repositories.Implementations
             {
                 if (_collection == null)
                 {
-                    _collection = _db.GetCollection<T>(this.CollectionName);
+                    _collection = _db.GetCollection<T>(_collectionName);
                     if (_collection == null)
                     {
-                        _db.CreateCollection(this.CollectionName);
+                        _db.CreateCollection(_collectionName);
                     }
                 }
                 return _collection;
@@ -51,7 +51,7 @@ namespace SuggeBookDAL.Repositories.Implementations
         public BaseRepository()
         {
             _db = DataBaseAccess.Db;
-            this.CollectionName = GetCollectionName(new T());
+            this._collectionName = GetCollectionName(new T());
         }
 
         public async Task<T> Get(string id)
@@ -63,7 +63,14 @@ namespace SuggeBookDAL.Repositories.Implementations
 
         public async Task Insert(T dao)
         {
-            await Collection.InsertOneAsync(dao);
+            try
+            {
+                await Collection.InsertOneAsync(dao);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public async Task<bool> Delete(T dao)
