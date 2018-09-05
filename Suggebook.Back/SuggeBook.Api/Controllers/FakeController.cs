@@ -12,13 +12,20 @@ namespace SuggeBook.Api.Controllers
     public class FakeController : Controller
     {
         private readonly IFakeBooksService _fakeBooks;
+        private readonly IFakeAuthorService _fakeAuthors;
         private readonly IBookService _bookService;
+        private readonly IAuthorService _authorService;
+
 
         public FakeController (IFakeBooksService fakeBooks,
-            IBookService bookService)
+            IFakeAuthorService fakeAuthors,
+            IBookService bookService,
+            IAuthorService authorService)
         {
             _fakeBooks = fakeBooks;
+            _fakeAuthors = fakeAuthors;
             _bookService = bookService;
+            _authorService = authorService;            
         }
 
         [Route("addBooks/{howMany}")]
@@ -26,6 +33,13 @@ namespace SuggeBook.Api.Controllers
         {
             var fakeBooks = _fakeBooks.Generate(howMany);
             await _bookService.InsertSeveral(fakeBooks);
+        }
+
+        [Route("addAuthors/{howMany}")]
+        public async Task GenerateAuthors (int howMany)
+        {
+            var fakeAuthors = _fakeAuthors.Generate(howMany);
+            await _authorService.InsertSeveral(fakeAuthors);
         }
     }
 }

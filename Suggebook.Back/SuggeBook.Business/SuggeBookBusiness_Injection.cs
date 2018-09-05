@@ -15,6 +15,7 @@ namespace SuggeBook.Business
             #region Commands
             services.AddSingleton<IInsertSuggestionCommandHandler, InsertSuggestionCommandHandler>();
             services.AddSingleton<IInsertBookCommandHandler, InsertBookCommandHandler>();
+            services.AddSingleton<IInsertAuthorCommandHandler, InsertAuthorCommandHandler>();
             #endregion
 
             #region Interactors
@@ -25,6 +26,7 @@ namespace SuggeBook.Business
             #region Services
             services.AddSingleton<ISuggestionService, SuggestionService>();
             services.AddSingleton<IBookService, BookService>();
+            services.AddSingleton<IAuthorService, AuthorService>();
 
             #endregion
         }
