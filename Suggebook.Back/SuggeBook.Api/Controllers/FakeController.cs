@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Mocks;
+using SuggeBook.Dto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace SuggeBook.Api.Controllers
         private readonly IFakeAuthorService _fakeAuthors;
         private readonly IBookService _bookService;
         private readonly IAuthorService _authorService;
+        
 
 
         public FakeController (IFakeBooksService fakeBooks,
@@ -32,7 +34,11 @@ namespace SuggeBook.Api.Controllers
         public async Task GenerateBooks (int howMany)
         {
             var fakeBooks = _fakeBooks.Generate(howMany);
-            await _bookService.InsertSeveral(fakeBooks);
+            foreach (BookDto book in fakeBooks)
+            {
+               var author = await _authorService.GetRandom();
+                await _bookService.Insert(book, author.Id);
+            }
         }
 
         [Route("addAuthors/{howMany}")]

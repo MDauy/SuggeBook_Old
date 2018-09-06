@@ -8,8 +8,6 @@ namespace SuggeBook.Business.Services.Contracts
 {
     public interface IBookService
     {
-        Task Insert(BookDto book);
-
-        Task InsertSeveral(List<BookDto> dtos);
+        Task Insert(BookDto book, string authorId);
     }
 }

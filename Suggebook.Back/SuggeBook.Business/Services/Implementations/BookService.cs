@@ -17,17 +17,9 @@ namespace SuggeBook.Business.Services.Implementations
             _insertBookCommandHandler = insertBookCommandHandler;
         }
 
-        public async Task Insert(BookDto book)
+        public async Task Insert(BookDto book, string authorId)
         {
-            await _insertBookCommandHandler.ExecuteAsync(book);
-        }
-
-        public async Task InsertSeveral(List<BookDto> dtos)
-        {
-            foreach (var item in dtos)
-            {
-                await _insertBookCommandHandler.ExecuteAsync(item);
-            }
+            await _insertBookCommandHandler.ExecuteAsync(new InsertBookCommandRequest { BookDto = book, AuthorId = authorId });
         }
     }
 }

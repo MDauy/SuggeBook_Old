@@ -16,5 +16,7 @@ namespace SuggeBookDAL.Repositories.Contracts
         Task<bool> Delete(AuthorDao id);
 
         Task<bool> Update(AuthorDao dao);
+
+        Task<AuthorDao> GetRandom(int howMany = 1);
     }
 }

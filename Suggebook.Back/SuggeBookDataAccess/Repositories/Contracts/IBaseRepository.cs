@@ -15,5 +15,7 @@ namespace SuggeBookDAL.Repositories.Contracts
         Task<bool> Delete(T dao);
 
         Task<List<T>> GetSeveral(List<string> ids);
+
+        Task<T> GetRandom();
     }
 }

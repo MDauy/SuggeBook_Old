@@ -111,5 +111,14 @@ namespace SuggeBookDAL.Repositories.Implementations
             }
             return result;
         }
+
+        public async Task<T> GetRandom ()
+        {
+            var ids = Collection.Distinct<ObjectId>("_id", Builders<T>.Filter.Empty).ToList();
+            var index = new Random().Next(1, ids.Count -1 );
+
+            return await Get(ids[index].ToString());
+        }
+
     }
 }

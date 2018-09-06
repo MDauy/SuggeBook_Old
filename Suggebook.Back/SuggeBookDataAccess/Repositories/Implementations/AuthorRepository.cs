@@ -11,7 +11,7 @@ namespace SuggeBookDAL.Repositories.Implementations
 {
     public class AuthorRepository : IAuthorRepository
     {
-        private readonly IBaseRepository<AuthorDao> _repo;
+        private readonly IBaseRepository<AuthorDao> _repo;       
 
         public AuthorRepository (IBaseRepository<AuthorDao> repo)
         {
@@ -41,6 +41,11 @@ namespace SuggeBookDAL.Repositories.Implementations
         public async Task<bool> Update(AuthorDao author)
         {
             return await _repo.Update(author) ;
+        }
+
+        public Task<AuthorDao> GetRandom(int howMany = 1)
+        {
+            throw new NotImplementedException();
         }
     }
 }

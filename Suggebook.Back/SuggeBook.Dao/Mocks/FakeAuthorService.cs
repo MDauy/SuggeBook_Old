@@ -24,7 +24,8 @@ namespace SuggeBook.Dto.Mocks
 			var bookstest = new Faker<AuthorDto>().StrictMode(true)
 					.RuleFor(a => a.FirstName, f => f.Name.FirstName())
 					.RuleFor(a => a.LastName, f => f.Name.LastName())
-					.RuleFor(a => a.Books, f => authorBooks);
+					.RuleFor(a => a.Books, f => authorBooks)
+                    .RuleFor(b => b.Id, "");
 
 			var authors = bookstest.Generate(howMany);
 

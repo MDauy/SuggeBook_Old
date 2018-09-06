@@ -1,4 +1,5 @@
-﻿using SuggeBook.Dto.Models;
+﻿using SuggeBook.Business.Interactors.Contracts;
+using SuggeBook.Dto.Models;
 using SuggeBook.Framework;
 using SuggeBookDAL.Dao;
 using SuggeBookDAL.Repositories.Contracts;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Contracts
 {
-    public abstract class BaseInteractor<T1,T2> where T1 : BaseDao, new() where T2 : BaseDto, new ()
+    public class BaseInteractor<T1,T2> : IBaseInteractor<T1, T2> where T1 : BaseDao, new() where T2 : BaseDto, new()
     {
         protected IBaseRepository<T1> _repo;
 
@@ -22,6 +23,12 @@ namespace SuggeBook.Business.Contracts
         {
             var daos = await _repo.GetSeveral(ids);
             return SuggeBookAutoMapper.MapLists<T1, T2>(daos);
+        }
+
+        public async Task<T2> GetRandom ()
+        {
+            var dao = await _repo.GetRandom();
+            return SuggeBookAutoMapper.Map<T1, T2>(dao);
         }
     }
 }

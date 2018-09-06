@@ -16,10 +16,11 @@ namespace SuggeBook.Business.Commands.Implementations
             _repo = repo;
         }
 
-        public async Task<bool> ExecuteAsync(BookDto obj)
+        public async Task<bool> ExecuteAsync(InsertBookCommandRequest command)
         {
-           await _repo.Insert(SuggeBookAutoMapper.Map<BookDto, BookDao> (obj));
-
+           var bookDao = SuggeBookAutoMapper.Map<BookDto, BookDao> (command.BookDto);
+            bookDao.AuthorId = command.AuthorId;
+            await _repo.Insert(bookDao);
             return true;
         }
     }

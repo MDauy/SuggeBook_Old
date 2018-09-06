@@ -16,7 +16,7 @@ namespace SuggeBook.Dto.Mocks
 
         public Lorem Lorem { get; set; }
 
-        public List<SuggestionDto> Generate (int howMany)
+        public List<SuggestionDto> Generate(int howMany)
         {
             var testSuggestions = new Faker<SuggestionDto>()
                 .RuleFor(s => s.BookTitle, f => f.PickRandom<string>(BooksSamples.BooksTitles))
@@ -24,8 +24,8 @@ namespace SuggeBook.Dto.Mocks
                 .RuleFor(s => s.Title, f => Lorem.Sentence(10))
                 .RuleFor(s => s.OpinionText, f => Lorem.Sentence(200))
                 .RuleFor(s => s.CreatorUsername, f => f.Name.FullName())
-                .RuleFor(s => s.Categories, f => BooksSamples.GetCategories(5));
-            
+                .RuleFor(s => s.Categories, f => BooksSamples.GetCategories(5))
+            .RuleFor(b => b.Id, "");
 
             var suggestions = testSuggestions.Generate(howMany);
 

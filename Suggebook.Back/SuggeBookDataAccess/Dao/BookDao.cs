@@ -9,7 +9,7 @@ namespace SuggeBookDAL.Dao
 		public string Title { get; set; }
 
 		[BsonElement("AuthorId")]
-		public int AuthorId { get; set; }
+		public string AuthorId { get; set; }
 
 		[BsonElement("Edition")]
 		public string Edition { get; set; }
