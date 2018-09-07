@@ -4,6 +4,7 @@ using SuggeBook.Business.Commands.Implementations;
 using SuggeBook.Business.Contracts;
 using SuggeBook.Business.Implementations;
 using SuggeBook.Business.Interactors.Contracts;
+using SuggeBook.Business.Interactors.Implementations;
 using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Business.Services.Implementations;
 using SuggeBook.Dto.Models;
@@ -24,7 +25,7 @@ namespace SuggeBook.Business
             #region Interactors
             services.AddSingleton<ISuggestionInteractor, SuggestionInteractor>();
             services.AddSingleton<IBookInteractor, BookInteractor>();
-            services.AddSingleton(typeof(IBaseInteractor<,>), typeof(BaseInteractor<,>));
+            services.AddSingleton<IAuthorInteractor, AuthorInteractor>();
             #endregion
 
             #region Services

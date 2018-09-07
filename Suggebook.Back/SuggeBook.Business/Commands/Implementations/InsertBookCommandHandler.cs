@@ -19,7 +19,7 @@ namespace SuggeBook.Business.Commands.Implementations
         public async Task<bool> ExecuteAsync(InsertBookCommandRequest command)
         {
            var bookDao = SuggeBookAutoMapper.Map<BookDto, BookDao> (command.BookDto);
-            bookDao.AuthorId = command.AuthorId;
+            bookDao.AuthorId = new MongoDB.Bson.ObjectId(command.AuthorId);
             await _repo.Insert(bookDao);
             return true;
         }

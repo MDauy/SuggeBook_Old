@@ -3,14 +3,15 @@ using SuggeBook.Dto.Models;
 using SuggeBook.Framework;
 using SuggeBookDAL.Dao;
 using SuggeBookDAL.Repositories.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Contracts
 {
-    public class BaseInteractor<T1,T2> : IBaseInteractor<T1, T2> where T1 : BaseDao, new() where T2 : BaseDto, new()
+    public abstract class BaseInteractor<T1, T2> where T1 : BaseDao, new() where T2 : BaseDto, new()
     {
-        protected IBaseRepository<T1> _repo;
+        protected IBaseRepository<T1> _repo;        
 
         public virtual async Task<T2> Get(string id)
         {
@@ -19,13 +20,13 @@ namespace SuggeBook.Business.Contracts
 
         }
 
-        public async Task<List<T2>> GetSeveral (List<string> ids)
+        public async Task<List<T2>> GetSeveral(List<string> ids)
         {
             var daos = await _repo.GetSeveral(ids);
             return SuggeBookAutoMapper.MapLists<T1, T2>(daos);
         }
 
-        public async Task<T2> GetRandom ()
+        public async Task<T2> GetRandom()
         {
             var dao = await _repo.GetRandom();
             return SuggeBookAutoMapper.Map<T1, T2>(dao);

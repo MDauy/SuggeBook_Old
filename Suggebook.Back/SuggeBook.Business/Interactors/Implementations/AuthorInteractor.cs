@@ -1,33 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using SuggeBook.Business.Contracts;
 using SuggeBook.Business.Interactors.Contracts;
 using SuggeBook.Dto.Models;
 using SuggeBookDAL.Dao;
+using SuggeBookDAL.Repositories.Contracts;
 
 namespace SuggeBook.Business.Interactors.Implementations
 {
-    public class AuthorInteractor : IAuthorInteractor
+    public class AuthorInteractor : BaseInteractor<AuthorDao, AuthorDto>, IAuthorInteractor
     {
-        private IBaseInteractor<AuthorDao, AuthorDto> _baseInteractor;
-
-        public AuthorInteractor(IBaseInteractor<AuthorDao, AuthorDto> baseInteractor)
+        public AuthorInteractor(IBaseRepository<AuthorDao> baseRepository)
         {
-            _baseInteractor = baseInteractor;
-        }
-
-        public async Task<AuthorDto> Get(string id)
-        {
-            return await _baseInteractor.Get(id);
-        }
-
-        public async Task<AuthorDto> GetRandom()
-        {
-            return await _baseInteractor.GetRandom();
-        }
-
-        public async Task<List<AuthorDto>> GetSeveral(List<string> ids)
-        {
-            return await GetSeveral(ids);
-        }
+            _repo = baseRepository;
+        }   
     }
 }
