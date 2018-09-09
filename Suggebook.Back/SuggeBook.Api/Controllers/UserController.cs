@@ -29,7 +29,7 @@ namespace SuggeBook.Api.Controllers
 
         [HttpPost]
         [Route("add")]
-        public JsonResult AddUser ([FromBody] User user)
+        public JsonResult AddUser ([FromBody] UserDto user)
         {
             try
             {

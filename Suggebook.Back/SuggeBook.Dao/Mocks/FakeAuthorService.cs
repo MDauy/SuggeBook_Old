@@ -19,7 +19,7 @@ namespace SuggeBook.Dto.Mocks
 		public List<AuthorDto> Generate(int howMany)
 		{
 			var books = _booksService.Generate(7);
-            var authorBooks = SuggeBookAutoMapper.MapLists<BookDto, AuthorDto.Book>(books);
+            var authorBooks = Framework.CustomAutoMapper.MapLists<BookDto, AuthorDto.Book>(books);
 
 			var bookstest = new Faker<AuthorDto>().StrictMode(true)
 					.RuleFor(a => a.FirstName, f => f.Name.FirstName())

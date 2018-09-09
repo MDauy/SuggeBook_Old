@@ -1,13 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SuggeBook.Business.Commands.Contracts;
 using SuggeBook.Business.Commands.Implementations;
-using SuggeBook.Business.Contracts;
-using SuggeBook.Business.Implementations;
-using SuggeBook.Business.Interactors.Contracts;
-using SuggeBook.Business.Interactors.Implementations;
+using SuggeBook.Business.Interactors;
 using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Business.Services.Implementations;
-using SuggeBook.Dto.Models;
 using SuggeBookDAL.Dao;
 
 namespace SuggeBook.Business
@@ -20,19 +16,21 @@ namespace SuggeBook.Business
             services.AddSingleton<IInsertSuggestionCommandHandler, InsertSuggestionCommandHandler>();
             services.AddSingleton<IInsertBookCommandHandler, InsertBookCommandHandler>();
             services.AddSingleton<IInsertAuthorCommandHandler, InsertAuthorCommandHandler>();
+            services.AddSingleton<IInsertUserCommandHandler, InsertUserCommandHandler>();
             #endregion
 
             #region Interactors
-            services.AddSingleton<ISuggestionInteractor, SuggestionInteractor>();
-            services.AddSingleton<IBookInteractor, BookInteractor>();
-            services.AddSingleton<IAuthorInteractor, AuthorInteractor>();
+            services.AddSingleton<BaseInteractor<SuggestionDao>, SuggestionInteractor>();
+            services.AddSingleton<BaseInteractor<AuthorDao>, AuthorInteractor>();
+            services.AddSingleton<BaseInteractor<UserDao>, UserInteractor>();
+            services.AddSingleton<BaseInteractor<BookDao>, BookInteractor>();
             #endregion
 
             #region Services
             services.AddSingleton<ISuggestionService, SuggestionService>();
             services.AddSingleton<IBookService, BookService>();
             services.AddSingleton<IAuthorService, AuthorService>();
-
+            services.AddSingleton<IUserService, UserService>();
             #endregion
         }
     }

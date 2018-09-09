@@ -1,15 +1,14 @@
 ﻿using SuggeBook.Business.Commands.Contracts;
 using SuggeBookDAL.Dao;
-using SuggeBookDAL.Repositories.Contracts;
-using System;
+using SuggeBookDAL.Repositories;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Commands.Implementations
 {
     public class InsertAuthorCommandHandler : IInsertAuthorCommandHandler
     {
-        private readonly IAuthorRepository _repo;
-        public InsertAuthorCommandHandler (IAuthorRepository repo)
+        private readonly BaseRepository<AuthorDao> _repo;
+        public InsertAuthorCommandHandler (BaseRepository<AuthorDao> repo)
         {
             _repo = repo;
         }

@@ -2,9 +2,6 @@
 using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers
@@ -16,18 +13,21 @@ namespace SuggeBook.Api.Controllers
         private readonly IFakeAuthorService _fakeAuthors;
         private readonly IBookService _bookService;
         private readonly IAuthorService _authorService;
-        
+        private readonly IUserService _userService;
+        private readonly IFakeUserService _fakeUsers;
 
 
         public FakeController (IFakeBooksService fakeBooks,
             IFakeAuthorService fakeAuthors,
             IBookService bookService,
-            IAuthorService authorService)
+            IAuthorService authorService,
+            IUserService userService)
         {
             _fakeBooks = fakeBooks;
             _fakeAuthors = fakeAuthors;
             _bookService = bookService;
-            _authorService = authorService;            
+            _authorService = authorService;
+            _userService = userService;
         }
 
         [Route("addBooks/{howMany}")]
@@ -46,6 +46,16 @@ namespace SuggeBook.Api.Controllers
         {
             var fakeAuthors = _fakeAuthors.Generate(howMany);
             await _authorService.InsertSeveral(fakeAuthors);
+        }
+
+        [Route("addUsers/{howMany}")]
+        public async Task GenerateUsers (int howMany)
+        {
+            var fakeUsers = _fakeUsers.Generate(howMany);
+            foreach (var user in fakeUsers)
+            {
+                await _userService.Insert(user);
+            }           
         }
     }
 }

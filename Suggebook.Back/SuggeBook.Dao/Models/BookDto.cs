@@ -14,7 +14,7 @@ namespace SuggeBook.Dto.Models
 
         public BookDto (BookDao dao)
         {
-            SuggeBookAutoMapper.Map<BookDao, BookDto>(dao);
+            Framework.CustomAutoMapper.Map<BookDao, BookDto>(dao);
         }
 
         public string Title { get; set; }

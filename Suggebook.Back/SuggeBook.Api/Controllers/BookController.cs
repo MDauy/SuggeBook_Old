@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
-using SuggeBookDAL.Repositories.Contracts;
+using SuggeBookDAL.Dao;
+using SuggeBookDAL.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers
@@ -15,8 +12,9 @@ namespace SuggeBook.Api.Controllers
     public class BookController : Controller
     {
         private ITestsBank _testsBank;
-        private readonly IBookRepository _bookService;
-        public BookController(IBookRepository bookService)
+        private readonly BaseRepository<BookDao> _bookService;
+
+        public BookController(BaseRepository<BookDao> bookService)
         {
             this._bookService = bookService;
         }

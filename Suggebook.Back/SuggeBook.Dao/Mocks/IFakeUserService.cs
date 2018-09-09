@@ -5,6 +5,6 @@ namespace SuggeBook.Dto.Mocks
 {
     public interface IFakeUserService
     {
-        List<User> Generate(int howMany);
+        List<UserDto> Generate(int howMany);
     }
 }

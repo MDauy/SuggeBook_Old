@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SuggeBook.Framework
 {
-    public static class SuggeBookAutoMapper
+    public static class CustomAutoMapper
     {
         public static T2 Map<T1, T2>(T1 source)
         {

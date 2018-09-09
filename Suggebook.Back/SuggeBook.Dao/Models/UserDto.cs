@@ -5,7 +5,7 @@ namespace SuggeBook.Dto.Models
     /// <summary>
     /// User tel qu'on voudrait l'afficher sur sa page user
     /// </summary>
-    public class User : BaseDto
+    public class UserDto : BaseDto
     {
         public string UserName { get; set; }
 

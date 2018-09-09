@@ -1,15 +1,13 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using SuggeBookDAL.Dao;
-using SuggeBookDAL.Repositories.Contracts;
 
-namespace SuggeBookDAL.Repositories.Implementations
+namespace SuggeBookDAL.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : BaseDao, new()
+    public class BaseRepository<T> where T : BaseDao, new()
     {
         private IMongoCollection<T> _collection;
         private IMongoDatabase _db;

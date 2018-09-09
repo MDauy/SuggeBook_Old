@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SuggeBook.Business.Commands.Contracts;
-using SuggeBook.Business.Interactors.Contracts;
+using SuggeBook.Business.Interactors;
 using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Models;
-using SuggeBook.Framework;
 using SuggeBookDAL.Dao;
 
 namespace SuggeBook.Business.Services.Implementations
@@ -12,39 +11,55 @@ namespace SuggeBook.Business.Services.Implementations
     public class AuthorService : IAuthorService
     {
         private readonly IInsertAuthorCommandHandler _authorCommandHandler;
-        private readonly IAuthorInteractor _authorInteractor;
-
-        public AuthorService (IInsertAuthorCommandHandler authorCommandHandler, IAuthorInteractor authorInteractor)
+        private readonly IBaseInteractor<AuthorDao> _interactor;
+        public AuthorService (IInsertAuthorCommandHandler authorCommandHandler, BaseInteractor<AuthorDao> interactor)
         {
             _authorCommandHandler = authorCommandHandler;
-            _authorInteractor = authorInteractor;
+            _interactor = interactor;
         }
 
         public async Task<AuthorDto> Get(string id)
         {
-            return await _authorInteractor.Get(id);
+            var authorDao = await _interactor.Get(id);
+
+            if(authorDao != null)
+            {
+                return Framework.CustomAutoMapper.Map<AuthorDao, AuthorDto>(authorDao);
+            }
+            return null;
         }
 
         public async Task<AuthorDto> GetRandom(int howMany = 1)
         {
-            return await _authorInteractor.GetRandom();
+            var authorDao = await _interactor.GetRandom();
+
+            if (authorDao != null)
+            {
+                return Framework.CustomAutoMapper.Map<AuthorDao, AuthorDto>(authorDao);
+            }
+            return null;
         }
 
         public async Task<List<AuthorDto>> GetSeveral(List<string> ids)
         {
-            return await _authorInteractor.GetSeveral(ids);
+            var result = new List<AuthorDto>();
+            foreach (var id in ids)
+            {
+                result.Add(await this.Get(id));
+            }
+            return result;
         }
 
         public async Task Insert(AuthorDto dto)
         {
-            await _authorCommandHandler.ExecuteAsync(SuggeBookAutoMapper.Map<AuthorDto, AuthorDao>(dto));
+            await _authorCommandHandler.ExecuteAsync(Framework.CustomAutoMapper.Map<AuthorDto, AuthorDao>(dto));
         }
 
         public async Task InsertSeveral(List<AuthorDto> dtos)
         {
             foreach (var item in dtos)
             {
-                await _authorCommandHandler.ExecuteAsync(SuggeBookAutoMapper.Map<AuthorDto, AuthorDao>(item));
+                await _authorCommandHandler.ExecuteAsync(Framework.CustomAutoMapper.Map<AuthorDto, AuthorDao>(item));
             }
         }
     }

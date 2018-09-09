@@ -1,0 +1,7 @@
+//Chemin vers mongodb
+C:\"Program Files"\MongoDB\Server\3.6\bin
+
+//Création de user
+db.createUser( { user: "sbUser",
+                 pwd: "toto4126",
+                 roles: [ "readWrite"] }
