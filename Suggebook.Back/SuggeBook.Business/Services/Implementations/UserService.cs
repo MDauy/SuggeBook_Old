@@ -1,4 +1,5 @@
-﻿using SuggeBook.Business.Interactors;
+﻿using SuggeBook.Business.Commands.Contracts;
+using SuggeBook.Business.Interactors;
 using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Models;
 using SuggeBook.Framework;
@@ -10,10 +11,12 @@ namespace SuggeBook.Business.Services.Implementations
     public class UserService : IUserService
     {
         BaseInteractor<UserDao> _userInteractor;
+        IInsertUserCommandHandler _insertUserCommand;
 
-        public UserService(BaseInteractor<UserDao> userInteractor)
+        public UserService(BaseInteractor<UserDao> userInteractor, IInsertUserCommandHandler insertUserCommand)
         {
             _userInteractor = userInteractor;
+            _insertUserCommand = insertUserCommand;
         }
 
         public async Task<UserDto> Get(string id)
@@ -30,8 +33,7 @@ namespace SuggeBook.Business.Services.Implementations
 
         public async Task Insert(UserDto dto)
         {
-            var dao = CustomAutoMapper.Map<UserDto, UserDao>(dto); 
-            //insert command 
+            await _insertUserCommand.ExecuteAsync(dto);
         }
     }
 }

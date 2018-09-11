@@ -9,5 +9,7 @@ namespace SuggeBook.Business.Services.Contracts
     public interface IBookService
     {
         Task Insert(BookDto book, string authorId);
+
+        Task<BookDto> GetRandom();
     }
 }

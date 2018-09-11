@@ -2,6 +2,7 @@
 using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
+using SuggeBook.Framework;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers
@@ -14,20 +15,27 @@ namespace SuggeBook.Api.Controllers
         private readonly IBookService _bookService;
         private readonly IAuthorService _authorService;
         private readonly IUserService _userService;
+        private readonly ISuggestionService _suggestionsService;
         private readonly IFakeUserService _fakeUsers;
+        private readonly IFakeSuggestionsService _fakeSuggestions;
 
 
         public FakeController (IFakeBooksService fakeBooks,
             IFakeAuthorService fakeAuthors,
             IBookService bookService,
             IAuthorService authorService,
-            IUserService userService)
+            IUserService userService,
+            IFakeUserService fakeUsers,IFakeSuggestionsService fakeSuggestionsService,
+            ISuggestionService suggestionService)
         {
             _fakeBooks = fakeBooks;
             _fakeAuthors = fakeAuthors;
             _bookService = bookService;
             _authorService = authorService;
             _userService = userService;
+            _fakeUsers = fakeUsers;
+            _fakeSuggestions = fakeSuggestionsService;
+            _suggestionsService = suggestionService;
         }
 
         [Route("addBooks/{howMany}")]
@@ -56,6 +64,24 @@ namespace SuggeBook.Api.Controllers
             {
                 await _userService.Insert(user);
             }           
+        }
+
+        [Route("addSuggestions/{howMany}")]
+        public async Task GenerateSuggestions (int howMany)
+        {
+            var fakeSuggestions = _fakeSuggestions.Generate(howMany);
+            foreach (var suggestion in fakeSuggestions)
+            {
+                var book = await _bookService.GetRandom();
+                suggestion.BookAuthor = book.AuthorFullName;
+                suggestion.BookTitle = book.Title;
+                var sugg = new InsertSuggestionDto
+                {
+                    Suggestion = suggestion,
+                    UserId = _userService.GetRandom().Id
+                };
+                await _suggestionsService.Insert(sugg);
+            }
         }
     }
 }

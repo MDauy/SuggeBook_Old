@@ -12,6 +12,6 @@ namespace SuggeBookDAL.Dao
 
         public string Mail { get; set; }
 
-        public string Pseudo { get; set; }
+        public string UserName{ get; set; }
     }
 }
