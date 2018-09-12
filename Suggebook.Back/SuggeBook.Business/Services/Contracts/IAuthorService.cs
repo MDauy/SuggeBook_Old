@@ -6,9 +6,7 @@ namespace SuggeBook.Business.Services.Contracts
 {
     public interface IAuthorService
     {
-        Task Insert(AuthorDto dto);
-
-        Task InsertSeveral(List<AuthorDto> dtos);
+        Task Insert(InsertAuthorDto dto);
 
         Task<AuthorDto> GetRandom(int howMany = 1);
 

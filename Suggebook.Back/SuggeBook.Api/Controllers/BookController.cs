@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
 using SuggeBookDAL.Dao;
@@ -12,9 +13,9 @@ namespace SuggeBook.Api.Controllers
     public class BookController : Controller
     {
         private ITestsBank _testsBank;
-        private readonly BaseRepository<BookDao> _bookService;
+        private readonly IBookService _bookService;
 
-        public BookController(BaseRepository<BookDao> bookService)
+        public BookController(IBookService bookService)
         {
             this._bookService = bookService;
         }
@@ -30,11 +31,12 @@ namespace SuggeBook.Api.Controllers
 
         [HttpPost]
         [Route("add")]
-        public JsonResult AddBook ([FromBody] BookDto book)
+        public JsonResult AddBook ([FromBody] InsertBookDto book)
         {
             try
             {
-                return new JsonResult(book);
+                _bookService.Insert(book);
+                return new JsonResult("Book added");
             }
             catch (Exception)
             {

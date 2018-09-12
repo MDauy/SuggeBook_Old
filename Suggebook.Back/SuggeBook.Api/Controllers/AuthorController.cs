@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
 using System;
@@ -12,28 +13,31 @@ namespace SuggeBook.Api.Controllers
     [Route("author")]
     public class AuthorController : Controller
     {
-        private ITestsBank _banksTest;
+        private IAuthorService _authorService;
 
-        public AuthorController(ITestsBank banksTest)
+        public AuthorController(IAuthorService authorService)
         {
-            this._banksTest = banksTest;
+            this._authorService = authorService;
         }
 
 
         [HttpGet]
-        [Route("{id}")]
-        public JsonResult GetAuthor (int id)
+        [Route("{authorId}")]
+        public async Task<JsonResult> Get (string authorId)
         {
-           return new JsonResult(_banksTest.Author());
+            var bookDto = await _authorService.Get(authorId);
+
+            return new JsonResult(bookDto);
         }
 
         [HttpPost]
         [Route("add")]
-        public ActionResult CreateAuthor ([FromBody] AuthorDto author)
+        public async Task<ActionResult> Add ([FromBody] InsertAuthorDto author)
         {
             try
-            {              
-                return new JsonResult(author);
+            {
+               await  _authorService.Insert(author);
+                return Ok();
             }
             catch
             {

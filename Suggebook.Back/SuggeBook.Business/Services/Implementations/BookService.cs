@@ -23,9 +23,9 @@ namespace SuggeBook.Business.Services.Implementations
             _authorInteractor = authorInteractor;
         }
 
-        public async Task Insert(BookDto book, string authorId)
+        public async Task Insert(InsertBookDto book)
         {
-            await _insertBookCommandHandler.ExecuteAsync(new InsertBookCommandRequest { BookDto = book, AuthorId = authorId });
+            await _insertBookCommandHandler.ExecuteAsync(book);
         }
 
         public async Task<BookDto> GetRandom ()

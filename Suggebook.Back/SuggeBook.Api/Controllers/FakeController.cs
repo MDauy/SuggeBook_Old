@@ -45,7 +45,11 @@ namespace SuggeBook.Api.Controllers
             foreach (BookDto book in fakeBooks)
             {
                var author = await _authorService.GetRandom();
-                await _bookService.Insert(book, author.Id);
+                await _bookService.Insert(new InsertBookDto
+                {
+                    AuthorId = author.Id,
+                    BookDto = book
+                });
             }
         }
 
@@ -53,7 +57,10 @@ namespace SuggeBook.Api.Controllers
         public async Task GenerateAuthors (int howMany)
         {
             var fakeAuthors = _fakeAuthors.Generate(howMany);
-            await _authorService.InsertSeveral(fakeAuthors);
+            foreach (var author in fakeAuthors)
+            {
+                await _authorService.Insert(CustomAutoMapper.Map<AuthorDto, InsertAuthorDto>(author));
+            }
         }
 
         [Route("addUsers/{howMany}")]

@@ -15,7 +15,7 @@ namespace SuggeBook.Business.Commands.Implementations
             _repo = repo;
         }
 
-        public async Task<bool> ExecuteAsync(InsertBookCommandRequest command)
+        public async Task<bool> ExecuteAsync(InsertBookDto command)
         {
            var bookDao = Framework.CustomAutoMapper.Map<BookDto, BookDao> (command.BookDto);
             bookDao.AuthorId = new MongoDB.Bson.ObjectId(command.AuthorId);

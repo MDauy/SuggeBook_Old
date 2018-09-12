@@ -10,11 +10,11 @@ namespace SuggeBook.Business.Services.Implementations
 {
     public class AuthorService : IAuthorService
     {
-        private readonly IInsertAuthorCommandHandler _authorCommandHandler;
+        private readonly IInsertAuthorCommandHandler _insertAuthorCommandHandler;
         private readonly IBaseInteractor<AuthorDao> _interactor;
         public AuthorService (IInsertAuthorCommandHandler authorCommandHandler, BaseInteractor<AuthorDao> interactor)
         {
-            _authorCommandHandler = authorCommandHandler;
+            _insertAuthorCommandHandler = authorCommandHandler;
             _interactor = interactor;
         }
 
@@ -50,17 +50,9 @@ namespace SuggeBook.Business.Services.Implementations
             return result;
         }
 
-        public async Task Insert(AuthorDto dto)
+        public async Task Insert(InsertAuthorDto dto)
         {
-            await _authorCommandHandler.ExecuteAsync(Framework.CustomAutoMapper.Map<AuthorDto, AuthorDao>(dto));
-        }
-
-        public async Task InsertSeveral(List<AuthorDto> dtos)
-        {
-            foreach (var item in dtos)
-            {
-                await _authorCommandHandler.ExecuteAsync(Framework.CustomAutoMapper.Map<AuthorDto, AuthorDao>(item));
-            }
+            await _insertAuthorCommandHandler.ExecuteAsync(dto);
         }
     }
 }
