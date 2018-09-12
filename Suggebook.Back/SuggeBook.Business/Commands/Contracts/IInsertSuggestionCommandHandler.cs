@@ -3,7 +3,7 @@ using SuggeBook.Framework;
 
 namespace SuggeBook.Business.Commands.Contracts
 {
-    public interface IInsertSuggestionCommandHandler : ICommandHandlerAsync<SuggestionDto, bool>
+    public interface IInsertSuggestionCommandHandler : ICommandHandlerAsync<InsertSuggestionDto, bool>
     {
     }
 }

@@ -1,4 +1,5 @@
-﻿using SuggeBook.Business.Commands.Contracts;
+﻿using MongoDB.Bson;
+using SuggeBook.Business.Commands.Contracts;
 using SuggeBook.Dto.Models;
 using SuggeBookDAL.Dao;
 using SuggeBookDAL.Repositories;
@@ -15,9 +16,12 @@ namespace SuggeBook.Business.Commands.Implementations
             _repo = repo;
         }
 
-        public async Task<bool> ExecuteAsync(SuggestionDto obj)
+        public async Task<bool> ExecuteAsync(InsertSuggestionDto obj)
         {
-            await _repo.Insert(Framework.CustomAutoMapper.Map<SuggestionDto, SuggestionDao>(obj));
+            var dao = Framework.CustomAutoMapper.Map<SuggestionDto, SuggestionDao>(obj.Suggestion);
+            dao.BookId = ObjectId.Parse(obj.BookId);
+            dao.UserId = ObjectId.Parse(obj.UserId);
+            await _repo.Insert(dao);
 
             return true;
         }

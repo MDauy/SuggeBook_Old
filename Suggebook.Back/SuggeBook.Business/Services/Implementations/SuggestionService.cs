@@ -21,7 +21,7 @@ namespace SuggeBook.Business.Services.Implementations
 
         public async Task Insert(InsertSuggestionDto dto)
         {
-            await _insertCommand.ExecuteAsync(dto.Suggestion);
+            await _insertCommand.ExecuteAsync(dto);
         }
 
         public async Task<SuggestionDto> Get (string id)
