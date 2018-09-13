@@ -9,9 +9,9 @@ namespace SuggeBookDAL.Repositories
 {
     public class BaseRepository<T> where T : BaseDao, new()
     {
-        private IMongoCollection<T> _collection;
-        private IMongoDatabase _db;
-        private string _collectionName;
+        protected IMongoCollection<T> _collection;
+        protected IMongoDatabase _db;
+        protected string _collectionName;
 
         public string GetCollectionName(BaseDao dao)
         {

@@ -2,7 +2,9 @@
 using SuggeBook.Business.Interactors;
 using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Models;
+using SuggeBook.Framework;
 using SuggeBookDAL.Dao;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Services.Implementations
@@ -11,12 +13,21 @@ namespace SuggeBook.Business.Services.Implementations
     {
         private readonly IInsertSuggestionCommandHandler _insertCommand;
         private readonly BaseInteractor<SuggestionDao> _suggestionInteractor;
+        private readonly ISuggestionInteractor _extendedSuggestionInteractor;
+        private readonly IBookService _bookService;
+        private readonly IUserService _userService;
 
         public SuggestionService (IInsertSuggestionCommandHandler insertCommand,
-            BaseInteractor<SuggestionDao> suggestionInteractor)
+            BaseInteractor<SuggestionDao> suggestionInteractor,
+            ISuggestionInteractor extendedSuggestionInteractor,
+            IBookService bookService,
+            IUserService userService)
         {
             _insertCommand = insertCommand;
             _suggestionInteractor = suggestionInteractor;
+            _extendedSuggestionInteractor = extendedSuggestionInteractor;
+            _bookService = bookService;
+            _userService = userService;
         }
 
         public async Task Insert(InsertSuggestionDto dto)
@@ -32,6 +43,25 @@ namespace SuggeBook.Business.Services.Implementations
                 return Framework.CustomAutoMapper.Map<SuggestionDao, SuggestionDto>(suggestionDao);
             }
             return null;
+        }
+
+        public async Task<List<SuggestionDto>> GetFomBook(string bookId)
+        {
+            var suggestionDaos = await _extendedSuggestionInteractor.GetFromBook(bookId);
+            var book = await _bookService.Get(bookId);
+            
+            var suggestionDtos = new List<SuggestionDto>();
+            foreach (var suggestionDao in suggestionDaos)
+            {
+               
+                var suggestionDto = CustomAutoMapper.Map<SuggestionDao, SuggestionDto>(suggestionDao);
+                 var user = await _userService.Get(suggestionDao.UserId.ToString());
+                suggestionDto.BookAuthor = book.AuthorFullName;
+                suggestionDto.BookTitle = book.Title;
+                suggestionDto.CreatorUsername = user.UserName;
+                suggestionDtos.Add(suggestionDto);
+            }
+            return suggestionDtos;
         }
     }
 }

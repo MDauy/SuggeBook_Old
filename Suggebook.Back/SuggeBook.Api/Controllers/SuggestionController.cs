@@ -4,6 +4,7 @@ using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -41,10 +42,11 @@ namespace SuggeBook.Api.Controllers
             }            
         }
 
-
-        public JsonResult GetFromBookId (int bookId)
+        [Route("frombook/{bookId}")]
+        public async Task<JsonResult> GetFromBookId (string bookId)
         {
-            return null;
+            var suggestions = await _service.GetFomBook(bookId);
+            return new JsonResult(suggestions);
         }
     }
 }

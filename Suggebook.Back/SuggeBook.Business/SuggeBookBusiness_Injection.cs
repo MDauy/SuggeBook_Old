@@ -21,6 +21,7 @@ namespace SuggeBook.Business
 
             #region Interactors
             services.AddSingleton<BaseInteractor<SuggestionDao>, SuggestionInteractor>();
+            services.AddSingleton<ISuggestionInteractor, SuggestionInteractor>();
             services.AddSingleton<BaseInteractor<AuthorDao>, AuthorInteractor>();
             services.AddSingleton<BaseInteractor<UserDao>, UserInteractor>();
             services.AddSingleton<BaseInteractor<BookDao>, BookInteractor>();
