@@ -22,7 +22,7 @@ namespace SuggeBook.Dto.Mocks
                 .RuleFor(s => s.BookTitle, f => f.PickRandom<string>(BooksSamples.BooksTitles))
                 .RuleFor(s => s.BookAuthor, f => f.PickRandom(BooksSamples.BooksAuthors))
                 .RuleFor(s => s.Title, f => Lorem.Sentence(10))
-                .RuleFor(s => s.OpinionText, f => Lorem.Sentence(200))
+                .RuleFor(s => s.Content, f => Lorem.Sentence(200))
                 .RuleFor(s => s.CreatorUsername, f => f.Name.FullName())
                 .RuleFor(s => s.Categories, f => BooksSamples.GetCategories(5))
             .RuleFor(b => b.Id, "");

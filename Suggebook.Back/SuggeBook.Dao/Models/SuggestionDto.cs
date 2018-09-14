@@ -15,14 +15,9 @@ namespace SuggeBook.Dto.Models
 
         public string CreatorUsername { get; set; }
 
-        public string OpinionText { get; set; }
-
-        //A remplacer par un objet de type Category ?
+        public string Content { get; set; }
+        
         public List<string> Categories { get; set; }
-
-        public struct Category
-        {
-            public string Label { get; set; }
-        }
+        
     }
 }

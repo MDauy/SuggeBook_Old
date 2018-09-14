@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace SuggeBookDAL.Dao
 {
@@ -14,5 +15,10 @@ namespace SuggeBookDAL.Dao
         [BsonElement("BookId")]
         public ObjectId BookId { get; set; }
 
+        [BsonElement("Content")]
+        public string Content { get; set; }
+
+        [BsonElement("Categories")]
+        public List<string> Categories{ get; set; }
     }
 }

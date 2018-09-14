@@ -38,9 +38,16 @@ namespace SuggeBook.Business.Services.Implementations
         public async Task<SuggestionDto> Get (string id)
         {
             var suggestionDao = await _suggestionInteractor.Get(id);
-            if (suggestionDao != null)
+            var book = await _bookService.Get(suggestionDao.BookId.ToString());
+            var user = await _userService.Get(suggestionDao.UserId.ToString());
+
+            if (suggestionDao != null && book != null)
             {
-                return Framework.CustomAutoMapper.Map<SuggestionDao, SuggestionDto>(suggestionDao);
+                var suggestion = Framework.CustomAutoMapper.Map<SuggestionDao, SuggestionDto>(suggestionDao);
+                suggestion.BookAuthor = book.AuthorFullName;
+                suggestion.BookTitle = book.Title;
+                suggestion.CreatorUsername = user.UserName;
+                return suggestion;
             }
             return null;
         }
