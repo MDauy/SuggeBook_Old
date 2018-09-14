@@ -10,6 +10,7 @@ namespace SuggeBookDAL
         {
             services.AddSingleton<BaseRepository<BookDao>, BookRepository>();
             services.AddSingleton<BaseRepository<UserDao>, UserRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<BaseRepository<SuggestionDao>, SuggestionRepository>();
             services.AddSingleton<BaseRepository<AuthorDao>, AuthorRepository>();
             services.AddSingleton<ISuggestionRepository, SuggestionRepository>();

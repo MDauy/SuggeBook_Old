@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using SuggeBook.Dto.Mocks;
+using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers
@@ -12,19 +9,28 @@ namespace SuggeBook.Api.Controllers
     [Route("user")]
     public class UserController : Controller
     {
-        private ITestsBank _testsBank;
+        private readonly IUserService _userService;
 
-        public UserController (ITestsBank testsBank)
+        public UserController (IUserService userService)
         {
-            _testsBank = testsBank ;
+            _userService = userService;
         }
        
+        [HttpGet]
+        [Route("from-username/{username}")]
+        public async Task<JsonResult> GetFromUsername (string username)
+        {
+            var user = await _userService.GetFromUsername(username);
+            return new JsonResult(user);
+        }
 
         [HttpGet]
         [Route("{userId}")]
-       public JsonResult GetUser (int id)
+       public async Task<JsonResult> GetUser (string id)
         {
-            return new JsonResult(_testsBank.User());
+            var user = await _userService.Get(id);
+
+            return new JsonResult(user);
         }
 
         [HttpPost]

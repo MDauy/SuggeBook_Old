@@ -12,17 +12,25 @@ namespace SuggeBook.Business.Services.Implementations
     {
         BaseInteractor<UserDao> _userInteractor;
         IInsertUserCommandHandler _insertUserCommand;
+        IUserInteractor _extraUserInteractor;
 
-        public UserService(BaseInteractor<UserDao> userInteractor, IInsertUserCommandHandler insertUserCommand)
+        public UserService(BaseInteractor<UserDao> userInteractor, IInsertUserCommandHandler insertUserCommand, IUserInteractor extraUserInteractor)
         {
             _userInteractor = userInteractor;
             _insertUserCommand = insertUserCommand;
+            _extraUserInteractor = extraUserInteractor;
         }
 
         public async Task<UserDto> Get(string id)
         {
             var dao = await _userInteractor.Get(id);
             return CustomAutoMapper.Map<UserDao, UserDto>(dao);
+        }
+
+        public async Task<UserDto> GetFromUsername(string username)
+        {
+            var userDao = await _extraUserInteractor.GetFromUsername(username);
+            return CustomAutoMapper.Map<UserDao, UserDto>(userDao);
         }
 
         public async Task<UserDto> GetRandom()

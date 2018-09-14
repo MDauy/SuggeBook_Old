@@ -10,6 +10,7 @@ namespace SuggeBook.Business.Services.Contracts
     {
         Task<UserDto> Get(string id);
         Task Insert(UserDto dto);
+        Task<UserDto> GetFromUsername(string username);
         Task<UserDto> GetRandom();
     }
 }
