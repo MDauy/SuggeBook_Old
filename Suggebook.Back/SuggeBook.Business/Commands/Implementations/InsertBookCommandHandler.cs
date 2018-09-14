@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using SuggeBook.Business.Commands.Contracts;
 using SuggeBook.Dto.Models;
 using SuggeBookDAL.Dao;
@@ -18,6 +19,7 @@ namespace SuggeBook.Business.Commands.Implementations
         public async Task<bool> ExecuteAsync(InsertBookDto command)
         {
            var bookDao = Framework.CustomAutoMapper.Map<BookDto, BookDao> (command.BookDto);
+            bookDao.Categories = command.BookDto.Categories.Select(c => c.ToString()).ToList();
             bookDao.AuthorId = new MongoDB.Bson.ObjectId(command.AuthorId);
             await _repo.Insert(bookDao);
             return true;

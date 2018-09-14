@@ -1,4 +1,5 @@
 ﻿using SuggeBook.Dto.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Services.Contracts
@@ -10,5 +11,9 @@ namespace SuggeBook.Business.Services.Contracts
         Task<BookDto> GetRandom();
 
         Task<BookDto> Get(string id);
+
+        Task<List<BookDto>> GetFromAuthor(string authorId);
+
+        Task<List<BookDto>> GetFromCategory(CategoryEnum category);
     }
 }

@@ -17,7 +17,9 @@ namespace SuggeBook.Dto.Models
 
         public string Content { get; set; }
         
-        public List<string> Categories { get; set; }
-        
+        public List<CategoryEnum> Categories { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
     }
 }

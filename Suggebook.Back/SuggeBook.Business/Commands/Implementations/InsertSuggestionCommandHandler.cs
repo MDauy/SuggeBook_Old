@@ -3,6 +3,8 @@ using SuggeBook.Business.Commands.Contracts;
 using SuggeBook.Dto.Models;
 using SuggeBookDAL.Dao;
 using SuggeBookDAL.Repositories;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Commands.Implementations
@@ -21,6 +23,8 @@ namespace SuggeBook.Business.Commands.Implementations
             var dao = Framework.CustomAutoMapper.Map<SuggestionDto, SuggestionDao>(obj.Suggestion);
             dao.BookId = ObjectId.Parse(obj.BookId);
             dao.UserId = ObjectId.Parse(obj.UserId);
+            dao.CreationDate = DateTime.Today;
+            dao.Categories = obj.Suggestion.Categories.Select(c => c.ToString()).ToList();
             await _repo.Insert(dao);
 
             return true;

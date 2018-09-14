@@ -10,6 +10,8 @@ namespace SuggeBook.Business.Services.Contracts
 
         Task<SuggestionDto> Get(string id);
 
-        Task<List<SuggestionDto>> GetFomBook(string id);
+        Task<List<SuggestionDto>> GetFomBook(string bookId);
+
+        Task<int> GetNbSuggestionsForBook(string bookId);
     }
 }

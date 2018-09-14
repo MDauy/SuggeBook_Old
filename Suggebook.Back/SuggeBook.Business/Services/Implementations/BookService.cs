@@ -4,6 +4,7 @@ using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Models;
 using SuggeBook.Framework;
 using SuggeBookDAL.Dao;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Services.Implementations
@@ -13,14 +14,15 @@ namespace SuggeBook.Business.Services.Implementations
         private readonly IInsertBookCommandHandler _insertBookCommandHandler;
         private readonly BaseInteractor<BookDao> _interactor;
         private readonly BaseInteractor<AuthorDao> _authorInteractor;
+        private readonly ISuggestionService _suggestionService;
 
         public BookService(IInsertBookCommandHandler insertBookCommandHandler, BaseInteractor<BookDao> interactor,
-            BaseInteractor<AuthorDao> authorInteractor
-        )
+            BaseInteractor<AuthorDao> authorInteractor, ISuggestionService suggestionService)
         {
             _insertBookCommandHandler = insertBookCommandHandler;
             _interactor = interactor;
             _authorInteractor = authorInteractor;
+            _suggestionService = suggestionService;
         }
 
         public async Task Insert(InsertBookDto book)
@@ -37,7 +39,9 @@ namespace SuggeBook.Business.Services.Implementations
         public async Task<BookDto> Get (string id)
         {
             var bookDao = await _interactor.Get(id);
-            return await BuildBook(bookDao);
+            var bookDto = await BuildBook(bookDao);
+            bookDto.NumberOfSuggestions = await _suggestionService.GetNbSuggestionsForBook(bookDto.Id);
+            return bookDto;
         }
 
         private async Task<BookDto> BuildBook (BookDao bookDao)
@@ -47,6 +51,16 @@ namespace SuggeBook.Business.Services.Implementations
             book.AuthorFullName = author.FullName;
 
             return book;
+        }
+
+        public Task<List<BookDto>> GetFromAuthor(string authorId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<List<BookDto>> GetFromCategory(CategoryEnum category)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

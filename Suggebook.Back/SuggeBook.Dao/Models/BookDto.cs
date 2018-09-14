@@ -28,6 +28,8 @@ namespace SuggeBook.Dto.Models
         public int Year { get; set; }
 
         public Guid ISBN { get; set; }
+
+        public string Edition { get; set; }
     }
 
 

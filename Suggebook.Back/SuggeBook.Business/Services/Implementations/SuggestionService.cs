@@ -70,5 +70,10 @@ namespace SuggeBook.Business.Services.Implementations
             }
             return suggestionDtos;
         }
+
+        public async Task<int> GetNbSuggestionsForBook(string bookId)
+        {
+            return (await _extendedSuggestionInteractor.GetFromBook(bookId)).Count;
+        }
     }
 }

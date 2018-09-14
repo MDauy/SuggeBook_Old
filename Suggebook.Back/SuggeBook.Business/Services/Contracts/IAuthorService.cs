@@ -11,6 +11,9 @@ namespace SuggeBook.Business.Services.Contracts
         Task<AuthorDto> GetRandom(int howMany = 1);
 
         Task<AuthorDto> Get(string id);
+
+        Task<AuthorDto> GetFull(string id);
+
         Task<List<AuthorDto>> GetSeveral(List<string> ids);
     }
 }

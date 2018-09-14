@@ -16,9 +16,7 @@ namespace SuggeBook.Dto.Models
 			{
 				return string.Format("{0} {1}", this.FirstName, this.LastName);
 			}
-
 		}
-
 		public List<Book> Books { get; set; }
 
 		public struct Book

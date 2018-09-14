@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace SuggeBookDAL.Dao
@@ -20,5 +21,8 @@ namespace SuggeBookDAL.Dao
 
         [BsonElement("Categories")]
         public List<string> Categories{ get; set; }
+
+        [BsonElement("Creation_Date")]
+        public DateTime CreationDate{ get; set; }
     }
 }
