@@ -7,17 +7,32 @@ namespace SuggeBook.Business.Interactors
 {
     public class SuggestionInteractor : BaseInteractor<SuggestionDao>, ISuggestionInteractor
     {
-        ISuggestionRepository _suggestionRepo;
+        ISuggestionRepository _extraRepo;
 
         public SuggestionInteractor (BaseRepository<SuggestionDao> repo, ISuggestionRepository suggestionRepo)
         {
             _repo = repo;
-            _suggestionRepo = suggestionRepo;
+            _extraRepo = suggestionRepo;
         }
 
         public async Task<List<SuggestionDao>> GetFromBook(string bookId)
         {
-            return await _suggestionRepo.GetFromBook(bookId);    
+            return await _extraRepo.GetFromBook(bookId);    
+        }
+
+        public async Task<List<SuggestionDao>> GetLastFromAuthor(string authorId)
+        {
+            return await _extraRepo.GetLastFromAuthor(authorId);
+        }
+
+        public async Task<List<SuggestionDao>> GetLastFromBook(string bookId)
+        {
+            return await _extraRepo.GetLastFromBook(bookId);
+        }
+
+        public async Task<List<SuggestionDao>> GetLastFromCategories(List<string> categories)
+        {
+            return await _extraRepo.GetLastFromCategories(categories);
         }
     }
 }

@@ -40,17 +40,17 @@ namespace SuggeBook.Dto.Mocks
         /// </summary>
         /// <param name="categoriesNumber"></param>
         /// <returns></returns>
-        public static List<string> GetCategories(int categoriesNumber)
+        public static List<CategoryEnum> GetCategories(int categoriesNumber)
         {
-            var categories = new List<string>();
+            var categories = new List<CategoryEnum>();
             var faker = new Faker();
             for (int i = 0; i < categoriesNumber - 1; i++)
             {
                 var cat = faker.PickRandom<CategoryEnum>();
 
-                if (!categories.Contains(cat.ToString()))
+                if (!categories.Contains(cat))
                 {
-                    categories.Add(cat.ToString());
+                    categories.Add(cat);
                 }
                 else
                 {

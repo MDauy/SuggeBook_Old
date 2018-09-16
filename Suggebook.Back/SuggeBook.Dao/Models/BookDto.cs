@@ -23,7 +23,7 @@ namespace SuggeBook.Dto.Models
 
         public int NumberOfSuggestions { get; set; }
 
-        public List<string> Categories { get; set; }
+        public List<CategoryEnum> Categories { get; set; }
 
         public int Year { get; set; }
 

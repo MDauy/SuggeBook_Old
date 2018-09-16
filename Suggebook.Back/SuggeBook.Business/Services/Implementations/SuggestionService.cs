@@ -75,5 +75,23 @@ namespace SuggeBook.Business.Services.Implementations
         {
             return (await _extendedSuggestionInteractor.GetFromBook(bookId)).Count;
         }
+
+        public async Task<List<SuggestionDto>> GetLastFromBook(string bookId)
+        {
+            var suggestionDaos = await _extendedSuggestionInteractor.GetFromBook(bookId);
+            return CustomAutoMapper.MapLists<SuggestionDao, SuggestionDto>(suggestionDaos);
+        }
+
+        public async Task<List<SuggestionDto>> GetLastFromAuthor(string authorId)
+        {
+            var suggeDaos = await _extendedSuggestionInteractor.GetLastFromAuthor(authorId);
+            return CustomAutoMapper.MapLists<SuggestionDao, SuggestionDto>(suggeDaos);
+        }
+
+        public  async Task<List<SuggestionDto>> GetLastFromCategories(List<string> categories)
+        {
+            var suggeDaos = await _extendedSuggestionInteractor.GetLastFromCategories(categories);
+            return CustomAutoMapper.MapLists<SuggestionDao, SuggestionDto>(suggeDaos);
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace SuggeBook.Dto.Models
 
         public List<Suggestion> Suggestions { get; set; }
 
-        public List<string> FavoriteCategories{ get; set; }
+        public List<CategoryEnum> FavoriteCategories{ get; set; }
 
         public struct Book
         {
