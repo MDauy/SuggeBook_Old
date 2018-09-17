@@ -21,6 +21,8 @@ namespace SuggeBook.Dto.Models
 
         public string AuthorFullName { get; set; }
 
+        public string AuthorId { get; set; }
+
         public int NumberOfSuggestions { get; set; }
 
         public List<CategoryEnum> Categories { get; set; }

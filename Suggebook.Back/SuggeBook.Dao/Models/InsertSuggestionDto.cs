@@ -11,5 +11,7 @@ namespace SuggeBook.Dto.Models
         public string UserId { get; set; }
 
         public string BookId { get; set; }
+
+        public string AuthorId { get; set; }
     }
 }

@@ -9,9 +9,6 @@ namespace SuggeBookDAL.Dao
 		[BsonElement("Title")]
 		public string Title { get; set; }
 
-		[BsonElement("AuthorId")]
-		public ObjectId AuthorId { get; set; }
-
 		[BsonElement("Edition")]
 		public string Edition { get; set; }
 
@@ -20,6 +17,8 @@ namespace SuggeBookDAL.Dao
 
         [BsonElement("Categories")]
         public List<string> Categories { get; set; }
-
+        
+        [BsonElement("Author")]
+        public object Author { get; set; }
     }
 }
