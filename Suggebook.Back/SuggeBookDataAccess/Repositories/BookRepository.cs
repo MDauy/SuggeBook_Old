@@ -10,7 +10,7 @@ namespace SuggeBookDAL.Repositories
     {
         public async Task<List<BookDao>> GetFromAuthor(string authorId)
         {
-            return (await Collection.FindAsync<BookDao>(x => x.AuthorId == ObjectId.Parse(authorId))).ToList();
+            return (await Collection.FindAsync<BookDao>(x => x.Author.Id == ObjectId.Parse(authorId))).ToList();
         }
 
         public async Task<List<BookDao>> GetFromCategory(string category)

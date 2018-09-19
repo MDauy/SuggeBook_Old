@@ -14,11 +14,14 @@ namespace SuggeBook.Business.Commands.Implementations
     {
         private readonly BaseRepository<SuggestionDao> _repo;
         private readonly IBookService _bookService;
+        private readonly IAuthorService _authorService;
 
-        public InsertSuggestionCommandHandler (BaseRepository<SuggestionDao> repo, IBookService bookService)
+        public InsertSuggestionCommandHandler(BaseRepository<SuggestionDao> repo, IBookService bookService
+            , IAuthorService authorService)
         {
             _repo = repo;
             _bookService = bookService;
+            _authorService = authorService;
         }
 
         public async Task<bool> ExecuteAsync(InsertSuggestionDto obj)
@@ -37,7 +40,7 @@ namespace SuggeBook.Business.Commands.Implementations
             {
                 authorId = book.AuthorId;
             }
-
+          
             return true;
         }
 

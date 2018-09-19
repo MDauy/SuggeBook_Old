@@ -20,10 +20,10 @@ namespace SuggeBook.Business.Commands.Implementations
         {
            var bookDao = Framework.CustomAutoMapper.Map<BookDto, BookDao> (command.BookDto);
             bookDao.Categories = command.BookDto.Categories.Select(c => c.ToString()).ToList();
-            bookDao.Author = new
+            bookDao.Author = new BookDao.BookDaoAuthor
             {
-                authorId = new MongoDB.Bson.ObjectId(command.AuthorId),
-                authorFullname = command.BookDto.AuthorFullName
+                Id = new MongoDB.Bson.ObjectId(command.AuthorId),
+                FullName = command.BookDto.AuthorFullName
             };
             await _repo.Insert(bookDao);
             return true;

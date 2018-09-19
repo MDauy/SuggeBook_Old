@@ -19,6 +19,12 @@ namespace SuggeBookDAL.Dao
         public List<string> Categories { get; set; }
         
         [BsonElement("Author")]
-        public object Author { get; set; }
+        public BookDaoAuthor Author { get; set; }
+
+        public class BookDaoAuthor
+        {
+            public ObjectId Id { get; set; }
+            public string FullName { get; set; }
+        }
     }
 }

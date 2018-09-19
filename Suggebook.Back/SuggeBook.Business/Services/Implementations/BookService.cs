@@ -46,7 +46,7 @@ namespace SuggeBook.Business.Services.Implementations
 
         private async Task<BookDto> BuildBook (BookDao bookDao)
         {
-            var author = CustomAutoMapper.Map<AuthorDao, AuthorDto>(await _authorInteractor.Get(bookDao.AuthorId.ToString()));
+            var author = CustomAutoMapper.Map<AuthorDao, AuthorDto>(await _authorInteractor.Get(bookDao.Author.Id.ToString()));
             var book = CustomAutoMapper.Map<BookDao, BookDto>(bookDao);
             book.AuthorFullName = author.FullName;
 
