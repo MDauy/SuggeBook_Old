@@ -7,9 +7,12 @@ namespace SuggeBook.Business.Interactors
 {
     public class BookInteractor : BaseInteractor<BookDao>, IBookInteractor
     {
-        public BookInteractor(BaseRepository<BookDao> repo)
+        private readonly IBookRepository _extraRepo;
+
+        public BookInteractor(BaseRepository<BookDao> repo, IBookRepository extraRepo)
         {
             _repo = repo;
+            _extracRepo = extraRepo;
         }
 
         public Task<List<BookDao>> GetFromAuthor(string authorId)
@@ -17,9 +20,9 @@ namespace SuggeBook.Business.Interactors
             throw new System.NotImplementedException();
         }
 
-        public Task<List<BookDao>> GetFromCategory(string category)
+        public Task<List<BookDao>> GetFromCategories(List<string> categories)
         {
-            throw new System.NotImplementedException();
+           return _extraRepo.GetFromCategory()
         }
     }
 }

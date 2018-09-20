@@ -7,7 +7,7 @@ namespace SuggeBook.Framework
     public static class Constants
     {
         public static readonly int NUMBER_OF_BEST_BOOKS_TO_GET = 5;
-        public static readonly int NUMBER_OF_LAST_SUGGESTIONS_TO_GET = 10;
+        public static readonly int NUMBER_OF_LAST_SUGGESTIONS_TO_GET_FOR_BOOK = 10;
         public static readonly int NUMBER_OF_LAST_SUGGESTIONS_TO_GET_FOR_AUTHOR = 15;
         private static DateTime _minimalDate;
         private static DateTime _minimalDateForCategories;

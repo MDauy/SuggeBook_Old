@@ -26,5 +26,7 @@ namespace SuggeBookDAL.Dao
             public ObjectId Id { get; set; }
             public string FullName { get; set; }
         }
+
+        public List<SuggestionDao> Suggestions{ get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace SuggeBookDAL.Repositories
             {
                 author.Suggestions.Remove(suggestions.First());
             }
-            author.Suggestions.Add(CustomAutoMapper.Map<SuggestionDao, AuthorDao.Suggestion>(sugge));
+            author.Suggestions.Add(sugge);
             var filter = Builders<AuthorDao>.Filter.Eq<ObjectId>(a => a.Id, ObjectId.Parse(authorId));
             await Collection.ReplaceOneAsync(filter, author);
         }

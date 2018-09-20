@@ -10,6 +10,6 @@ namespace SuggeBook.Business.Interactors
     {
         Task<List<BookDao>> GetFromAuthor(string authorId);
 
-        Task<List<BookDao>> GetFromCategory(string category);
+        Task<List<BookDao>> GetFromCategories(List<string> categories);
     }
 }

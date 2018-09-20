@@ -5,6 +5,7 @@ using SuggeBook.Dto.Models;
 using SuggeBook.Framework;
 using SuggeBookDAL.Dao;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Services.Implementations
@@ -15,14 +16,17 @@ namespace SuggeBook.Business.Services.Implementations
         private readonly BaseInteractor<BookDao> _interactor;
         private readonly BaseInteractor<AuthorDao> _authorInteractor;
         private readonly ISuggestionService _suggestionService;
+        private readonly IBookInteractor _bookInteractor;
 
         public BookService(IInsertBookCommandHandler insertBookCommandHandler, BaseInteractor<BookDao> interactor,
-            BaseInteractor<AuthorDao> authorInteractor, ISuggestionService suggestionService)
+            BaseInteractor<AuthorDao> authorInteractor, ISuggestionService suggestionService,
+            IBookInteractor bookInteractor)
         {
             _insertBookCommandHandler = insertBookCommandHandler;
             _interactor = interactor;
             _authorInteractor = authorInteractor;
             _suggestionService = suggestionService;
+            _bookInteractor = bookInteractor;
         }
 
         public async Task Insert(InsertBookDto book)
@@ -46,7 +50,8 @@ namespace SuggeBook.Business.Services.Implementations
 
         private async Task<BookDto> BuildBook (BookDao bookDao)
         {
-            var author = CustomAutoMapper.Map<AuthorDao, AuthorDto>(await _authorInteractor.Get(bookDao.Author.Id.ToString()));
+            var author = CustomAutoMapper.Map<BookDao.BookDaoAuthor, AuthorDto>(bookDao.Author);
+            var suggestions = CustomAutoMapper.MapLists<SuggestionDao, SuggestionDto>(bookDao.Suggestions);
             var book = CustomAutoMapper.Map<BookDao, BookDto>(bookDao);
             book.AuthorFullName = author.FullName;
 
@@ -58,9 +63,9 @@ namespace SuggeBook.Business.Services.Implementations
             throw new System.NotImplementedException();
         }
 
-        public Task<List<BookDto>> GetFromCategory(CategoryEnum category)
+        public async Task<List<BookDto>> GetFromCategory(List<CategoryEnum> categories)
         {
-            throw new System.NotImplementedException();
+            return _bookInteractor.GetFromCategory(categories.Select(c => c.ToString()).ToList();
         }
     }
 }
