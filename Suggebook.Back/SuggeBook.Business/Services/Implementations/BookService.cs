@@ -13,6 +13,7 @@ namespace SuggeBook.Business.Services.Implementations
     public class BookService : IBookService
     {
         private readonly IInsertBookCommandHandler _insertBookCommandHandler;
+        private readonly IUpdateBookSuggestionsCommandHandler _updateBookSuggestionsCommandHandler;
         private readonly BaseInteractor<BookDao> _interactor;
         private readonly BaseInteractor<AuthorDao> _authorInteractor;
         private readonly ISuggestionService _suggestionService;
@@ -20,13 +21,14 @@ namespace SuggeBook.Business.Services.Implementations
 
         public BookService(IInsertBookCommandHandler insertBookCommandHandler, BaseInteractor<BookDao> interactor,
             BaseInteractor<AuthorDao> authorInteractor, ISuggestionService suggestionService,
-            IBookInteractor bookInteractor)
+            IBookInteractor bookInteractor, IUpdateBookSuggestionsCommandHandler updateBookSuggestionsCommandHandler)
         {
             _insertBookCommandHandler = insertBookCommandHandler;
             _interactor = interactor;
             _authorInteractor = authorInteractor;
             _suggestionService = suggestionService;
             _bookInteractor = bookInteractor;
+            _updateBookSuggestionsCommandHandler = updateBookSuggestionsCommandHandler;
         }
 
         public async Task Insert(InsertBookDto book)
@@ -65,7 +67,24 @@ namespace SuggeBook.Business.Services.Implementations
 
         public async Task<List<BookDto>> GetFromCategory(List<CategoryEnum> categories)
         {
-            return _bookInteractor.GetFromCategory(categories.Select(c => c.ToString()).ToList();
+            var books =  await _bookInteractor.GetFromCategories(categories.Select(c => c.ToString()).ToList());
+            return CustomAutoMapper.MapLists<BookDao, BookDto>(books);
+        }
+
+        public Task<List<BookDto>> GetFromCategory(CategoryEnum category)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task UpdateSuggestions(string bookId, SuggestionDto suggestion)
+        {
+            var dao = CustomAutoMapper.Map<SuggestionDto, SuggestionDao>(suggestion);
+
+            await _updateBookSuggestionsCommandHandler.ExecuteAsync(new UpdateBookSuggestionsDto
+            {
+                BookId = bookId,
+                Suggestion = dao
+            });
         }
     }
 }

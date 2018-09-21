@@ -32,14 +32,14 @@ namespace SuggeBookDAL.Repositories
 
             var suggestions = await Collection.FindAsync<SuggestionDao>(s => ids.Contains(s.BookId) && s.CreationDate <= Constants.MINIMAL_DATE);
 
-            return suggestions.ToList().OrderBy(s => s.CreationDate).Take(Constants.NUMBER_OF_LAST_SUGGESTIONS_TO_GET).ToList();
+            return suggestions.ToList().OrderBy(s => s.CreationDate).Take(Constants.NUMBER_OF_LAST_SUGGESTIONS_TO_GET_FOR_AUTHOR).ToList();
         }
 
         public async Task<List<SuggestionDao>> GetLastFromBook(string bookId)
         {
             var suggestions = await Collection.FindAsync<SuggestionDao>(s => s.BookId == ObjectId.Parse(bookId) && s.CreationDate <= Constants.MINIMAL_DATE);
 
-            return suggestions.ToList().OrderBy(x => x.CreationDate).Take(Constants.NUMBER_OF_LAST_SUGGESTIONS_TO_GET).ToList();
+            return suggestions.ToList().OrderBy(x => x.CreationDate).Take(Constants.NUMBER_OF_LAST_SUGGESTIONS_TO_GET_FOR_BOOK).ToList();
         }
 
         public async Task<List<SuggestionDao>> GetLastFromCategories(List<string> categories)

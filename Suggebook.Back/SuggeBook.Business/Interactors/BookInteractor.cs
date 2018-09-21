@@ -12,7 +12,7 @@ namespace SuggeBook.Business.Interactors
         public BookInteractor(BaseRepository<BookDao> repo, IBookRepository extraRepo)
         {
             _repo = repo;
-            _extracRepo = extraRepo;
+            _extraRepo = extraRepo;
         }
 
         public Task<List<BookDao>> GetFromAuthor(string authorId)
@@ -22,7 +22,7 @@ namespace SuggeBook.Business.Interactors
 
         public Task<List<BookDao>> GetFromCategories(List<string> categories)
         {
-           return _extraRepo.GetFromCategory()
+            return _extraRepo.GetFromCategories(categories);
         }
     }
 }

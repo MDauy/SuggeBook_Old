@@ -10,7 +10,7 @@ namespace SuggeBookDAL.Repositories
     {
         Task<List<BookDao>> GetFromAuthor(string authorId);
 
-        Task<List<BookDao>> GetFromCategory(List<string> categories);
+        Task<List<BookDao>> GetFromCategories(List<string> categories);
 
         Task UpdateSuggestions(string bookId, SuggestionDao suggestion);
     }

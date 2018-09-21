@@ -17,6 +17,7 @@ namespace SuggeBook.Business
             services.AddSingleton<IInsertBookCommandHandler, InsertBookCommandHandler>();
             services.AddSingleton<IInsertAuthorCommandHandler, InsertAuthorCommandHandler>();
             services.AddSingleton<IInsertUserCommandHandler, InsertUserCommandHandler>();
+            services.AddSingleton<IUpdateBookSuggestionsCommandHandler, UpdateBookSuggestionsCommandHandler>();
             #endregion
 
             #region Interactors

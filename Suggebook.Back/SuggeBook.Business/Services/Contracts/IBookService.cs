@@ -15,5 +15,7 @@ namespace SuggeBook.Business.Services.Contracts
         Task<List<BookDto>> GetFromAuthor(string authorId);
 
         Task<List<BookDto>> GetFromCategory(CategoryEnum category);
+
+        Task UpdateSuggestions(string bookId, SuggestionDto suggestion);
     }
 }

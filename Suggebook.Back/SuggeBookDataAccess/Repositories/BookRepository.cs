@@ -15,9 +15,18 @@ namespace SuggeBookDAL.Repositories
             return (await Collection.FindAsync<BookDao>(x => x.Author.Id == ObjectId.Parse(authorId))).ToList();
         }
 
-        public async Task<List<BookDao>> GetFromCategory(List<string> categories)
+        public async Task<List<BookDao>> GetFromCategories(List<string> categories)
         {
-            return (await Collection.FindAsync<BookDao>(book => book.Categories.Contains(category))).ToList();
+            var results = new List<BookDao>();
+            foreach (var category in categories)
+            {
+                var book = await Collection.FindAsync<BookDao>(b => b.Categories.Contains(category));
+                if (book != null)
+                {
+                    results.Add(book.First());
+                }
+            }
+            return results;
         }
 
         public async Task UpdateSuggestions(string bookId, SuggestionDao suggestion)
