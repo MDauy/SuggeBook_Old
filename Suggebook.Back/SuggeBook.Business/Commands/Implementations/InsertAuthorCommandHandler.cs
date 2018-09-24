@@ -18,6 +18,7 @@ namespace SuggeBook.Business.Commands.Implementations
         public async Task<bool> ExecuteAsync(InsertAuthorDto obj)
         {
             var dao = CustomAutoMapper.Map<InsertAuthorDto, AuthorDao>(obj);
+            dao.Suggestions = new System.Collections.Generic.List<SuggestionDao>();
             await _repo.Insert(dao);
             return true;
         }

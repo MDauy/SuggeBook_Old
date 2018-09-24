@@ -33,11 +33,12 @@ namespace SuggeBookDAL.Repositories
         {
             var book = await Get(bookId);
             var bookSuggestions = book.Suggestions;
-            if (book.Suggestions.Count == Constants.NUMBER_OF_LAST_SUGGESTIONS_TO_GET_FOR_BOOK)
+            if (book.Suggestions != null && book.Suggestions.Count == Constants.NUMBER_OF_LAST_SUGGESTIONS_TO_GET_FOR_BOOK)
             {
                 book.Suggestions.Remove(bookSuggestions.First());
             }
             book.Suggestions.Add(suggestion);
+            book.NbSuggestions++;
             var filter = Builders<BookDao>.Filter.Eq<ObjectId>(a => a.Id, ObjectId.Parse(bookId));
             await Collection.ReplaceOneAsync(filter, book);
         }

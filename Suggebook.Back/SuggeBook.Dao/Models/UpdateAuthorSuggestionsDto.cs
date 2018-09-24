@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SuggeBookDAL.Dao;
 
 namespace SuggeBook.Dto.Models
 {
@@ -8,6 +6,6 @@ namespace SuggeBook.Dto.Models
     {
         public string AuthorId { get; set; }
 
-        public SuggestionDto Suggestion { get; set; }
+        public SuggestionDao Suggestion { get; set; }
     }
 }

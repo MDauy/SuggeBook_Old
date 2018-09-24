@@ -15,9 +15,9 @@ namespace SuggeBook.Business.Interactors
             _extraRepo = extraRepo;
         }
 
-        public Task<List<BookDao>> GetFromAuthor(string authorId)
+        public async Task<List<BookDao>> GetFromAuthor(string authorId)
         {
-            throw new System.NotImplementedException();
+            return await _extraRepo.GetFromAuthor(authorId);
         }
 
         public Task<List<BookDao>> GetFromCategories(List<string> categories)

@@ -19,6 +19,7 @@ namespace SuggeBook.Business.Commands.Implementations
         public async Task<bool> ExecuteAsync(InsertBookDto command)
         {
            var bookDao = Framework.CustomAutoMapper.Map<BookDto, BookDao> (command.BookDto);
+            bookDao.Suggestions = new System.Collections.Generic.List<SuggestionDao>();
             bookDao.Categories = command.BookDto.Categories.Select(c => c.ToString()).ToList();
             bookDao.Author = new BookDao.BookDaoAuthor
             {

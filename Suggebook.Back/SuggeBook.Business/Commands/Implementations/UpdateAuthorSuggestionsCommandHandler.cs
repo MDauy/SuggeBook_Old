@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Commands.Implementations
 {
-    public class UpdateAuthorSuggestionsCommandHandler : IUpdateAuthorSuggestionsCommandaHandler
+    public class UpdateAuthorSuggestionsCommandHandler : IUpdateAuthorSuggestionsCommandHandler
     {
         private readonly IAuthorRepository _repo;
 
@@ -20,6 +20,7 @@ namespace SuggeBook.Business.Commands.Implementations
 
         public async Task<bool> ExecuteAsync(UpdateAuthorSuggestionsDto obj)
         {
+            await _repo.UpdateAuthorSuggestions(obj.AuthorId, obj.Suggestion);
             return true;
         }
     }

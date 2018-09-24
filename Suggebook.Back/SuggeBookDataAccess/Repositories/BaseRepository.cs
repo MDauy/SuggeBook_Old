@@ -59,17 +59,18 @@ namespace SuggeBookDAL.Repositories
                 var dao = await Collection.FindAsync<T>(d => d.Id == ObjectId.Parse(id));
                 return dao.FirstOrDefault();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception(string.Format("L'objet dans la collection {0} avec l'id {1} n'a pas été trouvé", _collectionName, id));
+                throw new Exception(e.Message, new Exception (string.Format("L'objet dans la collection {0} avec l'id {1} n'a pas été trouvé", _collectionName, id)));
             }
         }
 
-        public async Task Insert(T dao)
+        public async Task<T> Insert(T dao)
         {
             try
             {
                 await Collection.InsertOneAsync(dao);
+                return dao;
             }
             catch (Exception e)
             {

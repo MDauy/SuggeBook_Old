@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SuggeBook.Business.Services.Contracts;
 using SuggeBook.Dto.Mocks;
 using SuggeBook.Dto.Models;
@@ -12,11 +14,16 @@ namespace SuggeBook.Api.Controllers
     public class SuggestionController : Controller
     {
         private ISuggestionService _service;
+        private IBookService _bookService;
+        private IAuthorService _authorService;
         private readonly IFakeSuggestionsService _fakeSuggestionsService;
-        public SuggestionController(ISuggestionService service, IFakeSuggestionsService fakeSuggestionsService)
+        public SuggestionController(ISuggestionService service, IFakeSuggestionsService fakeSuggestionsService,
+            IBookService bookService, IAuthorService authorService)
         {
             _service = service;
             _fakeSuggestionsService = fakeSuggestionsService;
+            _bookService = bookService;
+            _authorService = authorService;
         }
 
         [HttpGet]
@@ -27,14 +34,26 @@ namespace SuggeBook.Api.Controllers
             return null;
         }
 
+        public void Deserialize([FromBody] string dto)
+        {
+            
+        }
+
         [HttpPost]
         [Route ("add")]
-        public JsonResult Insert([FromBody] InsertSuggestionDto dto)
+        public async Task<JsonResult> Insert([FromBody]JObject json)
         {
             try
             {
-                _service.Insert(dto);
-                return new JsonResult("true");
+                var dto = json.ToObject<InsertSuggestionDto>();
+                await _service.Insert(dto);
+                var book = await _bookService.Get(dto.BookId);
+                var author = await _authorService.GetFull(dto.AuthorId);
+                return new JsonResult(new
+                {
+                    updatedAuthor = author,
+                    updatedBook = book
+                });
             }
             catch (Exception)
             {

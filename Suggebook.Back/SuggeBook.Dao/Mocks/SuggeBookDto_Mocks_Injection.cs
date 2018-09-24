@@ -9,11 +9,11 @@ namespace SuggeBook.Dto.Mocks
     {
         public static void Add_MocksServices (this IServiceCollection services)
         {
-            services.AddSingleton<IFakeAuthorService, FakeAuthorService>();
-            services.AddSingleton<IFakeBooksService, FakeBooksService>();
-            services.AddSingleton<IFakeSuggestionsService, FakeSuggestionsService>();
-            services.AddSingleton<IFakeUserService, FakeUserService>();
-            services.AddSingleton<ITestsBank, TestsBank>();
+            services.AddTransient<IFakeAuthorService, FakeAuthorService>();
+            services.AddTransient<IFakeBooksService, FakeBooksService>();
+            services.AddTransient<IFakeSuggestionsService, FakeSuggestionsService>();
+            services.AddTransient<IFakeUserService, FakeUserService>();
+            services.AddTransient<ITestsBank, TestsBank>();
         }
     }
 }

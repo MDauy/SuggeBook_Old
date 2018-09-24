@@ -15,5 +15,7 @@ namespace SuggeBook.Business.Services.Contracts
         Task<AuthorDto> GetFull(string id);
 
         Task<List<AuthorDto>> GetSeveral(List<string> ids);
+
+        Task UpdateSuggestions(string authorId, SuggestionDto sugge);
     }
 }

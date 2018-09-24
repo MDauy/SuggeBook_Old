@@ -13,11 +13,12 @@ namespace SuggeBookDAL.Repositories
         {
             var author = await Get(authorId);
             var suggestions = author.Suggestions;
-            if (author.Suggestions.Count == Constants.NUMBER_OF_LAST_SUGGESTIONS_TO_GET_FOR_AUTHOR)
+            if (author.Suggestions != null && author.Suggestions.Count == Constants.NUMBER_OF_LAST_SUGGESTIONS_TO_GET_FOR_AUTHOR)
             {
                 author.Suggestions.Remove(suggestions.First());
             }
             author.Suggestions.Add(sugge);
+            author.NbSuggestions++;
             var filter = Builders<AuthorDao>.Filter.Eq<ObjectId>(a => a.Id, ObjectId.Parse(authorId));
             await Collection.ReplaceOneAsync(filter, author);
         }

@@ -9,7 +9,6 @@ namespace SuggeBook.Business.Services.Contracts
         Task Insert(InsertSuggestionDto dto);
         Task<SuggestionDto> Get(string id);
         Task<List<SuggestionDto>> GetFomBook(string bookId);
-        Task<int> GetNbSuggestionsForBook(string bookId);
         Task<List<SuggestionDto>> GetLastFromBook(string bookId);
         Task<List<SuggestionDto>> GetLastFromAuthor(string authorId);
         Task<List<SuggestionDto>> GetLastFromCategories(List<string> categories);

@@ -17,7 +17,10 @@ namespace SuggeBook.Dto.Models
 				return string.Format("{0} {1}", this.FirstName, this.LastName);
 			}
 		}
-		public List<Book> Books { get; set; }
+
+        public int NbSuggestions { get; set; }
+
+        public List<Book> Books { get; set; }
 
 		public struct Book
 		{
@@ -27,7 +30,7 @@ namespace SuggeBook.Dto.Models
 
 			public int Year { get; set; }
 
-			public string NumberOfSuggestions { get; set; }
+			public string NbSuggestions { get; set; }
 		}
 	}
 

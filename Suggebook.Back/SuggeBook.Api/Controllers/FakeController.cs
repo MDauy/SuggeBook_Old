@@ -85,7 +85,7 @@ namespace SuggeBook.Api.Controllers
                 var user = await _userService.GetRandom();
                 var sugg = new InsertSuggestionDto
                 {
-                    Suggestion = suggestion,
+                    //Suggestion = suggestion,
                     UserId =  user.Id,
                     BookId = book.Id
                 };

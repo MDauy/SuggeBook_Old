@@ -21,6 +21,9 @@ namespace SuggeBookDAL.Dao
         [BsonElement("Author")]
         public BookDaoAuthor Author { get; set; }
 
+        [BsonElement("NbSuggestions")]
+        public int NbSuggestions { get; set; }
+
         public class BookDaoAuthor
         {
             public ObjectId Id { get; set; }

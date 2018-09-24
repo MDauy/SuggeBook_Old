@@ -15,18 +15,13 @@ namespace SuggeBook.Business.Services.Implementations
         private readonly IInsertBookCommandHandler _insertBookCommandHandler;
         private readonly IUpdateBookSuggestionsCommandHandler _updateBookSuggestionsCommandHandler;
         private readonly BaseInteractor<BookDao> _interactor;
-        private readonly BaseInteractor<AuthorDao> _authorInteractor;
-        private readonly ISuggestionService _suggestionService;
         private readonly IBookInteractor _bookInteractor;
 
         public BookService(IInsertBookCommandHandler insertBookCommandHandler, BaseInteractor<BookDao> interactor,
-            BaseInteractor<AuthorDao> authorInteractor, ISuggestionService suggestionService,
             IBookInteractor bookInteractor, IUpdateBookSuggestionsCommandHandler updateBookSuggestionsCommandHandler)
         {
             _insertBookCommandHandler = insertBookCommandHandler;
             _interactor = interactor;
-            _authorInteractor = authorInteractor;
-            _suggestionService = suggestionService;
             _bookInteractor = bookInteractor;
             _updateBookSuggestionsCommandHandler = updateBookSuggestionsCommandHandler;
         }
@@ -39,18 +34,17 @@ namespace SuggeBook.Business.Services.Implementations
         public async Task<BookDto> GetRandom ()
         {
             var bookDao = await _interactor.GetRandom();
-            return await BuildBook(bookDao);
+            return BuildBook(bookDao);
         }
 
         public async Task<BookDto> Get (string id)
         {
             var bookDao = await _interactor.Get(id);
-            var bookDto = await BuildBook(bookDao);
-            bookDto.NumberOfSuggestions = await _suggestionService.GetNbSuggestionsForBook(bookDto.Id);
+            var bookDto = bookDao != null ? BuildBook(bookDao) : null;            
             return bookDto;
         }
 
-        private async Task<BookDto> BuildBook (BookDao bookDao)
+        private BookDto BuildBook (BookDao bookDao)
         {
             var author = CustomAutoMapper.Map<BookDao.BookDaoAuthor, AuthorDto>(bookDao.Author);
             var suggestions = CustomAutoMapper.MapLists<SuggestionDao, SuggestionDto>(bookDao.Suggestions);
@@ -60,9 +54,10 @@ namespace SuggeBook.Business.Services.Implementations
             return book;
         }
 
-        public Task<List<BookDto>> GetFromAuthor(string authorId)
+        public async Task<List<BookDto>> GetFromAuthor(string authorId)
         {
-            throw new System.NotImplementedException();
+            var dtos = CustomAutoMapper.MapLists<BookDao, BookDto>( await _bookInteractor.GetFromAuthor(authorId));
+            return dtos;
         }
 
         public async Task<List<BookDto>> GetFromCategory(List<CategoryEnum> categories)
@@ -71,9 +66,11 @@ namespace SuggeBook.Business.Services.Implementations
             return CustomAutoMapper.MapLists<BookDao, BookDto>(books);
         }
 
-        public Task<List<BookDto>> GetFromCategory(CategoryEnum category)
+        public async Task<List<BookDto>> GetFromCategories(List<CategoryEnum> categories)
         {
-            throw new System.NotImplementedException();
+            var daos = await _bookInteractor.GetFromCategories(categories.Select(c => c.ToString()).ToList());
+
+            return CustomAutoMapper.MapLists<BookDao, BookDto>(daos) ;
         }
 
         public async Task UpdateSuggestions(string bookId, SuggestionDto suggestion)

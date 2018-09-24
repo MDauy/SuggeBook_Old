@@ -12,7 +12,6 @@ namespace SuggeBook.Api.Controllers
     [Route ("book")]
     public class BookController : Controller
     {
-        private ITestsBank _testsBank;
         private readonly IBookService _bookService;
 
         public BookController(IBookService bookService)

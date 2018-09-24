@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SuggeBook.Business.Commands.Contracts
 {
-    public interface IUpdateAuthorSuggestionsCommandaHandler : ICommandHandlerAsync<UpdateAuthorSuggestionsDto, bool>
+    public interface IUpdateAuthorSuggestionsCommandHandler : ICommandHandlerAsync<UpdateAuthorSuggestionsDto, bool>
     {
     }
 }

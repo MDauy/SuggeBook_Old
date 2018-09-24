@@ -8,13 +8,14 @@ namespace SuggeBookDAL
     {
         public static void Add_SuggeBookDAL(this IServiceCollection services)
         {
-            services.AddSingleton<BaseRepository<BookDao>, BookRepository>();
-            services.AddSingleton<BaseRepository<UserDao>, UserRepository>();
-            services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<BaseRepository<SuggestionDao>, SuggestionRepository>();
-            services.AddSingleton<BaseRepository<AuthorDao>, AuthorRepository>();
-            services.AddSingleton<IAuthorRepository, AuthorRepository>();
-            services.AddSingleton<ISuggestionRepository, SuggestionRepository>();
+            services.AddTransient<BaseRepository<BookDao>, BookRepository>();
+            services.AddTransient<BaseRepository<UserDao>, UserRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<BaseRepository<SuggestionDao>, SuggestionRepository>();
+            services.AddTransient<BaseRepository<AuthorDao>, AuthorRepository>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<ISuggestionRepository, SuggestionRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
         }
     }
 }

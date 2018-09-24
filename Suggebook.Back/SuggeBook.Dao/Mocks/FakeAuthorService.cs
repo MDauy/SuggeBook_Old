@@ -25,6 +25,7 @@ namespace SuggeBook.Dto.Mocks
 					.RuleFor(a => a.FirstName, f => f.Name.FirstName())
 					.RuleFor(a => a.LastName, f => f.Name.LastName())
 					.RuleFor(a => a.Books, f => authorBooks)
+                    .RuleFor(a => a.NbSuggestions, 0)
                     .RuleFor(b => b.Id, "");
 
 			var authors = bookstest.Generate(howMany);

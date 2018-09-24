@@ -14,25 +14,45 @@ namespace SuggeBook.Business.Services.Implementations
         private readonly IInsertSuggestionCommandHandler _insertCommand;
         private readonly BaseInteractor<SuggestionDao> _suggestionInteractor;
         private readonly ISuggestionInteractor _extendedSuggestionInteractor;
+        private readonly IUpdateAuthorSuggestionsCommandHandler _updateAuthorSuggestionsCommandHandler;
+        private readonly IUpdateBookSuggestionsCommandHandler _updateBookSuggestionsCommandHandler;
         private readonly IBookService _bookService;
+        private readonly IAuthorService _authorService;
         private readonly IUserService _userService;
 
-        public SuggestionService (IInsertSuggestionCommandHandler insertCommand,
+        public SuggestionService(IInsertSuggestionCommandHandler insertCommand,
             BaseInteractor<SuggestionDao> suggestionInteractor,
             ISuggestionInteractor extendedSuggestionInteractor,
             IBookService bookService,
-            IUserService userService)
+            IAuthorService authorService,
+            IUserService userService,
+            IUpdateBookSuggestionsCommandHandler updateBookSuggestionsCommandHandler,
+            IUpdateAuthorSuggestionsCommandHandler updateAuthorSuggestionsCommandHandler)
         {
             _insertCommand = insertCommand;
             _suggestionInteractor = suggestionInteractor;
             _extendedSuggestionInteractor = extendedSuggestionInteractor;
             _bookService = bookService;
+            _authorService = authorService;
             _userService = userService;
+            _updateAuthorSuggestionsCommandHandler = updateAuthorSuggestionsCommandHandler;
+            _updateBookSuggestionsCommandHandler = updateBookSuggestionsCommandHandler;
         }
 
         public async Task Insert(InsertSuggestionDto dto)
         {
-            await _insertCommand.ExecuteAsync(dto);
+            var newSuggestion = await _insertCommand.ExecuteAsync(dto);
+
+            await _updateBookSuggestionsCommandHandler.ExecuteAsync(new UpdateBookSuggestionsDto
+            {
+                BookId = dto.BookId,
+                Suggestion = newSuggestion
+            });
+            await _updateAuthorSuggestionsCommandHandler.ExecuteAsync(new UpdateAuthorSuggestionsDto
+            {
+                AuthorId = dto.AuthorId,
+                Suggestion = newSuggestion
+            });
         }
 
         public async Task<SuggestionDto> Get (string id)
@@ -69,12 +89,7 @@ namespace SuggeBook.Business.Services.Implementations
                 suggestionDtos.Add(suggestionDto);
             }
             return suggestionDtos;
-        }
-
-        public async Task<int> GetNbSuggestionsForBook(string bookId)
-        {
-            return (await _extendedSuggestionInteractor.GetFromBook(bookId)).Count;
-        }
+        }       
 
         public async Task<List<SuggestionDto>> GetLastFromBook(string bookId)
         {

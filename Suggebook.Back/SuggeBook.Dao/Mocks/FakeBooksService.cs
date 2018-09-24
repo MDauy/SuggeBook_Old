@@ -22,9 +22,11 @@ namespace SuggeBook.Dto.Mocks
                      RuleFor(b => b.Title, f => f.PickRandom(BooksSamples.BooksTitles))
                      .RuleFor(b => b.Categories, () => BooksSamples.GetCategories(3))
                      .RuleFor(b => b.ISBN, f => Guid.NewGuid())
-                     .RuleFor(b => b.NumberOfSuggestions, f => f.Random.Number(1, 100))
+                     .RuleFor(b => b.NbSuggestions, f => 0)
             .RuleFor(b => b.Year, f => f.Date.Past().Year)
-            .RuleFor(b => b.Id, "");
+            .RuleFor(b => b.Id, "")
+            .RuleFor(b => b.AuthorId, "")
+            .RuleFor(b => b.Edition, "");
 
 
 			var books = testBooks.Generate(howMany);
