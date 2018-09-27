@@ -92,5 +92,21 @@ namespace SuggeBook.Api.Controllers
                 await _suggestionsService.Insert(sugg);
             }
         }
+
+        [Route("testGet")]
+        [HttpGet]
+        public string TestGet ()
+        {
+            return "Get ok !";
+        }
+
+        [Route("testPost")]
+        [HttpPost]
+        public  string TestPost ([FromBody] Newtonsoft.Json.Linq.JObject jobj)
+        {
+            var str = jobj.ToObject<string>();
+
+            return "Post ok ! " + str;
+        }
     }
 }
