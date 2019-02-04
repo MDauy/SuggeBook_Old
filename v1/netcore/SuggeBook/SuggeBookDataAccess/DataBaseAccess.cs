@@ -10,12 +10,13 @@ namespace SuggeBookDAL
 		private static MongoClient _client;
 		private static IMongoDatabase _db;
 
+
 		public static MongoClient Client
 		{
 			get
 			{
 				if (_client == null)
-				{
+				{                    
 					_client = new MongoClient("http://localhost:27017");
 				}
 				return _client;
