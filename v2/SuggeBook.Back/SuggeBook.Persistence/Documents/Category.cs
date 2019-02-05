@@ -1,6 +1,8 @@
-﻿namespace SuggeBook.Persistence.Documents
+﻿using SuggeBook.Infrastructure;
+
+namespace SuggeBook.Persistence.Documents
 {
-    public class Category
+    public class Category : BaseDocument
     {
         public string Label { get; set; }
     }

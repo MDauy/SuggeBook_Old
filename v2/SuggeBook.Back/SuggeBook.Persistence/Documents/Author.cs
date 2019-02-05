@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SuggeBook.Infrastructure;
+using System;
 using System.Collections.Generic;
 
 namespace SuggeBook.Domain
 {
-    public class Author
+    public class Author : BaseDocument
     {
         public string FirstName { get; set; }
 

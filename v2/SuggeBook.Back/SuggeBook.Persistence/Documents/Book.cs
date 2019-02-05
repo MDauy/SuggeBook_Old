@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SuggeBook.Infrastructure;
+using System;
 using System.Collections.Generic;
 
 namespace SuggeBook.Persistence.Documents
 {
-    public class Book
+    public class Book : BaseDocument
     {
         public string Title { get; set; }
 

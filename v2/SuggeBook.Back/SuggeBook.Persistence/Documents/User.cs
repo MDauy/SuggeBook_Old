@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using SuggeBook.Infrastructure;
+using System.Collections.Generic;
 
 namespace SuggeBook.Persistence.Documents
 {
-    public class User
+    public class User : BaseDocument
     {
         public string UserName { get; set; }
 

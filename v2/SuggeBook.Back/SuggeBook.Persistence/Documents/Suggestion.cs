@@ -1,9 +1,9 @@
-﻿using SuggeBook.Persistence.Documents;
+﻿using SuggeBook.Infrastructure;
 using System.Collections.Generic;
 
 namespace SuggeBook.Persistence.Documents
 {
-    public class Suggestion
+    public class Suggestion : BaseDocument
     {
         public string Title { get; set; }
 
