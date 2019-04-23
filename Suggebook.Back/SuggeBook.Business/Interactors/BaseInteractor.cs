@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Interactors
 {
-    public abstract class BaseInteractor<T> : IBaseInteractor<T> where T : BaseDao, new()
+    public abstract class BaseInteractor<T> : IBaseInteractor<T> where T : BaseDocument, new()
     {
         protected BaseRepository<T> _repo;
 
