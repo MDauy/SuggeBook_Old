@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Persistence", "Su
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Business", "SuggeBook.Business\SuggeBook.Business.csproj", "{4046692C-81BF-4BDF-B388-0D6F99958B7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuggeBook.Infrastructure", "SuggeBook.Infrastructure\SuggeBook.Infrastructure.csproj", "{0618C3A8-7B20-4660-84C2-64A26A9AB149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Infrastructure", "SuggeBook.Infrastructure\SuggeBook.Infrastructure.csproj", "{0618C3A8-7B20-4660-84C2-64A26A9AB149}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuggeBook.Persistence.Documents", "SuggeBook.Persistence.Documents\SuggeBook.Persistence.Documents.csproj", "{FEDEC6CB-6DC6-46A7-9B01-EE2B0FDBE4E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Persistence.Documents", "SuggeBook.Persistence.Documents\SuggeBook.Persistence.Documents.csproj", "{FEDEC6CB-6DC6-46A7-9B01-EE2B0FDBE4E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +143,22 @@ Global
 		{FEDEC6CB-6DC6-46A7-9B01-EE2B0FDBE4E4}.Release|x64.Build.0 = Release|Any CPU
 		{FEDEC6CB-6DC6-46A7-9B01-EE2B0FDBE4E4}.Release|x86.ActiveCfg = Release|Any CPU
 		{FEDEC6CB-6DC6-46A7-9B01-EE2B0FDBE4E4}.Release|x86.Build.0 = Release|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Debug|ARM.Build.0 = Debug|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Debug|x64.Build.0 = Debug|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Debug|x86.Build.0 = Debug|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Release|ARM.ActiveCfg = Release|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Release|ARM.Build.0 = Release|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Release|x64.ActiveCfg = Release|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Release|x64.Build.0 = Release|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Release|x86.ActiveCfg = Release|Any CPU
+		{CCE85D43-8D14-4A94-8475-BBE1C4F08EBC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,6 +3,7 @@ using AutoMapper;
 using Bogus;
 using SuggeBook.Dto.Models;
 using SuggeBook.Framework;
+using SuggeBook.Tools;
 
 namespace SuggeBook.Dto.Mocks
 {
@@ -19,7 +20,7 @@ namespace SuggeBook.Dto.Mocks
 		public List<AuthorDto> Generate(int howMany)
 		{
 			var books = _booksService.Generate(7);
-            var authorBooks = Framework.CustomAutoMapper.MapLists<BookDto, AuthorDto.Book>(books);
+            var authorBooks = CustomAutoMapper.MapLists<BookDto, AuthorDto.Book>(books);
 
 			var bookstest = new Faker<AuthorDto>().StrictMode(true)
 					.RuleFor(a => a.FirstName, f => f.Name.FirstName())

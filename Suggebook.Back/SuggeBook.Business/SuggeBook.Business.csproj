@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SuggeBook.Dao\SuggeBook.Dto.csproj" />
     <ProjectReference Include="..\SuggeBook.Framework\SuggeBook.Domain.csproj" />
     <ProjectReference Include="..\SuggeBookDataAccess\SuggeBook.Persistence.csproj" />
   </ItemGroup>

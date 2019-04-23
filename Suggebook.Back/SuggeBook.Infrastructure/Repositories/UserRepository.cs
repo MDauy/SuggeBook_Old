@@ -21,15 +21,17 @@ namespace SuggeBookDAL.Infrastructure.Repositories
 
         public async Task<User> GetFromUsername(string username)
         {
-            Func<List<User>, List<UserDocument>> func = list => list.FirstOrDefault(u => u.UserName == username)
-            var users = await _baseRepository.Get();
-            var usersList = users.ToList();
-            if (usersList.Count > 1)
+            //Expression<Func<UserDocument, bool>> expression 
+            
+            var users = await _baseRepository.Get(x => x.UserName == username);
+
+            if (users.Count > 1)
             {
                 throw new System.Exception($"Several users wither username {username} have been found");
             }
 
-            return usersList.FirstOrDefault();
+
+            return null;/* AutoMapper<UserDocument, User>.Map(users.First());*/
         }
     }
 }

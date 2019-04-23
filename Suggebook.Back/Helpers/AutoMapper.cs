@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SuggeBook.Framework
+namespace SuggeBook.Tools
 {
     public static class CustomAutoMapper
     {

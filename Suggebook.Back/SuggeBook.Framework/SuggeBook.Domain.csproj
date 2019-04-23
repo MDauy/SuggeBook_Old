@@ -5,9 +5,4 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="7.0.0" />
-  </ItemGroup>
-
 </Project>

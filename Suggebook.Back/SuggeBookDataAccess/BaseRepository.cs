@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -117,6 +118,13 @@ namespace SuggeBookDAL.Persistence
                 result.Add(await Get(id));
             }
             return result;
+        }
+
+        public async Task<List<T>> Get(Expression<Func<T, bool>> expression)
+        {
+            var documents = await Collection.FindAsync<T>(expression);
+            return documents.ToList();
+             
         }
     }
 }

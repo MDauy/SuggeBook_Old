@@ -2,6 +2,7 @@
 using SuggeBookDAL.Persistence.Documents;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Infrastructure
@@ -12,7 +13,7 @@ namespace SuggeBook.Infrastructure
 
         Task<T> Get(ObjectId id);
 
-        Task<T> Get(Func<bool> f);
+        Task<List<T>> Get(Expression<Func<T, bool>> expression);
 
         Task<T> Insert(T document);
 

@@ -1,8 +1,6 @@
 ﻿using SuggeBook.Business.Commands.Contracts;
-using SuggeBook.Dto.Models;
-using SuggeBook.Framework;
-using SuggeBookDAL.Dao;
-using SuggeBookDAL.Repositories;
+using SuggeBook.Tools;
+using SuggeBookDAL.Persistence;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Business.Commands.Implementations
