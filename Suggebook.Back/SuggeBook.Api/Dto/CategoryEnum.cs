@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SuggeBook.Api.Dto
+﻿namespace SuggeBook.Api.Dto
 {
     public enum CategoryEnum
     {

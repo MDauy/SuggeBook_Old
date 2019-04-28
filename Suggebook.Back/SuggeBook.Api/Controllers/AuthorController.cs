@@ -1,11 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SuggeBook.Business.Services.Contracts;
-using SuggeBook.Dto.Mocks;
-using SuggeBook.Dto.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers

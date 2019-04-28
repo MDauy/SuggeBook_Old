@@ -14,9 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SuggeBook.Business\SuggeBook.Business.csproj" />
     <ProjectReference Include="..\SuggeBook.Framework\SuggeBook.Domain.csproj" />
-    <ProjectReference Include="..\SuggeBookDataAccess\SuggeBook.Persistence.csproj" />
+    <ProjectReference Include="..\SuggeBook.IoC\SuggeBook.IoC.csproj" />
   </ItemGroup>
 
 </Project>

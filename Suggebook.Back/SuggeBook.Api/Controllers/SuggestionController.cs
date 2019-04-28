@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SuggeBook.Business.Services.Contracts;
-using SuggeBook.Dto.Mocks;
-using SuggeBook.Dto.Models;
 using System;
 using System.Threading.Tasks;
 

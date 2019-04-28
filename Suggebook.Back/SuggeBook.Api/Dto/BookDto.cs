@@ -1,7 +1,6 @@
-﻿using SuggeBook.Framework;
-using SuggeBookDAL.Dao;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SuggeBook.Domain.Model;
 
 namespace SuggeBook.Api.Dto
 {
@@ -12,9 +11,9 @@ namespace SuggeBook.Api.Dto
 
         }
 
-        public BookDto (BookDao dao)
+        public BookDto (Book dao)
         {
-            Framework.CustomAutoMapper.Map<BookDao, BookDto>(dao);
+            Framework.CustomAutoMapper.Map<Book, BookDto>(dao);
         }
 
         public string Title { get; set; }
@@ -29,7 +28,7 @@ namespace SuggeBook.Api.Dto
 
         public int Year { get; set; }
 
-        public Guid ISBN { get; set; }
+        public Guid Isbn { get; set; }
 
         public string Edition { get; set; }
     }

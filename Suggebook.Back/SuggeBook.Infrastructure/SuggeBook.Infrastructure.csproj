@@ -1,13 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Helpers\Helpers.csproj" />
-    <ProjectReference Include="..\SuggeBook.Framework\SuggeBook.Domain.csproj" />
-    <ProjectReference Include="..\SuggeBook.Persistence.Documents\SuggeBook.Persistence.Documents.csproj" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SuggeBook.Framework\SuggeBook.Framework.csproj" />
+    <ProjectReference Include="..\SuggeBook.Domain\SuggeBook.Domain.csproj" />
   </ItemGroup>
 
 </Project>

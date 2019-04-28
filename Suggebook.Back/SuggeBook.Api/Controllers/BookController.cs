@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuggeBook.Business.Services.Contracts;
-using SuggeBook.Dto.Mocks;
-using SuggeBook.Dto.Models;
-using SuggeBookDAL.Dao;
-using SuggeBookDAL.Repositories;
 using System;
 using System.Threading.Tasks;
 

@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuggeBook.Business.Services.Contracts;
-using SuggeBook.Dto.Mocks;
-using SuggeBook.Dto.Models;
-using SuggeBook.Framework;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers

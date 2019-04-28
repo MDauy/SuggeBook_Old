@@ -1,14 +1,12 @@
-﻿using System.Threading.Tasks;
-using MongoDB.Driver;
-using System.Linq;
-using SuggeBook.Infrastructure;
-using SuggeBookDAL.Domain.UserDomain;
-using SuggeBookDAL.Persistence.Documents;
-using SuggeBook.Domain.UserDomain;
-using System;
-using System.Collections.Generic;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using SuggeBook.Domain.Model;
+using SuggeBook.Domain.Repositories;
+using SuggeBook.Infrastructure.Documents;
+using SuggeBook.Infrastructure.Exceptions;
+using SuggeBook.Framework;
 
-namespace SuggeBookDAL.Infrastructure.Repositories
+namespace SuggeBook.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -17,21 +15,29 @@ namespace SuggeBookDAL.Infrastructure.Repositories
             _baseRepository = baseRepo;
         }
 
-        private IBaseRepository<UserDocument> _baseRepository;
+        private readonly IBaseRepository<UserDocument> _baseRepository;
+
+        public async Task<User> Create(User user)
+        {
+                var userDocument = await _baseRepository.Insert(new UserDocument(user));
+                return (User)userDocument.ConvertToModel(); 
+        }
 
         public async Task<User> GetFromUsername(string username)
         {
-            //Expression<Func<UserDocument, bool>> expression 
-            
             var users = await _baseRepository.Get(x => x.UserName == username);
 
             if (users.Count > 1)
             {
-                throw new System.Exception($"Several users wither username {username} have been found");
+                throw new ObjectNotUniqueException("User", username);
             }
+            return CustomAutoMapper.Map<UserDocument, User>(users.First());
+        }
 
-
-            return null;/* AutoMapper<UserDocument, User>.Map(users.First());*/
+        public async Task<bool> Insert(User user)
+        {
+            var document =await  _baseRepository.Insert(new UserDocument(user));
+            return document != null;
         }
     }
 }

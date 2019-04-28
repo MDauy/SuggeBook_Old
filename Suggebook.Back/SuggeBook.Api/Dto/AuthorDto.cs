@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SuggeBook.Api.Dto
 {
@@ -14,7 +13,7 @@ namespace SuggeBook.Api.Dto
 		{
 			get
 			{
-				return string.Format("{0} {1}", this.FirstName, this.LastName);
+				return $"{this.FirstName} {this.LastName}";
 			}
 		}
 
@@ -24,7 +23,7 @@ namespace SuggeBook.Api.Dto
 
 		public struct Book
 		{
-			public Guid ISBN { get; set; }
+			public Guid Isbn { get; set; }
 
 			public string Title { get; set; }
 
