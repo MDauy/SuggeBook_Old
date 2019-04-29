@@ -12,6 +12,6 @@ namespace SuggeBook.Domain.Repositories
 
         Task<User> GetFromUsername(string username);
 
-
+        Task<User> Get(string userId);
     }
 }

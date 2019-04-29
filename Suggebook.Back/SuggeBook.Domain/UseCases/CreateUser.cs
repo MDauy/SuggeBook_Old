@@ -13,12 +13,17 @@ namespace SuggeBook.Domain.UseCases
         private readonly IUserRepository _userRepository;
 
         public CreateUser(IUserRepository userRepository)
-        {
+        {            
             _userRepository = userRepository;
         }
         public async Task<User> Create(User user)
         {
-            return await _userRepository.Create(user);
+            if (user.IsValid())
+            {
+                return await _userRepository.Create(user);
+            }
+            return null;
         }
+
     }
 }

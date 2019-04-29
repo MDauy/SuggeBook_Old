@@ -9,15 +9,20 @@ namespace SuggeBook.Domain.UseCases
     public class GetAuthor : IGetAuthor
     {
         private readonly IAuthorRepository _authorRepository;
+        private readonly IBookRepository _bookRepository;
 
-        public GetAuthor(IAuthorRepository authorRepository)
+        public GetAuthor(IAuthorRepository authorRepository, IBookRepository bookRepository)
         {
             _authorRepository = authorRepository;
+            _bookRepository = bookRepository;
         }
 
-        public async Task<Author> IGetAuthor.GetAuthor(string authorId)
+        public async Task<Author> Get(string authorId)
         {
-            var author = await _authorRepository.
+            var author = await _authorRepository.Get(authorId);
+            author.Books = await _bookRepository.GetFromAuthor(authorId);
+
+            return author;
         }
     }
 }

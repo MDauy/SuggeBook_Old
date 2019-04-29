@@ -5,6 +5,9 @@ using SuggeBook.Domain.Repositories;
 using SuggeBook.Infrastructure.Documents;
 using SuggeBook.Infrastructure.Exceptions;
 using SuggeBook.Framework;
+using MongoDB.Bson;
+using System.Linq.Expressions;
+using System;
 
 namespace SuggeBook.Infrastructure.Repositories
 {
@@ -23,15 +26,24 @@ namespace SuggeBook.Infrastructure.Repositories
                 return (User)userDocument.ConvertToModel(); 
         }
 
-        public async Task<User> GetFromUsername(string username)
+        private async Task<User> BasicGetUser (Expression<Func<UserDocument,bool>> func, string userIdentifier)
         {
-            var users = await _baseRepository.Get(x => x.UserName == username);
-
+            var users = await _baseRepository.Get(func);
             if (users.Count > 1)
             {
-                throw new ObjectNotUniqueException("User", username);
+                throw new ObjectNotUniqueException("User", userIdentifier);
             }
             return CustomAutoMapper.Map<UserDocument, User>(users.First());
+        }
+
+        public async Task<User> GetFromUsername(string username)
+        {
+            return await BasicGetUser(x => x.UserName == username, username);
+        }
+
+        public async Task<User> Get(string userId)
+        {
+            return await BasicGetUser(x => x.Id == ObjectId.Parse(userId), userId);
         }
     }
 }

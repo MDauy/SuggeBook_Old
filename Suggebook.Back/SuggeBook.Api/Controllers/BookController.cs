@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SuggeBook.Business.Services.Contracts;
-using System;
+using SuggeBook.Api.ViewModels;
+using SuggeBook.Domain.Model;
+using SuggeBook.Domain.UseCasesInterfaces;
+using SuggeBook.Framework;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers
@@ -8,35 +10,19 @@ namespace SuggeBook.Api.Controllers
     [Route ("book")]
     public class BookController : Controller
     {
-        private readonly IBookService _bookService;
+        private readonly IGetBook _getBook;
 
-        public BookController(IBookService bookService)
+        public BookController(IGetBook getBook)
         {
-            this._bookService = bookService;
+            _getBook = getBook;
         }
 
         [Route("{bookId}")]
         public async Task<JsonResult> Get (string bookId)
         {
-            var book = await _bookService.Get(bookId);
-
-            return new JsonResult(book);
-        }
-
-
-        [HttpPost]
-        [Route("add")]
-        public JsonResult AddBook ([FromBody] InsertBookDto book)
-        {
-            try
-            {
-                _bookService.Insert(book);
-                return new JsonResult("Book added");
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            var book = await _getBook.Get(bookId);
+            var bookViewModel = CustomAutoMapper.Map<Book, BookViewModel>(book);
+            return new JsonResult(bookViewModel); 
         }
 
 

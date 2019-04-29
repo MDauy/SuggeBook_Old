@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SuggeBook.Api.Dto
+namespace SuggeBook.Api.ViewModels
 {
-	public class AuthorDto : BaseViewModel
+	public class AuthorViewModel : BaseViewModel
 	{
+        public AuthorViewModel ()
+        {
+
+        }
+        
+
 		public string FirstName { get; set; }
 
 		public string LastName { get; set; }
@@ -19,7 +25,7 @@ namespace SuggeBook.Api.Dto
 
         public int NbSuggestions { get; set; }
 
-        public List<AuthorBook> Books { get; set; }
+        public IList<AuthorBook> Books { get; set; }
 
 		public struct AuthorBook
 		{

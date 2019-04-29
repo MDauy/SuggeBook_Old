@@ -3,7 +3,7 @@ using SuggeBook.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace SuggeBook.Api.Dto
+namespace SuggeBook.Api.ViewModels
 {
     public class BookViewModel : BaseViewModel
     {

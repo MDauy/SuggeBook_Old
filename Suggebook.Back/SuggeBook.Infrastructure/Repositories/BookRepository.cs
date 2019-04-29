@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
+using SuggeBook.Framework;
 using SuggeBook.Infrastructure.Documents;
+using SuggeBook.Infrastructure.Exceptions;
 
 namespace SuggeBook.Infrastructure.Repositories
 {
@@ -17,6 +19,23 @@ namespace SuggeBook.Infrastructure.Repositories
         {
             _baseRepository = baseRepository;
             _suggestionRepository = suggestionRepository;
+        }
+
+        public async Task<Book> Get(string bookId)
+        {
+            var books = await _baseRepository.Get(b => b.Id == ObjectId.Parse(bookId));
+
+            if (books.IsNullOrEmpty())
+            {
+                throw new ObjectNotFoundException("Book", bookId);
+            }
+
+            if (books.Count > 1)
+            {
+                throw new ObjectNotUniqueException("Book", bookId);
+            }
+
+            return (Book)books.First().ConvertToModel();
         }
 
         public async Task<List<Book>> GetFromAuthor(string authorId)

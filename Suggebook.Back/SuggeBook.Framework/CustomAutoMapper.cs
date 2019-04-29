@@ -14,7 +14,7 @@ namespace SuggeBook.Framework
             return iMapper.Map<T1, T2>(source);
         }
 
-        public static List<T2> MapLists<T1, T2>(List<T1> source)
+        public static IList<T2> MapLists<T1, T2>(IList<T1> source)
         {
             var result = new List<T2>();
 

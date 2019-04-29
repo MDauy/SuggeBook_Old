@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
+using SuggeBook.Framework;
 using SuggeBook.Infrastructure.Documents;
 using SuggeBook.Infrastructure.Exceptions;
 

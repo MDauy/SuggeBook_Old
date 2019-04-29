@@ -1,4 +1,4 @@
-﻿namespace SuggeBook.Api.Dto
+﻿namespace SuggeBook.Api.ViewModels
 {
     public class CategoryViewModel : BaseViewModel
     {

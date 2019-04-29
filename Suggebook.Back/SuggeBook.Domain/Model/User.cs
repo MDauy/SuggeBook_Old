@@ -6,6 +6,10 @@ namespace SuggeBook.Domain.Model
 {
     public class User : BaseModel
     {
+        public User()
+        {
+            WrongProperties = string.Empty;
+        }
         public string Firstname{ get; set; }
         public string Lastname { get; set; }
         public string Mail{ get; set; }      
@@ -13,7 +17,17 @@ namespace SuggeBook.Domain.Model
         public List<string> FavoriteCategories { get; set; }
         public override bool IsValid()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(Mail))
+            {
+                WrongProperties += "Mail is null or empty";
+            }
+
+            if (string.IsNullOrEmpty(UserName))
+            {
+                WrongProperties += "UserName is null or empty";
+            }
+
+            return TestWrongProperties();
         }
     }
 }

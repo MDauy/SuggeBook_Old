@@ -8,6 +8,7 @@ namespace SuggeBook.Domain.Repositories
 {
     public interface IBookRepository
     {
+        Task<Book> Get(string bookId);
         Task<List<Book>> GetFromAuthor(string authorId);
         Task<List<Book>> GetFromCategories(List<string> authorId);
         Task UpdateSuggestions(string bookId, string suggestionId);

@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace SuggeBook.Api.Dto
+namespace SuggeBook.Api.ViewModels
 {
     [Serializable]
-    public class InsertSuggestionViewModel : BaseViewModel
+    public class CreateSuggestionViewModel : BaseViewModel
     {
         [JsonProperty(PropertyName = "suggestion")]
         public SuggestionViewModel Suggestion { get; set; }

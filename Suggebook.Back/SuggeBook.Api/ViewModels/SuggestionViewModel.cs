@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SuggeBook.Api.Dto
+namespace SuggeBook.Api.ViewModels
 {
     [Serializable]
     public class SuggestionViewModel : BaseViewModel

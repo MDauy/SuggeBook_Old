@@ -116,7 +116,7 @@ namespace SuggeBook.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<List<T>> Get(Expression<Func<T, bool>> expression)
+        public async Task<IList<T>> Get(Expression<Func<T, bool>> expression)
         {
             var documents = await Collection.FindAsync<T>(expression);
             return documents.ToList();

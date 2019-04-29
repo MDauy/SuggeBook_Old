@@ -5,6 +5,11 @@ namespace SuggeBook.Domain.Model
 {
     public class Suggestion : BaseModel
     {
+        public Suggestion ()
+        {
+            WrongProperties = string.Empty;
+        }
+
         public string Title { get; set; }
         public IList<string> Categories { get; set; }
         public DateTime? CreationDate { get; set; }
@@ -14,7 +19,22 @@ namespace SuggeBook.Domain.Model
 
         public override bool IsValid()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(Title))
+            {
+                WrongProperties += "Title is null or empty";
+            }
+
+            if (Book == null)
+            {
+                WrongProperties += "Book is null";
+            }
+
+            if (Book == null)
+            {
+                WrongProperties += "User is null";
+            }
+
+            return TestWrongProperties();
         }
     }
 }

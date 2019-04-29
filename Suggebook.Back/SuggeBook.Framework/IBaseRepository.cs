@@ -12,6 +12,6 @@ namespace SuggeBook.Framework
         Task<bool> Delete(T document);
         Task<bool> Update(T document);
         Task<IList<T>> GetSeveral(IList<string> ids);
-        Task<List<T>> Get(Expression<Func<T, bool>> expression);
+        Task<IList<T>> Get(Expression<Func<T, bool>> expression);
     }
 }

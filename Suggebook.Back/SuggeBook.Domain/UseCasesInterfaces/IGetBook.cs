@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace SuggeBook.Domain.UseCasesInterfaces
 {
-    public interface IGetAuthor
+    public interface IGetBook
     {
-        Task<Author> Get(string authorId);
+        Task<Book> Get(string bookId);
     }
 }

@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SuggeBook.Api.ViewModels;
+using SuggeBook.Domain.Model;
+using SuggeBook.Domain.UseCasesInterfaces;
+using SuggeBook.Framework;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers
@@ -6,11 +10,11 @@ namespace SuggeBook.Api.Controllers
     [Route("author")]
     public class AuthorController : Controller
     {
-        private IAuthorService _authorService;
+        private IGetAuthor _getAuthor;
 
-        public AuthorController(IAuthorService authorService)
+        public AuthorController(IGetAuthor getAuthor)
         {
-            this._authorService = authorService;
+            this._getAuthor = getAuthor;
         }
 
 
@@ -18,25 +22,12 @@ namespace SuggeBook.Api.Controllers
         [Route("{authorId}")]
         public async Task<JsonResult> Get (string authorId)
         {
-            var bookDto = await _authorService.Get(authorId);
+            var author = await _getAuthor.Get(authorId);
 
-            return new JsonResult(bookDto);
-        }
+            var authorViewModel = CustomAutoMapper.Map<Author, AuthorViewModel>(author);
+            authorViewModel.Books = CustomAutoMapper.MapLists<Book, AuthorViewModel.AuthorBook>(author.Books);
 
-        [HttpPost]
-        [Route("add")]
-        public async Task<ActionResult> Add ([FromBody] InsertAuthorDto author)
-        {
-            try
-            {
-               await  _authorService.Insert(author);
-                return Ok();
-            }
-            catch
-            {
-                throw;
-            }
-
+            return new JsonResult(authorViewModel);
         }
     }
 }
