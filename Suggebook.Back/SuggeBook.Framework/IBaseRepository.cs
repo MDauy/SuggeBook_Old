@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace SuggeBook.Domain.Repositories
+namespace SuggeBook.Framework
 {
     public interface IBaseRepository<T>
     {

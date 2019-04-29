@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SuggeBook.Business.Services.Contracts;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers

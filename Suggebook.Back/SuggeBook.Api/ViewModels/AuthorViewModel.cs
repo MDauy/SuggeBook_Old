@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SuggeBook.Api.Dto
 {
-	public class AuthorDto : BaseDto
+	public class AuthorDto : BaseViewModel
 	{
 		public string FirstName { get; set; }
 
@@ -19,9 +19,9 @@ namespace SuggeBook.Api.Dto
 
         public int NbSuggestions { get; set; }
 
-        public List<Book> Books { get; set; }
+        public List<AuthorBook> Books { get; set; }
 
-		public struct Book
+		public struct AuthorBook
 		{
 			public Guid Isbn { get; set; }
 

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using SuggeBook.Domain.Repositories;
+using SuggeBook.Framework;
 using SuggeBook.Infrastructure.Documents;
 
 namespace SuggeBook.Infrastructure.Repositories

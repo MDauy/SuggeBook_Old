@@ -1,19 +1,20 @@
-﻿using System;
+﻿using SuggeBook.Domain.Model;
+using SuggeBook.Framework;
+using System;
 using System.Collections.Generic;
-using SuggeBook.Domain.Model;
 
 namespace SuggeBook.Api.Dto
 {
-    public class BookDto : BaseDto
+    public class BookViewModel : BaseViewModel
     {
-        public BookDto()
+        public BookViewModel()
         {
 
         }
 
-        public BookDto (Book dao)
+        public BookViewModel(Book dao)
         {
-            Framework.CustomAutoMapper.Map<Book, BookDto>(dao);
+            CustomAutoMapper.Map<Book, BookViewModel>(dao);
         }
 
         public string Title { get; set; }

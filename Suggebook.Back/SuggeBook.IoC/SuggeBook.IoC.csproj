@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SuggeBook.Framework\SuggeBook.Domain.csproj" />
     <ProjectReference Include="..\SuggeBook.Infrastructure\SuggeBook.Infrastructure.csproj" />
   </ItemGroup>
 

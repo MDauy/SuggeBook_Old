@@ -2,6 +2,8 @@
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Domain.UseCases;
 using SuggeBook.Domain.UseCasesInterfaces;
+using SuggeBook.Framework;
+using SuggeBook.Infrastructure.Documents;
 using SuggeBook.Infrastructure.Repositories;
 
 namespace SuggeBook.IoC
@@ -10,6 +12,11 @@ namespace SuggeBook.IoC
     {
         public static void InjectRepositories (this IServiceCollection services)
         {
+            services.AddTransient<IBaseRepository<AuthorDocument>, BaseRepository<AuthorDocument>>();
+            services.AddTransient<IBaseRepository<BookDocument>, BaseRepository<BookDocument>>();
+            services.AddTransient<IBaseRepository<SuggestionDocument>, BaseRepository<SuggestionDocument>>();
+            services.AddTransient<IBaseRepository<UserDocument>, BaseRepository<UserDocument>>();
+
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<ISuggestionRepository, SuggestionRepository>();

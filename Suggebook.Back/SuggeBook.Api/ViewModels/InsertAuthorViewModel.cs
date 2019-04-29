@@ -1,6 +1,6 @@
 ﻿namespace SuggeBook.Api.Dto
 {
-    public class InsertAuthorDto : BaseDto
+    public class InsertAuthorViewModel : BaseViewModel
     {
         public string FirstName { get; set; }
 

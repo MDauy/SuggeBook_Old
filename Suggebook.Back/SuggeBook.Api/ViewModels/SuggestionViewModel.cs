@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SuggeBook.Api.Dto
 {
     [Serializable]
-    public class SuggestionDto : BaseDto
+    public class SuggestionViewModel : BaseViewModel
     {
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }

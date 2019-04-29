@@ -33,11 +33,5 @@ namespace SuggeBook.Infrastructure.Repositories
             }
             return CustomAutoMapper.Map<UserDocument, User>(users.First());
         }
-
-        public async Task<bool> Insert(User user)
-        {
-            var document =await  _baseRepository.Insert(new UserDocument(user));
-            return document != null;
-        }
     }
 }

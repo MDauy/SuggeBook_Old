@@ -5,17 +5,17 @@ namespace SuggeBook.Api.Dto
     /// <summary>
     /// User tel qu'on voudrait l'afficher sur sa page user
     /// </summary>
-    public class UserDto : BaseDto
+    public class UserViewModel : BaseViewModel
     {
         public string UserName { get; set; }
 
-        public List<Book> Books { get; set; }
+        public List<UserBook> Books { get; set; }
 
-        public List<Suggestion> Suggestions { get; set; }
+        public List<UserSuggestion> Suggestions { get; set; }
 
         public List<CategoryEnum> FavoriteCategories{ get; set; }
 
-        public struct Book
+        public struct UserBook
         {
             public string Id { get; set; }
 
@@ -26,14 +26,14 @@ namespace SuggeBook.Api.Dto
             public int Year { get; set; }
         }
     
-        public struct Suggestion
+        public struct UserSuggestion
         {
             public string Title { get; set; }
 
             public string BookTitle { get; set; }
         }  
         
-        public struct Category
+        public struct UserCategory
         {
             public string Label { get; set; }
         }

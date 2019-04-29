@@ -4,10 +4,10 @@ using System;
 namespace SuggeBook.Api.Dto
 {
     [Serializable]
-    public class InsertSuggestionDto
+    public class InsertSuggestionViewModel : BaseViewModel
     {
         [JsonProperty(PropertyName = "suggestion")]
-        public SuggestionDto Suggestion { get; set; }
+        public SuggestionViewModel Suggestion { get; set; }
 
         [JsonProperty(PropertyName = "userId")]
         public string UserId { get; set; }
