@@ -21,6 +21,15 @@ namespace SuggeBook.Infrastructure.Repositories
             _suggestionRepository = suggestionRepository;
         }
 
+        public Task<Book> Create(Book book)
+        {
+            if (book.IsValid)
+            {
+                book = _baseRepository.Insert(new BookDocument())
+            }
+            return book;
+        }
+
         public async Task<Book> Get(string bookId)
         {
             var books = await _baseRepository.Get(b => b.Id == ObjectId.Parse(bookId));

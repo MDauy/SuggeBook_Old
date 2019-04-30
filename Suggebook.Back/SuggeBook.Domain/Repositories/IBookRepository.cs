@@ -12,6 +12,7 @@ namespace SuggeBook.Domain.Repositories
         Task<List<Book>> GetFromAuthor(string authorId);
         Task<List<Book>> GetFromCategories(List<string> authorId);
         Task UpdateSuggestions(string bookId, string suggestionId);
+        Task<Book> Create(Book book);
 
     }
 }

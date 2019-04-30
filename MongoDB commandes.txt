@@ -1,7 +1,15 @@
-//Chemin vers mongodb
-C:\"Program Files"\MongoDB\Server\3.6\bin
+﻿//Chemin vers mongodb
+Ouvrir d'abord Mongod, qui est le serveur database
+Ouvrir ensuite Mongo
 
-//Création de user
-db.createUser( { user: "sbUser",
-                 pwd: "toto4126",
-                 roles: [ "readWrite"] }
+> use suggebook
+
+(si création de la base création de user)
+db.createUser( {
+  user: "suggebook_admin",
+  pwd: "sb_admin",
+  roles: [
+    { "readWrite"
+  ],
+  mechanisms: [ "SCRAM-SHA-256"]
+})

@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using System.Configuration;
 
 namespace SuggeBook.Infrastructure.Repositories
 {
@@ -13,7 +14,8 @@ namespace SuggeBook.Infrastructure.Repositories
 			{
 				if (_client == null)
 				{
-					_client = new MongoClient("mongodb://sbUser:toto4126@localhost:27017/SuggeBook");
+                    var databseName = 
+					_client = new MongoClient("mongodb://suggebook_admin:sb_admin@localhost:27017/suggebook");
 				}
 				return _client;
 			}
@@ -26,7 +28,7 @@ namespace SuggeBook.Infrastructure.Repositories
 			{
 				if (_db == null)
 				{
-					_db = Client.GetDatabase("SuggeBook");
+					_db = Client.GetDatabase("suggebook");
 				};
 
 				return _db;

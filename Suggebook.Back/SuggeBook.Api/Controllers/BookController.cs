@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using SuggeBook.Api.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
@@ -23,6 +24,15 @@ namespace SuggeBook.Api.Controllers
             var book = await _getBook.Get(bookId);
             var bookViewModel = CustomAutoMapper.Map<Book, BookViewModel>(book);
             return new JsonResult(bookViewModel); 
+        }
+
+        public async Task<JsonResult> Create ([FromBody] JObject bookToCreate)
+        {
+            var book = bookToCreate.ToObject<CreateBookViewModel>();
+            if (book != null)
+            {
+
+            }
         }
 
 
