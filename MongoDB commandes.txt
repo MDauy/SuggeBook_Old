@@ -5,11 +5,8 @@ Ouvrir ensuite Mongo
 > use suggebook
 
 (si création de la base création de user)
-db.createUser( {
+db.createUser({
   user: "suggebook_admin",
   pwd: "sb_admin",
-  roles: [
-    { "readWrite"
-  ],
-  mechanisms: [ "SCRAM-SHA-256"]
+  roles: ["readWrite"]
 })

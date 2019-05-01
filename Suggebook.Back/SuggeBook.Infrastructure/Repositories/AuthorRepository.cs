@@ -12,7 +12,7 @@ namespace SuggeBook.Infrastructure.Repositories
     public class AuthorRepository : IAuthorRepository
     {
         private readonly ISuggestionRepository _suggestionRepository;
-        private readonly  IBaseRepository<AuthorDocument> _baseRepository;
+        private readonly IBaseRepository<AuthorDocument> _baseRepository;
 
         public AuthorRepository(ISuggestionRepository suggestionRepository, IBaseRepository<AuthorDocument> baseRepository)
         {
@@ -35,6 +35,18 @@ namespace SuggeBook.Infrastructure.Repositories
             }
 
             return (Author)author.First().ConvertToModel();
+        }
+
+        public async Task<Author> Create(Author author)
+        {
+            var authorDocument = CustomAutoMapper.Map<Author, AuthorDocument>(author);
+            if (authorDocument != null)
+            {
+                authorDocument = await _baseRepository.Insert(authorDocument);
+                return (Author)authorDocument.ConvertToModel();
+            }
+
+            return null;
         }
 
         public async Task UpdateNbSuggestions(string authorId, string suggestionId)

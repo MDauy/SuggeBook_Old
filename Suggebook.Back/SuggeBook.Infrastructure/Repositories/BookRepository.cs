@@ -21,13 +21,18 @@ namespace SuggeBook.Infrastructure.Repositories
             _suggestionRepository = suggestionRepository;
         }
 
-        public Task<Book> Create(Book book)
+        public async Task<Book> Create(Book book)
         {
-            if (book.IsValid)
+            if (book.IsValid())
             {
-                book = _baseRepository.Insert(new BookDocument())
+                var bookDocument = CustomAutoMapper.Map<Book, BookDocument>(book);
+                if (bookDocument != null)
+                {
+                    bookDocument = await _baseRepository.Insert(bookDocument);
+                    return (Book) bookDocument.ConvertToModel();
+                }
             }
-            return book;
+            return null;
         }
 
         public async Task<Book> Get(string bookId)

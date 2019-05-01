@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.IoC", "SuggeBook.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Framework", "SuggeBook.Framework\SuggeBook.Framework.csproj", "{A016B564-FE73-4E9A-990A-FAA88A2F4871}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuggeBook.Domain", "SuggeBook.Domain\SuggeBook.Domain.csproj", "{4F02EDC7-564D-4B9B-9F3A-22108EAB9482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Domain", "SuggeBook.Domain\SuggeBook.Domain.csproj", "{4F02EDC7-564D-4B9B-9F3A-22108EAB9482}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

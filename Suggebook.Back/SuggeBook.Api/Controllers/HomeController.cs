@@ -7,10 +7,7 @@ namespace SuggeBook.Api.Controllers
     {
         public JsonResult Home (int? userId)
         {
-            /// TODO : si le userId est renseigné, on lui récupère ses suggestions
-            /// Sinon, on le redirige vers la page de connexion
-            /// TODO : mettre en place une couche business
-            return null;
+            return new JsonResult("Hello !");
         }
     }
 }

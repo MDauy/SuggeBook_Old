@@ -15,17 +15,8 @@ namespace SuggeBook.Api.Controllers
         private readonly ICreateSuggestion _createSuggestion;
         public SuggestionController(ICreateSuggestion createSuggestion)
         {
-            createSuggestion = _createSuggestion;
+            _createSuggestion = createSuggestion;
         }
-
-        [HttpGet]
-        [Route("/home")]
-        public JsonResult Home([FromQuery] int uId)
-        {
-            //TODO : Appel à la DAL ici 
-            return null;
-        }
-
 
         [HttpPost]
         [Route("add")]

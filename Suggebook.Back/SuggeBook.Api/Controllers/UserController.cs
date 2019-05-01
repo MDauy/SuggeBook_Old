@@ -51,7 +51,7 @@ namespace SuggeBook.Api.Controllers
                     user = await _createUser.Create(user);
                     return new JsonResult(user);
                 }
-                return null;
+                return new JsonResult("no user added");
             }
             catch (Exception)
             {

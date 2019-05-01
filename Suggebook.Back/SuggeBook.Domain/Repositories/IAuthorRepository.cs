@@ -8,5 +8,7 @@ namespace SuggeBook.Domain.Repositories
         Task UpdateNbSuggestions(string authorId, string suggestionId);
 
         Task<Author> Get(string authorId);
+
+        Task<Author> Create(Author author);
     }
 }

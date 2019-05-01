@@ -26,14 +26,14 @@ namespace SuggeBook.Api.Controllers
             return new JsonResult(bookViewModel); 
         }
 
-        public async Task<JsonResult> Create ([FromBody] JObject bookToCreate)
-        {
-            var book = bookToCreate.ToObject<CreateBookViewModel>();
-            if (book != null)
-            {
+        //public async Task<JsonResult> Create ([FromBody] JObject bookToCreate)
+        //{
+        //    var book = bookToCreate.ToObject<CreateBookViewModel>();
+        //    if (book != null)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
 
     }
