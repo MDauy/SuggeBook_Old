@@ -9,8 +9,6 @@ namespace SuggeBook.Domain.Model
             WrongProperties = string.Empty;
         }
         public List<string> Categories { get; set; }
-        public string Edition { get; set; }
-        public string Isbn { get; set; }
         public string Title { get; set; }
         public Author Author { get; set; }
 

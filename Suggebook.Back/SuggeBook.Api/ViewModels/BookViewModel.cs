@@ -28,11 +28,5 @@ namespace SuggeBook.Api.ViewModels
         public List<CategoryEnum> Categories { get; set; }
 
         public int Year { get; set; }
-
-        public Guid Isbn { get; set; }
-
-        public string Edition { get; set; }
     }
-
-
 }

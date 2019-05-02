@@ -33,6 +33,8 @@ namespace SuggeBook.Api.Controllers
             return new JsonResult(authorViewModel);
         }
 
+        [HttpPost]
+        [Route("create")]
         public async Task<JsonResult> Create([FromBody] JObject author)
         {
             var authorViewModel = author.ToObject<CreateAuthorViewModel>();

@@ -13,7 +13,7 @@ namespace SuggeBook.Api.Controllers
     {
         private readonly IGetBook _getBook;
 
-        public BookController(IGetBook getBook)
+        public BookController(IGetBook getBook, ICreateBook)
         {
             _getBook = getBook;
         }
@@ -26,14 +26,15 @@ namespace SuggeBook.Api.Controllers
             return new JsonResult(bookViewModel); 
         }
 
-        //public async Task<JsonResult> Create ([FromBody] JObject bookToCreate)
-        //{
-        //    var book = bookToCreate.ToObject<CreateBookViewModel>();
-        //    if (book != null)
-        //    {
+        public async Task<JsonResult> Create([FromBody] JObject book)
+        {
+            var createBookViewModel = book.ToObject<CreateBookViewModel>();
+            if (createBookViewModel != null)
+            {
+               var bookModel = CustomAutoMapper.Map<CreateBookViewModel, Book>(createBookViewModel);
 
-        //    }
-        //}
+            }
+        }
 
 
     }

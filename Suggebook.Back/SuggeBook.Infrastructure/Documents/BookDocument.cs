@@ -41,8 +41,6 @@ namespace SuggeBook.Infrastructure.Documents
                 },
                 Id = Id.ToString(),
                 Categories = Categories,
-                Edition = Edition,
-                Isbn = Isbn,
                 Title = Title
             };
         }

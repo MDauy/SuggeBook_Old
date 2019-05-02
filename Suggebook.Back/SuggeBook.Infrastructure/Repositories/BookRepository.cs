@@ -29,10 +29,26 @@ namespace SuggeBook.Infrastructure.Repositories
                 if (bookDocument != null)
                 {
                     bookDocument = await _baseRepository.Insert(bookDocument);
-                    return (Book) bookDocument.ConvertToModel();
+                    return (Book)bookDocument.ConvertToModel();
                 }
             }
             return null;
+        }
+
+        public async Task<List<Book>> GetSimilar(Book book)
+        {
+            var existingBook = await _baseRepository.Get(b => b.Id == ObjectId.Parse(book.Id) || (b.Title == book.Title && b.Author.Id == ObjectId.Parse(book.Author.Id)));
+
+            if (existingBook.IsNullOrEmpty())
+            {
+                return null;
+            }
+            var books = new List<Book>();
+            foreach (var b in existingBook)
+            {
+                books.Add(CustomAutoMapper.Map<BookDocument, Book>(b));
+            }
+            return books;
         }
 
         public async Task<Book> Get(string bookId)
@@ -59,7 +75,7 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var book in document)
             {
-                result.Add((Book) book.ConvertToModel());
+                result.Add((Book)book.ConvertToModel());
             }
 
             return result;
@@ -75,7 +91,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 {
                     if (results.FirstOrDefault(b => string.Equals(b.Id, book.Id.ToString())) == null)
                     {
-                        results.Add((Book) book.ConvertToModel());
+                        results.Add((Book)book.ConvertToModel());
                     }
                 }
             }

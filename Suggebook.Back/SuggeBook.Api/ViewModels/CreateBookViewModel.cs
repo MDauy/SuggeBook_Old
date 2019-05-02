@@ -16,11 +16,5 @@ namespace SuggeBook.Api.ViewModels
 
         [JsonProperty(PropertyName = "year")]
         public int Year { get; set; }
-
-        [JsonProperty(PropertyName = "isbn")]
-        public Guid Isbn { get; set; }
-
-        [JsonProperty(PropertyName = "edition")]
-        public string Edition { get; set; }
     }
 }

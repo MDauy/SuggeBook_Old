@@ -7,7 +7,16 @@ namespace SuggeBook.Framework
         public static bool IsNullOrEmpty<T>(this IList<T> list)
         {
             var enumerator = list?.GetEnumerator();
-            return enumerator == null || enumerator.Current == null;
+            if (enumerator == null)
+            {
+                return true;
+            };
+            enumerator.MoveNext();
+            if (enumerator.Current == null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

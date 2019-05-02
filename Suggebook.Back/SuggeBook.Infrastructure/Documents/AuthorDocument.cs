@@ -19,6 +19,7 @@ namespace SuggeBook.Infrastructure.Documents
         {
             return new Author
             {
+                Id = Id.ToString(),
                 Firstname = Firstname,
                 Lastname = Lastname,
                 NbSuggestions = NbSuggestions
