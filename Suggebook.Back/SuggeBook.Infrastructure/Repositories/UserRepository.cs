@@ -23,7 +23,7 @@ namespace SuggeBook.Infrastructure.Repositories
         public async Task<User> Create(User user)
         {
                 var userDocument = await _baseRepository.Insert(new UserDocument(user));
-                return (User)userDocument.ConvertToModel(); 
+            return CustomAutoMapper.Map<UserDocument, User>(userDocument);
         }
 
         private async Task<User> BasicGetUser (Expression<Func<UserDocument,bool>> func, string userIdentifier)

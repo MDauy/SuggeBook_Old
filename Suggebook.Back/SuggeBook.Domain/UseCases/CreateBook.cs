@@ -2,6 +2,7 @@
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Domain.UseCasesInterfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Domain.UseCases
@@ -27,6 +28,17 @@ namespace SuggeBook.Domain.UseCases
                 return similarbook;
             }
             return null;
+        }
+
+        public async Task<IList<Book>> CreateSeveral(IList<Book> books)
+        {
+            var resultBooks = new List<Book>();
+
+            foreach (var book in books)
+            {
+                resultBooks.Add(await Create(book));
+            }
+            return resultBooks;
         }
     }
 }

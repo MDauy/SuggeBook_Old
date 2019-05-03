@@ -13,18 +13,6 @@ namespace SuggeBook.Infrastructure.Documents
 
         [BsonElement("NbSuggestions")]
         public int NbSuggestions { get; set; }
-
-
-        public override BaseModel ConvertToModel()
-        {
-            return new Author
-            {
-                Id = Id.ToString(),
-                Firstname = Firstname,
-                Lastname = Lastname,
-                NbSuggestions = NbSuggestions
-            };
-        }
     }
 
 }

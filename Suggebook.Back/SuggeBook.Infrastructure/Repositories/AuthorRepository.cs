@@ -34,7 +34,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Author", authorId);
             }
 
-            return (Author)author.First().ConvertToModel();
+            return CustomAutoMapper.Map<AuthorDocument, Author>(author.First());
         }
 
         public async Task<Author> Create(Author author)
@@ -43,7 +43,7 @@ namespace SuggeBook.Infrastructure.Repositories
             if (authorDocument != null)
             {
                 authorDocument = await _baseRepository.Insert(authorDocument);
-                return (Author)authorDocument.ConvertToModel();
+                return CustomAutoMapper.Map <AuthorDocument, Author>(authorDocument);
             }
 
             return null;

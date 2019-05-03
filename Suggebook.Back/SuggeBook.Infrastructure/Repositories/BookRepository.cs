@@ -29,7 +29,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 if (bookDocument != null)
                 {
                     bookDocument = await _baseRepository.Insert(bookDocument);
-                    return (Book)bookDocument.ConvertToModel();
+                    return CustomAutoMapper.Map<BookDocument,Book>(bookDocument);
                 }
             }
             return null;
@@ -65,7 +65,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Book", bookId);
             }
 
-            return (Book)books.First().ConvertToModel();
+            return CustomAutoMapper.Map<BookDocument, Book>(books.First());
         }
 
         public async Task<List<Book>> GetFromAuthor(string authorId)
@@ -75,7 +75,7 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var book in document)
             {
-                result.Add((Book)book.ConvertToModel());
+                result.Add(CustomAutoMapper.Map<BookDocument,Book>(book));
             }
 
             return result;
@@ -91,7 +91,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 {
                     if (results.FirstOrDefault(b => string.Equals(b.Id, book.Id.ToString())) == null)
                     {
-                        results.Add((Book)book.ConvertToModel());
+                        results.Add(CustomAutoMapper.Map<BookDocument,Book>(book));
                     }
                 }
             }

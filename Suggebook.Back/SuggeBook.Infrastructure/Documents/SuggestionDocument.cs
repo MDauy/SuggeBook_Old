@@ -37,24 +37,6 @@ namespace SuggeBook.Infrastructure.Documents
         public DateTime? CreationDate { get; set; }
 
         [BsonElement("User_Id")]
-        public ObjectId UserId { get; set; }
-
-        public override BaseModel ConvertToModel()
-        {
-            return new Suggestion
-            {
-                Title = Title,
-                Book = new Book
-                {
-                    Id = BookId.ToString()
-                },
-                CreationDate = CreationDate,
-                Categories = Categories,
-                User = new User
-                {
-                    Id = UserId.ToString()
-                }
-            };
-        }
+        public ObjectId UserId { get; set; }        
     }
 }

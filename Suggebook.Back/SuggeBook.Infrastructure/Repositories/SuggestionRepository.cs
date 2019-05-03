@@ -11,7 +11,7 @@ namespace SuggeBook.Infrastructure.Repositories
 {
     public class SuggestionRepository : ISuggestionRepository
     {
-        
+
         private readonly IBaseRepository<SuggestionDocument> _baseRepository;
 
         public SuggestionRepository(IBaseRepository<SuggestionDocument> baseRepository)
@@ -66,19 +66,22 @@ namespace SuggeBook.Infrastructure.Repositories
         public async Task<Suggestion> Insert(Suggestion suggestion)
         {
             var document = await _baseRepository.Insert(new SuggestionDocument(suggestion));
-            return (Suggestion)document.ConvertToModel();
+            return CustomAutoMapper.Map<SuggestionDocument, Suggestion>(document);
         }
 
         public async Task<Suggestion> Get(string id)
         {
             var document = await _baseRepository.Get(s => s.Id == ObjectId.Parse(id));
 
-
-            if (document != null && document.Count > 1)
+            if (document == null)
+            {
+                throw new ObjectNotFoundException("Suggestion", id);
+            }
+            if (document.Count > 1)
             {
                 throw new ObjectNotUniqueException("Suggestion", id);
             }
-                return (Suggestion)document?.FirstOrDefault()?.ConvertToModel();
+            return CustomAutoMapper.Map<SuggestionDocument, Suggestion>(document.First());
         }
     }
 }

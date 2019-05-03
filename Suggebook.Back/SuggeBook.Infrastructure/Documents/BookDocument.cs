@@ -30,19 +30,5 @@ namespace SuggeBook.Infrastructure.Documents
             public ObjectId Id { get; set; }
             public string FullName { get; set; }
         }
-
-        public override BaseModel ConvertToModel()
-        {
-            return new Book
-            {
-                Author = new Author
-                {
-                    Id = Author.Id.ToString()
-                },
-                Id = Id.ToString(),
-                Categories = Categories,
-                Title = Title
-            };
-        }
     }
 }

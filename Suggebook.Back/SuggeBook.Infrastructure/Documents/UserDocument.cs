@@ -34,18 +34,5 @@ namespace SuggeBook.Infrastructure.Documents
 
         [BsonElement("UserName")]
         public string UserName{ get; set; }
-
-        public override BaseModel ConvertToModel()
-        {
-            return new User
-            {
-                Id = this.Id.ToString(),
-                Firstname = this.Firstname,
-                Lastname = this.Lastname,
-                FavoriteCategories = this.FavoriteCategories,
-                Mail = this.Mail,
-                UserName = this.UserName
-            };
-        }
     }
 }

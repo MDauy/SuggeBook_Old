@@ -9,7 +9,5 @@ namespace SuggeBook.Infrastructure.Documents
         [BsonId]
         [BsonElement("UserId")]
         public ObjectId Id{ get; set; }
-
-        public abstract BaseModel ConvertToModel();
     }
 }
