@@ -2,6 +2,10 @@
 Ouvrir d'abord Mongod, qui est le serveur database
 Ouvrir ensuite Mongo
 
+show dbs
+use database
+show collections
+
 > use suggebook
 
 (si création de la base création de user)
