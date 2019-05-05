@@ -7,7 +7,7 @@ namespace SuggeBook.Infrastructure.Documents
     public abstract class BaseDocument
     {
         [BsonId]
-        [BsonElement("UserId")]
+        [BsonElement("_id")]
         public ObjectId Id{ get; set; }
     }
 }

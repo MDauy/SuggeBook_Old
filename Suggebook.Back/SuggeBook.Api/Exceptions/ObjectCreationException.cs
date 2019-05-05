@@ -5,7 +5,7 @@ namespace SuggeBook.Api.Exceptions
     {
         public override string Message { get;}
 
-        public ObjectCreationException(string objectType, string obj)
+        public ObjectCreationException(string objectType)
         {
             Message = $"Problem creating {objectType} : obj";
         }

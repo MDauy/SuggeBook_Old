@@ -23,32 +23,37 @@ namespace SuggeBook.Infrastructure.Repositories
 
         public async Task<Book> Create(Book book)
         {
-            if (book.IsValid())
-            {
-                var bookDocument = CustomAutoMapper.Map<Book, BookDocument>(book);
-                if (bookDocument != null)
-                {
-                    bookDocument = await _baseRepository.Insert(bookDocument);
-                    return CustomAutoMapper.Map<BookDocument,Book>(bookDocument);
-                }
-            }
-            return null;
+            var bookDocument = new BookDocument(book);
+            bookDocument = await _baseRepository.Insert(bookDocument);
+            return bookDocument.ToModel();
         }
 
-        public async Task<List<Book>> GetSimilar(Book book)
+        public async Task<Book> GetSimilar(Book book)
         {
-            var existingBook = await _baseRepository.Get(b => b.Id == ObjectId.Parse(book.Id) || (b.Title == book.Title && b.Author.Id == ObjectId.Parse(book.Author.Id)));
+            IList<BookDocument> existingBooks;
+            if (!string.IsNullOrEmpty(book.Id))
+            {
+                existingBooks = await _baseRepository.Get(b =>
+                   (b.Title == book.Title && b.Author.Id == new ObjectId(book.Author.Id)) ||
+                   b.Id == new ObjectId(book.Id));
+            }
+            else
+            {
+                existingBooks = await _baseRepository.Get(b =>
+                    b.Title == book.Title && b.Author.Id == new ObjectId(book.Author.Id));
+            }
 
-            if (existingBook.IsNullOrEmpty())
+            if (existingBooks.IsNullOrEmpty())
             {
                 return null;
             }
-            var books = new List<Book>();
-            foreach (var b in existingBook)
+
+            if (existingBooks.Count > 2)
             {
-                books.Add(CustomAutoMapper.Map<BookDocument, Book>(b));
+                throw new ObjectNotUniqueException("Book", $"{book.Id} {book.Author.Id}");
             }
-            return books;
+
+            return existingBooks.First().ToModel();
         }
 
         public async Task<Book> Get(string bookId)
@@ -65,7 +70,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Book", bookId);
             }
 
-            return CustomAutoMapper.Map<BookDocument, Book>(books.First());
+            return books.First().ToModel();
         }
 
         public async Task<List<Book>> GetFromAuthor(string authorId)
@@ -75,7 +80,7 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var book in document)
             {
-                result.Add(CustomAutoMapper.Map<BookDocument,Book>(book));
+                result.Add(book.ToModel());
             }
 
             return result;
@@ -91,7 +96,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 {
                     if (results.FirstOrDefault(b => string.Equals(b.Id, book.Id.ToString())) == null)
                     {
-                        results.Add(CustomAutoMapper.Map<BookDocument,Book>(book));
+                        results.Add(book.ToModel());
                     }
                 }
             }

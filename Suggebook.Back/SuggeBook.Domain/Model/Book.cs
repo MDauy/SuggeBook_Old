@@ -8,11 +8,14 @@ namespace SuggeBook.Domain.Model
         {
             WrongProperties = string.Empty;
         }
-        public List<string> Categories { get; set; }
+
+        public IList<string> Categories { get; set; }
         public string Title { get; set; }
         public Author Author { get; set; }
 
-        public override bool IsValid()
+        public string Isbn { get; set; }
+
+        public override bool TestValidation()
         {
             if (string.IsNullOrEmpty(Title))
             {

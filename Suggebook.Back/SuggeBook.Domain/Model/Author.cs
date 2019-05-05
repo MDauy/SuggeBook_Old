@@ -13,7 +13,7 @@ namespace SuggeBook.Domain.Model
         public string Lastname { get; set; }
         public int NbSuggestions { get; set; }
         public IList<Book> Books{ get; set; }
-        public override bool IsValid()
+        public override bool TestValidation()
         {
 
             if (string.IsNullOrEmpty(Lastname))

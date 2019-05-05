@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 
 namespace SuggeBook.Framework
@@ -7,25 +8,41 @@ namespace SuggeBook.Framework
     {
         public static T2 Map<T1, T2>(T1 source)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<T1, T2>());
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<T1, T2>());
 
-            var iMapper = config.CreateMapper();
+                var iMapper = config.CreateMapper();
 
-            return iMapper.Map<T1, T2>(source);
+                return iMapper.Map<T1, T2>(source);
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Error matching {typeof(T1).Name} in {typeof(T2).Name}");
+            }
         }
 
         public static IList<T2> MapLists<T1, T2>(IList<T1> source)
         {
-            var result = new List<T2>();
-
-            if (source != null)
+            try
             {
-                foreach (var t1 in source)
+                var result = new List<T2>();
+
+                if (source != null)
                 {
-                    result.Add(Map<T1, T2>(t1));
+                    foreach (var t1 in source)
+                    {
+                        result.Add(Map<T1, T2>(t1));
+                    }
                 }
+
+                return result;
             }
-            return result;
+
+            catch (Exception)
+            {
+                throw new Exception($"Error matching lists of {typeof(T1).Name} in {typeof(T2).Name}");
+            }
         }
     }
 }

@@ -8,16 +8,15 @@ namespace SuggeBook.Infrastructure.Documents
     {
         public UserDocument()
         {
-
         }
 
         public UserDocument(User user)
         {
-            this.Firstname = user.Firstname;
-            this.Lastname = user.Lastname;
-            this.FavoriteCategories = user.FavoriteCategories;
-            this.Mail = user.Mail;
-            this.UserName = user.UserName;
+            Firstname = user.Firstname;
+            Lastname = user.Lastname;
+            FavoriteCategories = user.FavoriteCategories;
+            Mail = user.Mail;
+            UserName = user.UserName;
         }
 
         [BsonElement("Firstname")]
@@ -27,12 +26,25 @@ namespace SuggeBook.Infrastructure.Documents
         public string Lastname { get; set; }
 
         [BsonElement("FavoriteCategories")]
-        public List<string> FavoriteCategories { get; set; }
+        public IList<string> FavoriteCategories { get; set; }
 
         [BsonElement("Mail")]
         public string Mail { get; set; }
 
         [BsonElement("UserName")]
         public string UserName{ get; set; }
+
+        public User ToModel()
+        {
+            return new User
+            {
+                Id = Id.ToString(),
+                Firstname = Firstname,
+                Lastname = Lastname,
+                FavoriteCategories = FavoriteCategories,
+                Mail = Mail,
+                UserName = UserName
+            };
+        }
     }
 }

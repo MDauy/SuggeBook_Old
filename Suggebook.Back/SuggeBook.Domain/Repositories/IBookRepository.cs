@@ -13,6 +13,6 @@ namespace SuggeBook.Domain.Repositories
         Task<List<Book>> GetFromCategories(List<string> authorId);
         Task UpdateSuggestions(string bookId, string suggestionId);
         Task<Book> Create(Book book);
-        Task<List<Book>> GetSimilar(Book book);
+        Task<Book> GetSimilar(Book book);
     }
 }

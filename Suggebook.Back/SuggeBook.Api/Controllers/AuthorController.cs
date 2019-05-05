@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using SuggeBook.Api.ViewModels;
-using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
-using SuggeBook.Framework;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -16,7 +14,7 @@ namespace SuggeBook.Api.Controllers
 
         public AuthorController(IGetAuthor getAuthor, ICreateAuthor createAuthor)
         {
-            this._getAuthor = getAuthor;
+            _getAuthor = getAuthor;
             _createAuthor = createAuthor;
         }
 
@@ -27,27 +25,25 @@ namespace SuggeBook.Api.Controllers
         {
             var author = await _getAuthor.Get(authorId);
 
-            var authorViewModel = CustomAutoMapper.Map<Author, AuthorViewModel>(author);
-            authorViewModel.Books = CustomAutoMapper.MapLists<Book, AuthorViewModel.AuthorBook>(author.Books);
+            var authorViewModel = new AuthorViewModel(author);
 
             return new JsonResult(authorViewModel);
         }
 
         [HttpPost]
         [Route("create")]
-        public async Task<JsonResult> Create([FromBody] JObject author)
+        public async Task<JsonResult> Create([FromBody] CreateAuthorViewModel author)
         {
-            var authorViewModel = author.ToObject<CreateAuthorViewModel>();
-            if (authorViewModel != null)
+            try
             {
-                var authorToCreate = CustomAutoMapper.Map<CreateAuthorViewModel, Author>(authorViewModel);
-                if (authorToCreate != null)
-                {
-                    var authorCreated = await _createAuthor.Create(authorToCreate);
-                    return new JsonResult(CustomAutoMapper.Map<Author, AuthorViewModel>(authorCreated));
-                }
+                var authorModel = author.ToModel();
+                authorModel = await _createAuthor.Create(authorModel);
+                return new JsonResult(new AuthorViewModel(authorModel));
             }
-            return null;
+            catch (Exception exception)
+            {
+                return new JsonResult(exception.Message);
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ namespace SuggeBook.Infrastructure.Repositories
         public async Task<User> Create(User user)
         {
                 var userDocument = await _baseRepository.Insert(new UserDocument(user));
-            return CustomAutoMapper.Map<UserDocument, User>(userDocument);
+                return userDocument.ToModel();
         }
 
         private async Task<User> BasicGetUser (Expression<Func<UserDocument,bool>> func, string userIdentifier)
@@ -33,7 +33,8 @@ namespace SuggeBook.Infrastructure.Repositories
             {
                 throw new ObjectNotUniqueException("User", userIdentifier);
             }
-            return CustomAutoMapper.Map<UserDocument, User>(users.First());
+
+            return users.First().ToModel();
         }
 
         public async Task<User> GetFromUsername(string username)

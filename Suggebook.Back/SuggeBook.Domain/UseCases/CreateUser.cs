@@ -18,7 +18,7 @@ namespace SuggeBook.Domain.UseCases
         }
         public async Task<User> Create(User user)
         {
-            if (user.IsValid())
+            if (user.TestValidation())
             {
                 return await _userRepository.Create(user);
             }

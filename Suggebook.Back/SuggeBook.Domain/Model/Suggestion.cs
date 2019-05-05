@@ -11,13 +11,12 @@ namespace SuggeBook.Domain.Model
         }
 
         public string Title { get; set; }
-        public IList<string> Categories { get; set; }
         public DateTime? CreationDate { get; set; }
         public string Content { get; set; }
         public Book Book { get; set; }
         public User User { get; set; }
 
-        public override bool IsValid()
+        public override bool TestValidation()
         {
             if (string.IsNullOrEmpty(Title))
             {

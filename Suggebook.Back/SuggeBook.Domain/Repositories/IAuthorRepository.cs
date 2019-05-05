@@ -10,5 +10,7 @@ namespace SuggeBook.Domain.Repositories
         Task<Author> Get(string authorId);
 
         Task<Author> Create(Author author);
+
+        Task<Author> GetSimilar(Author author);
     }
 }

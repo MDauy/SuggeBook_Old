@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using SuggeBook.Api.Exceptions;
 using SuggeBook.Api.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
 using SuggeBook.Framework;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers
 {
-    [Route ("book")]
+    [Route("book")]
     public class BookController : Controller
     {
         private readonly IGetBook _getBook;
@@ -24,55 +22,26 @@ namespace SuggeBook.Api.Controllers
         }
 
         [Route("{bookId}")]
-        public async Task<JsonResult> Get (string bookId)
+        public async Task<JsonResult> Get(string bookId)
         {
             var book = await _getBook.Get(bookId);
-            var bookViewModel = CustomAutoMapper.Map<Book, BookViewModel>(book);
-            return new JsonResult(bookViewModel); 
+            var bookViewModel = new BookViewModel(book);
+            return new JsonResult(bookViewModel);
         }
 
-        public async Task<JsonResult> Create([FromBody] JObject book)
+        [HttpPost]
+        [Route("create")]
+        public async Task<JsonResult> Create([FromBody] CreateBookViewModel book)
         {
-            try
-            {
-                var createBookViewModel = book.ToObject<CreateBookViewModel>();
-                if (createBookViewModel != null)
+                var bookModel = book.ToModel();
+                if (bookModel == null)
                 {
-                    var bookToCreate = CustomAutoMapper.Map<CreateBookViewModel, Book>(createBookViewModel);
-                    if (bookToCreate != null)
-                    {
-                        bookToCreate = await _createBook.Create(bookToCreate);
-                        var bookViewModel = CustomAutoMapper.Map<Book, BookViewModel>(bookToCreate);
-                        return new JsonResult(bookViewModel);
-                    }
+                    throw new ObjectCreationException("Book");
                 }
-                throw new ObjectCreationException("Book", book.ToString());
-            }
-             catch (Exception e)
-            {
-                return new JsonResult(e.Message);
-            }            
+                bookModel.Author = new Author { Id = book.AuthorId};
+                bookModel = await _createBook.Create(bookModel);
+                var bookViewModel = new BookViewModel(bookModel);
+                return new JsonResult(bookViewModel);
         }
-
-        public async Task<JsonResult> CreateSeveral([FromBody] JObject books)
-        {
-            try
-            {
-                var booksViewModels = books.ToObject<List<CreateBookViewModel>>();
-                if (booksViewModels != null)
-                {
-                    var booksToCreate = CustomAutoMapper.MapLists<CreateBookViewModel, Book>(booksViewModels);
-                    var createdBooks = await _createBook.CreateSeveral(booksToCreate);
-                    return new JsonResult(CustomAutoMapper.MapLists<Book, BookViewModel>(createdBooks));
-                }
-                throw new ObjectCreationException("Book", books.ToString());
-            }
-            catch(Exception e)
-            {
-                return new JsonResult(e.Message);
-            }
-        }
-
-
     }
 }

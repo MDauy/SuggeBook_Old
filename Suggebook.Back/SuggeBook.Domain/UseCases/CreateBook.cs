@@ -1,33 +1,41 @@
 ﻿using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Domain.UseCasesInterfaces;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SuggeBook.Domain.Exceptions;
 
 namespace SuggeBook.Domain.UseCases
 {
     public class CreateBook : ICreateBook
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IAuthorRepository _authorRepository;
 
-        public CreateBook(IBookRepository bookRepository)
+        public CreateBook(IBookRepository bookRepository, IAuthorRepository authorRepository)
         {
             _bookRepository = bookRepository;
+            _authorRepository = authorRepository;
         }
 
         public async Task<Book> Create(Book book)
         {
-            if (book.IsValid())
-            {
-                var similarbook = await _bookRepository.Create(book);
-                if (similarbook == null)
+            book.TestValidation();
+            
+                var author = await _authorRepository.Get(book.Author.Id);
+                if (author != null)
                 {
-                    similarbook = await _bookRepository.Create(book);
+                    book.Author = author;
+                    var similarBook = await _bookRepository.GetSimilar(book);
+                    if (similarBook == null)
+                    {
+                        // ReSharper disable once RedundantAssignment
+                       return await _bookRepository.Create(book);
+                    }
+
+                    return similarBook;
                 }
-                return similarbook;
-            }
-            return null;
+                throw  new InvalidObjectException("Author", book.Author.Id, "Author doesn't exist");
         }
 
         public async Task<IList<Book>> CreateSeveral(IList<Book> books)

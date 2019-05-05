@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SuggeBook.Domain.Model;
 
 namespace SuggeBook.Api.ViewModels
 {
@@ -7,35 +8,48 @@ namespace SuggeBook.Api.ViewModels
     /// </summary>
     public class UserViewModel : BaseViewModel
     {
+        public UserViewModel() { }
+
+        public UserViewModel(User user)
+        {
+            Id = user.Id;
+            UserName = user.UserName;
+            FavoriteCategories = user.FavoriteCategories;
+        }
+
         public string UserName { get; set; }
 
         public List<UserBook> Books { get; set; }
 
-        public List<UserSuggestion> Suggestions { get; set; }
+        public IList<UserSuggestion> Suggestions { get; set; }
 
-        public List<CategoryEnum> FavoriteCategories{ get; set; }
+        public IList<string> FavoriteCategories{ get; set; }
 
         public struct UserBook
         {
+            public UserBook(Book book)
+            {
+                Id = book.Id;
+                AuthorFullName = $"{book.Author.Firstname} {book.Author.Lastname}";
+                Title = book.Title;
+                
+            }
+
             public string Id { get; set; }
 
             public string Title { get; set; }
 
             public string AuthorFullName { get; set; }
-
-            public int Year { get; set; }
         }
     
         public struct UserSuggestion
         {
+            public UserSuggestion(Suggestion suggestion)
+            {
+                Title = suggestion.Title;
+            }
             public string Title { get; set; }
-
-            public string BookTitle { get; set; }
         }  
         
-        public struct UserCategory
-        {
-            public string Label { get; set; }
-        }
     }
 }

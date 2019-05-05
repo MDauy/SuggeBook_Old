@@ -28,6 +28,7 @@ namespace SuggeBook.IoC
             services.AddSingleton<ICreateSuggestion, CreateSuggestion>();
             services.AddSingleton<ICreateUser, CreateUser>();
             services.AddSingleton<ICreateAuthor, CreateAuthor>();
+            services.AddSingleton<ICreateBook, CreateBook>();
             services.AddSingleton<IGetAuthor, GetAuthor>();
             services.AddSingleton<IGetBook, GetBook>();
             services.AddSingleton<IGetUser, GetUser>();

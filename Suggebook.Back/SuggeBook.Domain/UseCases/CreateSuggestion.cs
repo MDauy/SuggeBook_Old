@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Domain.UseCasesInterfaces;
@@ -19,17 +20,15 @@ namespace SuggeBook.Domain.UseCases
         }
         public async Task<Suggestion> Create(Suggestion suggestion)
         {
-            if (suggestion.IsValid())
-            {
-                var createdSuggestion = await _suggestionRepository.Insert(suggestion);
-                createdSuggestion.Book = suggestion.Book;
-                createdSuggestion.User = suggestion.User;
-                await _authorRepository.UpdateNbSuggestions(suggestion.Book.Author.Id, createdSuggestion.Id);
-                await _bookRepository.UpdateSuggestions(suggestion.Book.Id, createdSuggestion.Id);
+            suggestion.TestValidation();
 
-                return createdSuggestion;
-            }
-            return null;
+            var createdSuggestion = await _suggestionRepository.Insert(suggestion);
+            createdSuggestion.Book = suggestion.Book;
+            createdSuggestion.User = suggestion.User;
+            await _authorRepository.UpdateNbSuggestions(suggestion.Book.Author.Id, createdSuggestion.Id);
+            await _bookRepository.UpdateSuggestions(suggestion.Book.Id, createdSuggestion.Id);
+
+            return createdSuggestion;
         }
     }
 }

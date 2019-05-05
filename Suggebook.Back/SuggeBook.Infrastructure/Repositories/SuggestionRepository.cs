@@ -66,7 +66,7 @@ namespace SuggeBook.Infrastructure.Repositories
         public async Task<Suggestion> Insert(Suggestion suggestion)
         {
             var document = await _baseRepository.Insert(new SuggestionDocument(suggestion));
-            return CustomAutoMapper.Map<SuggestionDocument, Suggestion>(document);
+            return document.ToModel();
         }
 
         public async Task<Suggestion> Get(string id)
@@ -81,7 +81,8 @@ namespace SuggeBook.Infrastructure.Repositories
             {
                 throw new ObjectNotUniqueException("Suggestion", id);
             }
-            return CustomAutoMapper.Map<SuggestionDocument, Suggestion>(document.First());
+
+            return document.First().ToModel();
         }
     }
 }

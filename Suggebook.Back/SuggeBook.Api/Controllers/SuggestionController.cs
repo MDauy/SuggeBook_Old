@@ -19,23 +19,18 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpPost]
-        [Route("add")]
-        public async Task<JsonResult> Add([FromBody]JObject json)
+        [Route("create")]
+        public async Task<JsonResult> Add([FromBody]CreateSuggestionViewModel suggestionToCreate)
         {
             try
             {
-                CreateSuggestionViewModel createSuggestionViewModel = json.ToObject<CreateSuggestionViewModel>();
-                var suggestion = CustomAutoMapper.Map<CreateSuggestionViewModel, Suggestion>(createSuggestionViewModel);
-                if (suggestion != null)
-                {
-                    var createdSuggestion = await _createSuggestion.Create(suggestion);
-                    return new JsonResult(createdSuggestion);
-                }
-                return null;
+                var suggestion = suggestionToCreate.ToModel();
+                suggestion = await _createSuggestion.Create(suggestion);
+                return new JsonResult(new SuggestionViewModel(suggestion));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                return new JsonResult(e.Message);
             }
         }
     }

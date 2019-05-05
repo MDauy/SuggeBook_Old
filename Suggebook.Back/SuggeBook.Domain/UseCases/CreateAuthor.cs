@@ -16,9 +16,14 @@ namespace SuggeBook.Domain.UseCases
 
         public async Task<Author> Create(Author author)
         {
-            if (author.IsValid())
+            if (author.TestValidation())
             {
-                return await _authorRepository.Create(author);
+                var similarAuthor = await _authorRepository.GetSimilar(author);
+                if (similarAuthor == null)
+                {
+                    return await _authorRepository.Create(author);
+                }
+                return similarAuthor;
             }
             return null;
         }

@@ -15,7 +15,6 @@ namespace SuggeBook.Infrastructure.Documents
         public SuggestionDocument(Suggestion suggestion)
         {
             Title = suggestion.Title;
-            Categories = suggestion.Categories;
             CreationDate = suggestion.CreationDate;
             Content = suggestion.Content;
             BookId = new ObjectId(suggestion.Book.Id);
@@ -37,6 +36,25 @@ namespace SuggeBook.Infrastructure.Documents
         public DateTime? CreationDate { get; set; }
 
         [BsonElement("User_Id")]
-        public ObjectId UserId { get; set; }        
+        public ObjectId UserId { get; set; }
+
+        public Suggestion ToModel()
+        {
+            return new Suggestion
+            {
+                Id = Id.ToString(),
+                Book = new Book()
+                {
+                    Id = BookId.ToString()
+                },
+                User = new User()
+                {
+                    Id = UserId.ToString()
+                },
+                Title = Title,
+                Content = Content,
+                CreationDate = CreationDate
+            };
+        }
     }
 }

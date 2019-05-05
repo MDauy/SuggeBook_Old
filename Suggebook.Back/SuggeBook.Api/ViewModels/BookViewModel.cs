@@ -1,6 +1,4 @@
 ﻿using SuggeBook.Domain.Model;
-using SuggeBook.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace SuggeBook.Api.ViewModels
@@ -12,21 +10,31 @@ namespace SuggeBook.Api.ViewModels
 
         }
 
-        public BookViewModel(Book dao)
+        public BookViewModel(Book book)
         {
-            CustomAutoMapper.Map<Book, BookViewModel>(dao);
+            Id = book.Id;
+            Title = book.Title;
+            Author = new BookAuthorViewModel()
+            {
+                Id = book.Author.Id,
+                Fullname = $"{book.Author.Firstname} {book.Author.Lastname}"
+            };
+            Categories = book.Categories;
         }
 
         public string Title { get; set; }
 
-        public string AuthorFullName { get; set; }
-
-        public string AuthorId { get; set; }
+        public BookAuthorViewModel Author { get; set; }
 
         public int NbSuggestions { get; set; }
 
-        public List<CategoryEnum> Categories { get; set; }
+        public IList<string> Categories { get; set; }
 
-        public int Year { get; set; }
+        
+    }
+    public struct BookAuthorViewModel
+    {
+        public string Id { get; set; }
+        public string Fullname { get; set; }
     }
 }

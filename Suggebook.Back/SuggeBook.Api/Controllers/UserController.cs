@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using SuggeBook.Api.ViewModels;
-using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
-using SuggeBook.Framework;
 using System;
 using System.Threading.Tasks;
 
@@ -15,15 +12,15 @@ namespace SuggeBook.Api.Controllers
         private readonly IGetUser _getUser;
         private readonly ICreateUser _createUser;
 
-        public UserController (IGetUser getUser, ICreateUser createUser)
+        public UserController(IGetUser getUser, ICreateUser createUser)
         {
             _getUser = getUser;
             _createUser = createUser;
         }
-       
+
         [HttpGet]
         [Route("from-username/{username}")]
-        public async Task<JsonResult> GetFromUsername (string username)
+        public async Task<JsonResult> GetFromUsername(string username)
         {
             var user = await _getUser.GetFromUsername(username);
             return new JsonResult(user);
@@ -31,7 +28,7 @@ namespace SuggeBook.Api.Controllers
 
         [HttpGet]
         [Route("{userId}")]
-       public async Task<JsonResult> GetUser (string id)
+        public async Task<JsonResult> Get(string id)
         {
             var user = await _getUser.Get(id);
 
@@ -39,25 +36,22 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpPost]
-        [Route("add")]
-        public async Task<JsonResult> AddUser ([FromBody] JObject userToCreateJson)
+        [Route("create")]
+        public async Task<JsonResult> Create([FromBody] CreateUserViewModel userToCreate)
         {
             try
             {
-                var viewModel = userToCreateJson.ToObject<CreateUserViewModel>();
-                if (viewModel != null)
-                {
-                    var user = CustomAutoMapper.Map<CreateUserViewModel, User>(viewModel);
-                    user = await _createUser.Create(user);
-                    return new JsonResult(user);
-                }
-                return new JsonResult("no user added");
+
+                var user = userToCreate.ToModel();
+                user = await _createUser.Create(user);
+                return new JsonResult(new UserViewModel(user));
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                return new JsonResult(e.Message);
             }
         }
-        
+
     }
 }

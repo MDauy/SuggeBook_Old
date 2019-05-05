@@ -34,19 +34,29 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Author", authorId);
             }
 
-            return CustomAutoMapper.Map<AuthorDocument, Author>(author.First());
+            return author.First().ToModel();
         }
 
         public async Task<Author> Create(Author author)
         {
-            var authorDocument = CustomAutoMapper.Map<Author, AuthorDocument>(author);
-            if (authorDocument != null)
-            {
-                authorDocument = await _baseRepository.Insert(authorDocument);
-                return CustomAutoMapper.Map <AuthorDocument, Author>(authorDocument);
-            }
+            var authorDocument = new AuthorDocument(author);
+            authorDocument = await _baseRepository.Insert(authorDocument);
+            return authorDocument.ToModel();
+        }
 
-            return null;
+        public async Task<Author> GetSimilar(Author author)
+        {
+            var authorsDocuments = await _baseRepository.Get(a =>
+                string.Equals(a.Lastname, author.Lastname) && string.Equals(a.Firstname, author.Firstname));
+            if (authorsDocuments.IsNullOrEmpty())
+            {
+                return null;
+            }
+            if (authorsDocuments.Count > 1)
+            {
+                throw new ObjectNotUniqueException("Author", $"{author.Firstname} {author.Lastname}");
+            }
+            return authorsDocuments.First().ToModel();
         }
 
         public async Task UpdateNbSuggestions(string authorId, string suggestionId)
