@@ -16,7 +16,7 @@ namespace SuggeBook.Infrastructure.Documents
             Lastname = user.Lastname;
             FavoriteCategories = user.FavoriteCategories;
             Mail = user.Mail;
-            UserName = user.UserName;
+            UserName = user.Username;
         }
 
         [BsonElement("Firstname")]
@@ -43,7 +43,7 @@ namespace SuggeBook.Infrastructure.Documents
                 Lastname = Lastname,
                 FavoriteCategories = FavoriteCategories,
                 Mail = Mail,
-                UserName = UserName
+                Username = UserName
             };
         }
     }

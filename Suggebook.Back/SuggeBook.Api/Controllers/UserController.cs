@@ -41,7 +41,6 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-
                 var user = userToCreate.ToModel();
                 user = await _createUser.Create(user);
                 return new JsonResult(new UserViewModel(user));

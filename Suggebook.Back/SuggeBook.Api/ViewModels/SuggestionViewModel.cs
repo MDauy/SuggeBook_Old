@@ -22,7 +22,7 @@ namespace SuggeBook.Api.ViewModels
             };
             CreationDate = suggestion.CreationDate;
             BookTitle = suggestion.Book.Title;
-            CreatorUsername = suggestion.User.UserName;
+            CreatorUsername = suggestion.User.Username;
             Content = suggestion.Content;
         }
 

@@ -13,7 +13,7 @@ namespace SuggeBook.Api.ViewModels
         public UserViewModel(User user)
         {
             Id = user.Id;
-            UserName = user.UserName;
+            UserName = user.Username;
             FavoriteCategories = user.FavoriteCategories;
         }
 

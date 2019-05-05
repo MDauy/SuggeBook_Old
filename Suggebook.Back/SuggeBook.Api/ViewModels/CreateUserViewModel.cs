@@ -32,7 +32,7 @@ namespace SuggeBook.Api.ViewModels
                 Firstname = Firstname,
                 Lastname = Lastname,
                 Mail = Mail,
-                UserName = Username
+                Username = Username
             };
         }
     }

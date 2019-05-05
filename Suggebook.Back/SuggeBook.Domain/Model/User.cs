@@ -13,7 +13,7 @@ namespace SuggeBook.Domain.Model
         public string Firstname{ get; set; }
         public string Lastname { get; set; }
         public string Mail{ get; set; }      
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public IList<string> FavoriteCategories { get; set; }
         public override bool TestValidation()
         {
@@ -22,7 +22,7 @@ namespace SuggeBook.Domain.Model
                 WrongProperties += "Mail is null or empty";
             }
 
-            if (string.IsNullOrEmpty(UserName))
+            if (string.IsNullOrEmpty(Username))
             {
                 WrongProperties += "UserName is null or empty";
             }

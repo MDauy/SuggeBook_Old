@@ -13,7 +13,7 @@ namespace SuggeBook.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public UserRepository (IBaseRepository<UserDocument> baseRepo)
+        public UserRepository(IBaseRepository<UserDocument> baseRepo)
         {
             _baseRepository = baseRepo;
         }
@@ -22,11 +22,11 @@ namespace SuggeBook.Infrastructure.Repositories
 
         public async Task<User> Create(User user)
         {
-                var userDocument = await _baseRepository.Insert(new UserDocument(user));
-                return userDocument.ToModel();
+            var userDocument = await _baseRepository.Insert(new UserDocument(user));
+            return userDocument.ToModel();
         }
 
-        private async Task<User> BasicGetUser (Expression<Func<UserDocument,bool>> func, string userIdentifier)
+        private async Task<User> BasicGetUser(Expression<Func<UserDocument, bool>> func, string userIdentifier)
         {
             var users = await _baseRepository.Get(func);
             if (users.Count > 1)
@@ -45,6 +45,42 @@ namespace SuggeBook.Infrastructure.Repositories
         public async Task<User> Get(string userId)
         {
             return await BasicGetUser(x => x.Id == ObjectId.Parse(userId), userId);
+        }
+
+        public async Task<User> GetSimilarUsername(string username)
+        {
+            var existingUser =
+                await _baseRepository.Get(u => string.Equals(u.UserName, username));
+
+            if (existingUser.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            if (existingUser.Count > 1)
+            {
+                throw new ObjectNotUniqueException("User", $"{username}");
+            }
+
+            return existingUser.First().ToModel();
+        }
+
+        public async Task<User> GetSimilarMail(string mail)
+        {
+            var existingUser =
+                await _baseRepository.Get(u => string.Equals(u.Mail, mail));
+
+            if (existingUser.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            if (existingUser.Count > 1)
+            {
+                throw new ObjectNotUniqueException("User", $"{mail}");
+            }
+
+            return existingUser.First().ToModel();
         }
     }
 }
