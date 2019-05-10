@@ -14,5 +14,6 @@ namespace SuggeBook.Domain.Repositories
         Task UpdateSuggestions(string bookId, string suggestionId);
         Task<Book> Create(Book book);
         Task<Book> GetSimilar(Book book);
+        Task<IList<Book>> GetHomeBooks();
     }
 }

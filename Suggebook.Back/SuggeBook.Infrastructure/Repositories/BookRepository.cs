@@ -118,5 +118,18 @@ namespace SuggeBook.Infrastructure.Repositories
                 await _baseRepository.Update(book);
             }
         }
+
+        public async Task<IList<Book>> GetHomeBooks()
+        {
+            var booksDocuments = await _baseRepository.Get(_ => true);
+            var booksResults = new List<Book>();
+
+            foreach (var document in booksDocuments)
+            {
+                booksResults.Add(document.ToModel());
+            }
+
+            return booksResults;
+        }
     }
 }

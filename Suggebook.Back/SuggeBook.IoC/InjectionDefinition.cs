@@ -32,6 +32,7 @@ namespace SuggeBook.IoC
             services.AddSingleton<IGetAuthor, GetAuthor>();
             services.AddSingleton<IGetBook, GetBook>();
             services.AddSingleton<IGetUser, GetUser>();
+            services.AddSingleton<IGetHomeBooks, GetHomeBooks>();
 
         }
     }
