@@ -1,4 +1,4 @@
-import { ACTIONS } from "../consts";
+import { ACTIONS } from "../../consts";
 
 const bookReducer = (state, action)=>
 {
@@ -8,15 +8,16 @@ const bookReducer = (state, action)=>
         return {
             ...state,
             book : {
-                title : action.payload.title
+                title : action.data.title
             }
         }
-        case ACTIONS.GET_HOME_BOOKS:
-        default:
+        case ACTIONS.GET_HOME_BOOKS:        
         return {
             ...state,
-            homeBooks : [action.payload]
+            homeBooks : [action.data]
         }
+        default:
+        return state;
     }
 }
 

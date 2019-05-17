@@ -1,20 +1,21 @@
-import React from "react"
+import React from "react";
 
 export class BookThumbnail extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
+    const book = this.props.book;
+    this.state = {
+      title: book.title,
+      author: book.author,
+      id: book.id
+    };
+  }
 
-        this.state = {
-            title: '',
-            author: '',
-            id: ''
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                {this.title}  {this.author}
-            </div>)
-    }
+  render() {
+    return (
+      <div>
+        {this.title} {this.author}
+      </div>
+    );
+  }
 }

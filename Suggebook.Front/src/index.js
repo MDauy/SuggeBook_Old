@@ -2,10 +2,10 @@ import ReactDOM from 'react-dom';
 import React from 'react'
 import { Provider as ReduxProvider} from 'react-redux'
 import HomeBooksContaniner from './components/book/homeBooksContainer';
-import configureStore from './reducers/configureStore';
+import configureStore from './Redux/configureStore';
 
 
-var store = configureStore();
+var store = configureStore({homeBooks : []});
 
 window.React = React;
 

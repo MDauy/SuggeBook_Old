@@ -1,5 +1,5 @@
 import {createStore} from 'redux';
-import bookReducer from './bookReducer';
+import bookReducer from './reducers/bookReducer';
 
 export default function configureStore (initialState)
 {   

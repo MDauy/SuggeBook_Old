@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import {ACTIONS, BASE_URL} from "../consts"
+import {ACTIONS, BASE_URL} from "../../consts"
 export const getBook = (id)=> {
     return {
         type: ACTIONS.GET_BOOK,
@@ -14,7 +14,7 @@ export const getBook = (id)=> {
 
 export const getHomeBooks = () => {
     return {
-        type:ACTIONS.GET_GHOME_BOOKS,
+        type:ACTIONS.GET_HOME_BOOKS,
         data : $.ajax ({
             method:"GET",
             dataType:"application/json",
