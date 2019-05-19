@@ -14,7 +14,7 @@ export class BookThumbnail extends React.Component {
   render() {
     return (
       <div>
-        {this.title} {this.author}
+        {this.state.title} {this.state.author.fullname}
       </div>
     );
   }

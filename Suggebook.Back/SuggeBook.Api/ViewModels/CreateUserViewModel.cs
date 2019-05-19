@@ -31,7 +31,7 @@ namespace SuggeBook.Api.ViewModels
                 FavoriteCategories = FavoriteCategories,
                 Firstname = Firstname,
                 Lastname = Lastname,
-                Mail = Mail,
+                Email = Mail,
                 Username = Username
             };
         }

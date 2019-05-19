@@ -15,7 +15,7 @@ namespace SuggeBook.Infrastructure.Documents
             Firstname = user.Firstname;
             Lastname = user.Lastname;
             FavoriteCategories = user.FavoriteCategories;
-            Mail = user.Mail;
+            Email = user.Email;
             UserName = user.Username;
         }
 
@@ -28,11 +28,14 @@ namespace SuggeBook.Infrastructure.Documents
         [BsonElement("FavoriteCategories")]
         public IList<string> FavoriteCategories { get; set; }
 
-        [BsonElement("Mail")]
-        public string Mail { get; set; }
+        [BsonElement("Email")]
+        public string Email { get; set; }
 
         [BsonElement("UserName")]
         public string UserName{ get; set; }
+
+        [BsonElement("Password")]
+        public string Password { get; set; }
 
         public User ToModel()
         {
@@ -42,7 +45,7 @@ namespace SuggeBook.Infrastructure.Documents
                 Firstname = Firstname,
                 Lastname = Lastname,
                 FavoriteCategories = FavoriteCategories,
-                Mail = Mail,
+                Email = Email,
                 Username = UserName
             };
         }

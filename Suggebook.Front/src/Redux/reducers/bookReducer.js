@@ -14,7 +14,7 @@ const bookReducer = (state, action)=>
         case ACTIONS.GET_HOME_BOOKS:        
         return {
             ...state,
-            homeBooks : [action.data]
+            homeBooks : action.data
         }
         default:
         return state;

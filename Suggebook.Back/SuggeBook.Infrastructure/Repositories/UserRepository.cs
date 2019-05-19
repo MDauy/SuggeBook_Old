@@ -68,7 +68,7 @@ namespace SuggeBook.Infrastructure.Repositories
         public async Task<User> GetSimilarMail(string mail)
         {
             var existingUser =
-                await _baseRepository.Get(u => string.Equals(u.Mail, mail));
+                await _baseRepository.Get(u => string.Equals(u.Email, mail));
 
             if (existingUser.IsNullOrEmpty())
             {
@@ -81,6 +81,33 @@ namespace SuggeBook.Infrastructure.Repositories
             }
 
             return existingUser.First().ToModel();
+        }
+
+        public async Task<User> Connect(string usernameOrEmail, string password)
+        {
+            var users = await _baseRepository.Get(u => u.UserName == usernameOrEmail);
+            if (users.IsNullOrEmpty())
+            {
+                users = await _baseRepository.Get(u => u.Email == usernameOrEmail);
+            }
+
+            if (!users.IsNullOrEmpty())
+            {
+                if (users.Count > 1)
+                {
+                    throw new ObjectNotUniqueException("User", usernameOrEmail);
+                }
+
+                var user = users.First();
+
+                if (string.Equals(user.Password, password))
+                {
+
+                    return user.ToModel();
+                }
+            }
+
+            return null;
         }
     }
 }

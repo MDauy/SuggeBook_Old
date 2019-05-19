@@ -17,5 +17,7 @@ namespace SuggeBook.Domain.Repositories
 
         Task<User> GetSimilarUsername(string username);
         Task<User> GetSimilarMail(string mail);
+
+        Task<User> Connect(string usernameOrEmail, string password);
     }
 }

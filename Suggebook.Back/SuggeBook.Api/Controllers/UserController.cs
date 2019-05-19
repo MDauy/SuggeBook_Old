@@ -11,11 +11,13 @@ namespace SuggeBook.Api.Controllers
     {
         private readonly IGetUser _getUser;
         private readonly ICreateUser _createUser;
+        private readonly IConnectUser _connectUser;
 
-        public UserController(IGetUser getUser, ICreateUser createUser)
+        public UserController(IGetUser getUser, ICreateUser createUser, IConnectUser connectUser)
         {
             _getUser = getUser;
             _createUser = createUser;
+            _connectUser = connectUser;
         }
 
         [HttpGet]
@@ -51,6 +53,20 @@ namespace SuggeBook.Api.Controllers
                 return new JsonResult(e.Message);
             }
         }
+        [HttpPut]
+        [Route("connect")]
+        public async Task<JsonResult> Connect([FromBody] UserToConnectViewModel userToConnect)
+        {
+            try
+            {
+                return new JsonResult(await _connectUser.Connect(userToConnect.UsernameOrEmail, userToConnect.Password));
+            }
+            catch (Exception e)
+            {
+                return new JsonResult(e.Message);
+            }
+        }
+
 
     }
 }

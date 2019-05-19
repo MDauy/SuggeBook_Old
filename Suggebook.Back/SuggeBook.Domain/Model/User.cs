@@ -12,12 +12,12 @@ namespace SuggeBook.Domain.Model
         }
         public string Firstname{ get; set; }
         public string Lastname { get; set; }
-        public string Mail{ get; set; }      
+        public string Email{ get; set; }      
         public string Username { get; set; }
         public IList<string> FavoriteCategories { get; set; }
         public override bool TestValidation()
         {
-            if (string.IsNullOrEmpty(Mail))
+            if (string.IsNullOrEmpty(Email))
             {
                 WrongProperties += "Mail is null or empty";
             }

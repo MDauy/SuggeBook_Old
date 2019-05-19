@@ -15,9 +15,21 @@ namespace SuggeBook.Api
 
         public IConfiguration Configuration { get; }
 
+        private readonly string CorsSpecificOrigins = "AllowAll";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3006");
+                    });
+            });
+            services.AddCors();
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ViewModelValidationFilter));
@@ -35,6 +47,7 @@ namespace SuggeBook.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(CorsSpecificOrigins);
             app.UseMvc();
         }
     }

@@ -1,7 +1,9 @@
-import {createStore} from 'redux';
+import {createStore, combineReducers} from 'redux';
 import bookReducer from './reducers/bookReducer';
+import userReducer from './reducers/userReducer';
 
 export default function configureStore (initialState)
-{   
-    return createStore(bookReducer, initialState);
+{
+    const combinedReducers = combineReducers (bookReducer, userReducer)
+    return createStore(combinedReducers, initialState);
 }

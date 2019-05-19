@@ -18,10 +18,10 @@ namespace SuggeBook.Domain.UseCases
         {
             user.TestValidation();
             var alreadyUsedProperties = string.Empty;
-            var similarUserMail =await  _userRepository.GetSimilarMail(user.Mail);
+            var similarUserMail =await  _userRepository.GetSimilarMail(user.Email);
             if (similarUserMail != null)
             {
-                alreadyUsedProperties += $"{user.Mail} ";
+                alreadyUsedProperties += $"{user.Email} ";
             }
 
             var similarUserUsername = await _userRepository.GetSimilarUsername(user.Username);
