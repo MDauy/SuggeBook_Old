@@ -5,7 +5,7 @@ import configureStore from './redux/configureStore';
 import LandingRedirection from './components/landingRedirection'
 
 
-var store = configureStore({homeBooks : []});
+var store = configureStore({homeBooks : [], user :{}});
 
 window.React = React;
 
