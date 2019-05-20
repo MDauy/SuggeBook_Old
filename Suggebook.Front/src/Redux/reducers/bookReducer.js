@@ -1,6 +1,6 @@
 import { ACTIONS } from "../../consts";
 
-const bookReducer = (state, action)=>
+const bookReducer = (state = 0, action)=>
 {
     switch(action.type)
     {

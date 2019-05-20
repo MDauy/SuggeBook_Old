@@ -1,8 +1,8 @@
-import { React, Component } from "react";
+import React from "react";
 import HomeBooksContainer from "./book/homeBooksContainer";
 import LoginForm from "./user/loginForm";
 import { connect } from "react-redux";
-class LandingRedirection extends Component {
+class LandingRedirection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

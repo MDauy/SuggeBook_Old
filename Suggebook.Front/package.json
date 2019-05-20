@@ -5,7 +5,8 @@
   "main": "suggebook.front",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set PORT=3006 && react-scripts start"
+    "start": "set PORT=3006 && react-scripts start",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",

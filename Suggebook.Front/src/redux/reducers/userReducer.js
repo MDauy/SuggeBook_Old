@@ -1,6 +1,6 @@
 import { ACTIONS } from "../../consts";
 
-const userReducer = (state, action) =>
+const userReducer = (state = 0, action) =>
 {
     switch (action)
     {

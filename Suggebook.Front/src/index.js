@@ -1,11 +1,13 @@
 import ReactDOM from 'react-dom';
 import React from 'react'
 import { Provider as ReduxProvider} from 'react-redux'
-import configureStore from './redux/configureStore';
+import configureStore from './redux/reducers/configureStore';
 import LandingRedirection from './components/landingRedirection'
+import './styles/index.scss' 
 
 
-var store = configureStore({homeBooks : [], user :{}});
+
+var store = configureStore();
 
 window.React = React;
 
