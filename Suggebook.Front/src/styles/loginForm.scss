@@ -1,14 +1,25 @@
 #login-form-container{
-    width : 300px;
-    width : 300px;
+    width : 400px;
+    width : 400px;
     height: 30%;
     margin:auto;
-    position: absolute;
+    margin-top : 250px;
+    vertical-align: center;
 }
 
-#login-form
+h1
 {
-    margin : 20px;
+    margin : auto;
+    width:auto;
+    display: table;
+}
+
+
+.form-container
+{
+    margin : 70px 20px 20px 20px;
+    padding : 20px;
+    border : 1px solid;
 }
 
 #login-form .form-group

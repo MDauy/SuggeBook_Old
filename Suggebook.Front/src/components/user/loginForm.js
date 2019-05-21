@@ -19,10 +19,17 @@ class LoginForm extends React.Component {
 
   onSubmit(event) {}
 
+  redirectToSignup = ()=>
+  {
+    this.props.history.push('/sign-up')
+  }
+
   render() {
     return (
       <div id="login-form-container">
-        <form className="form-container" id="login-form">
+      <h1>Se connecter</h1>
+      <div className="form-container">
+        <form id="login-form">
           <div className="form-group">
             <label htmlFor="mail-input">Mail ou nom d'utilisateur</label>
             <input className="form-control" id="mail-input" type="text" />
@@ -32,6 +39,10 @@ class LoginForm extends React.Component {
             <input className="form-control" id="password-input" type="password" />
           </div>
         </form>
+        <a to={'/sign-up'}>Mot de passe oublié ?</a>
+        <br/>
+        <a onClick={this.redirectToSignup}>1ère visite ?</a>
+       </div>
       </div>
     );
   }
