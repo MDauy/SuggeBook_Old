@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
 
-class SignUp extends React.Class {
+class SignUp extends React.Component {
 
+  render() {
+    return <p>SIGNUP PAGE</p>;
+  }
 }
 
 export default SignUp;
