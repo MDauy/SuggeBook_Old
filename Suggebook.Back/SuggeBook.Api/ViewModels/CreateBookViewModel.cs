@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using SuggeBook.Domain.Model;
@@ -16,10 +17,13 @@ namespace SuggeBook.Api.ViewModels
         public string AuthorId { get; set; }
 
         [JsonProperty(PropertyName = "year")]
-        public int Year { get; set; }
+        public DateTime Year { get; set; }
 
-        [JsonProperty(PropertyName = "isbn")]
-        public string Isbn { get; set; }
+        [JsonProperty(PropertyName = "isbn10")]
+        public string Isbn10 { get; set; }
+
+        [JsonProperty(PropertyName = "isbn13")]
+        public string Isbn13 { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "categories")]
@@ -36,7 +40,8 @@ namespace SuggeBook.Api.ViewModels
                 },
                 Id = Id,
                 Categories = Categories,
-                Isbn = Isbn
+                Isbn10 = Isbn10,
+                Isbn13 = Isbn13
             };
         }
     }

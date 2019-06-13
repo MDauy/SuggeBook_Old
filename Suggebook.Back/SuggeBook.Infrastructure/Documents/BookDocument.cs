@@ -14,7 +14,8 @@ namespace SuggeBook.Infrastructure.Documents
         {
             Author = new BookAuthor(book.Author);
             Categories = book.Categories;
-            Isbn = book.Isbn;
+            Isbn10 = book.Isbn10;
+            Isbn13= book.Isbn13;
             Title = book.Title;
             
         }
@@ -22,8 +23,11 @@ namespace SuggeBook.Infrastructure.Documents
 		[BsonElement("Title")]
 		public string Title { get; set; }
 
-		[BsonElement("ISBN")]
-		public string Isbn { get; set; }
+		[BsonElement("ISBN10")]
+		public string Isbn10 { get; set; }
+
+        [BsonElement("ISBN13")]
+        public string Isbn13 { get; set; }
 
         [BsonElement("Categories")]
         public IList<string> Categories { get; set; }

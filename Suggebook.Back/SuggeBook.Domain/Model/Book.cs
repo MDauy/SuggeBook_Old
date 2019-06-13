@@ -13,7 +13,9 @@ namespace SuggeBook.Domain.Model
         public string Title { get; set; }
         public Author Author { get; set; }
 
-        public string Isbn { get; set; }
+        public string Isbn10 { get; set; }
+        public string Isbn13 { get; set; }
+
 
         public override bool TestValidation()
         {
