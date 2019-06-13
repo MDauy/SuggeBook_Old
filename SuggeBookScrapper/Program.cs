@@ -9,8 +9,11 @@ using System.Threading;
 
 namespace SuggeBookScrapper
 {
-    class Program
+    public class Program
     {
+        private static readonly GoogleBooks _googleBooks = new GoogleBooks();
+
+
         static void Main(string[] args)
         {
             AsyncContext.Run(() => MainAsync(args));
@@ -19,7 +22,7 @@ namespace SuggeBookScrapper
 
         static async void MainAsync(string[] args)
         {
-            var index = 1;
+            var index = 2538;
 
             var baseUrl = "https://www.babelio.com/auteur/xx/";
             var handler = new HttpClientHandler();
@@ -51,12 +54,12 @@ namespace SuggeBookScrapper
                                     if (pageContent != null)
                                     {
                                         htmlDocument.LoadHtml(pageContent);
-
-
                                         var authorNameTags = htmlDocument.DocumentNode.SelectSingleNode("(//div[contains(@class, 'livre_header_con')]//h1//a)[1]");
+
                                         if (authorNameTags != null)
                                         {
                                             var name = Regex.Replace(authorNameTags.InnerHtml, @"\t|\n|\r", "");
+                                            _googleBooks.GetAuthorBooks(name);
                                         }                        
 
                                     }                                    
@@ -68,5 +71,7 @@ namespace SuggeBookScrapper
                 Console.ReadLine();
             }
         }
+
+        
     }
 }

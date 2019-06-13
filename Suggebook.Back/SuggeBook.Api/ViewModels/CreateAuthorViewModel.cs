@@ -13,12 +13,15 @@ namespace SuggeBook.Api.ViewModels
         [JsonProperty(PropertyName = "lastname")]
         public string LastName { get; set; }
 
+        public string BabelioId{ get; set; }
+
         public Author ToModel()
         {
             return new Author
             {
                 Firstname =  FirstName,
-                Lastname = LastName
+                Lastname = LastName,
+                BabelioId =  BabelioId
             };
         }
     }

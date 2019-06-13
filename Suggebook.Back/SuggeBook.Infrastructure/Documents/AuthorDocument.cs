@@ -23,6 +23,9 @@ namespace SuggeBook.Infrastructure.Documents
         [BsonElement("NbSuggestions")]
         public int NbSuggestions { get; set; }
 
+        [BsonElement("BabelioId")]
+        public string BabelioId { get; set; }
+
         public Author ToModel()
         {
             return new Author
@@ -31,7 +34,8 @@ namespace SuggeBook.Infrastructure.Documents
                 Firstname = Firstname,
                 Lastname = Lastname,
                 Books = new List<Book>(),
-                NbSuggestions = NbSuggestions
+                NbSuggestions = NbSuggestions,
+                BabelioId =  BabelioId
             };
         }
     }
