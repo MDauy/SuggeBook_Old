@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "bc4f43fd-31e3-4dbb-b7e1-50513e81800e",
+		"_postman_id": "9dce50b1-21b3-44fe-ab3f-cd2cc4559d38",
 		"name": "SuggeBook",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -33,7 +33,7 @@
 					"response": []
 				},
 				{
-					"name": "SuggeBook_AddBook",
+					"name": "Create",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -44,18 +44,18 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Harry Potter\",\n    \"authorFullName\": \"Jarrod Fay\",\n    \"numberOfSuggestions\": 94,\n    \"categories\": [\n        \"Poetry\",\n        \"Manga\"\n    ]\n}"
+							"raw": "{\n    \"title\": \"Parce que je t'aime\",\n    \"author_id\":\"5ccde7d539f9d23db41c6481\",\n    \"categories\":[\"Contemporain\"]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:50022/book/add",
+							"raw": "http://localhost:5002/book/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "50022",
+							"port": "5002",
 							"path": [
 								"book",
-								"add"
+								"create"
 							]
 						}
 					},
@@ -100,7 +100,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:50022/suggestion/frombook/5b9bed4e9eacd441e815183f",
 							"protocol": "http",
@@ -127,7 +130,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:50022/testData/addauthors/15",
 							"protocol": "http",
@@ -164,7 +170,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": ""
 						}
@@ -176,7 +185,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": ""
 						}
@@ -186,16 +198,169 @@
 			]
 		},
 		{
-			"name": "Get User",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": ""
+			"name": "Authors",
+			"item": [
+				{
+					"name": "Create_Musso",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstname\":\"Guillaume\",\n\t\"lastname\":\"Musso\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5002/author/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"author",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_Hugo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstname\":\"Victor\",\n\t\"lastname\":\"Hugo\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5002/author/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"author",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_Hugo 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstname\":\"Victoria\",\n\t\"lastname\":\"Hugo\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5002/author/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"author",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_crashTest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"toto\":\"Victor\",\r\n    \"tata\":\"Hugo\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5002/author/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"author",
+								"create"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"KévinDu78\",\n\t\"mail\":\"kevin.78@gmail.com\",\n\t\"firstname\":\"Kévin\",\n\t\"lastname\":\"Martin\",\n\t\"favorite_categories\":[\"Mangas\"]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5002/user/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

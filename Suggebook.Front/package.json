@@ -28,6 +28,7 @@
     "bootstrap": "^4.1.1",
     "css-loader": "^0.28.11",
     "g": "^2.0.1",
+    "jquery": "^3.4.1",
     "json-loader": "^0.5.7",
     "node": "^10.5.0",
     "node-sass": "^4.9.0",
@@ -39,11 +40,12 @@
     "react-scripts": "^1.1.4",
     "reactjs-popup": "^1.1.1",
     "redux": "^4.0.0",
+    "redux-immutable-state-invariant": "^2.1.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
-    "webpack": "^4.16.3",
-    "yarn": "^1.9.2",
+    "webpack": "^3.11.0",
+    "yarn": "^1.16.0",
     "yarn-install": "^1.0.0"
   }
 }

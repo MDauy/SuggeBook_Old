@@ -1,18 +1,17 @@
 import ReactDOM from 'react-dom';
 import React from 'react'
-import AddSuggestionForm from './components/addSuggestionForm'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import suggestionReducer from './reducers/suggestionReducer'
+import { Provider as ReduxProvider} from 'react-redux'
+import configureStore from './redux/configureStore';
+import LandingRedirection from './components/landingRedirection'
 
-var store = createStore(suggestionReducer);
+
+var store = configureStore({homeBooks : [], user :{}});
 
 window.React = React;
-let elem;
 
 ReactDOM.render(
-    <Provider store={store}>
-       <AddSuggestionForm/>      
-    </Provider>,
+    <ReduxProvider store={store}>
+        <LandingRedirection></LandingRedirection>
+    </ReduxProvider>,
     document.getElementById('react-container')
 );
