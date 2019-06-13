@@ -19,25 +19,18 @@ namespace SuggeBookScrapper
 
         static async void MainAsync(string[] args)
         {
-            var index = 6120;
+            var index = 1;
 
             var baseUrl = "https://www.babelio.com/auteur/xx/";
-            
-
-            //var proxy = new WebProxy()
-            //{
-            //    Address = new Uri("http://127.0.0.1:8888")
-            //};
-
             var handler = new HttpClientHandler();
 
             using (handler)
             {
                 handler.AllowAutoRedirect = true;
                 using (HttpClient httpClient = new HttpClient(handler))
-                    while (index < 3000)
+                    while (index < 7000)
                     {
-                        Thread.Sleep(10000);
+                        Thread.Sleep(3000);
                         var url = $"{baseUrl}{index}";
                         using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url))
                         using (var response = await httpClient.SendAsync(request))
@@ -46,7 +39,6 @@ namespace SuggeBookScrapper
                             var uri = response.RequestMessage.RequestUri;
                             if (string.Equals(uri, "https://www.babelio.com/"))
                             {
-                                //Console.WriteLine($"Wrong : index : {index}");
                                 index++;
                                 continue;
                             }
@@ -65,14 +57,10 @@ namespace SuggeBookScrapper
                                         if (authorNameTags != null)
                                         {
                                             var name = Regex.Replace(authorNameTags.InnerHtml, @"\t|\n|\r", "");
-                                            Console.WriteLine(name);
-                                        }
-                                            //Récupérer le nom
-                                            //appeler la google api                                         
+                                        }                        
 
                                     }                                    
                                 }
-                                //Console.WriteLine($"Write but wrong : index : {index} : {uri}");
                                 index++;
                             }
                         }
