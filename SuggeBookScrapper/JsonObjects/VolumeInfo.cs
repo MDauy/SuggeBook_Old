@@ -11,6 +11,6 @@ namespace SuggeBookScrapper.JsonObjects
         public int PageCount { get; set; }
         public string Publisher { get; set; }
         public List<string> Categories { get; set; }
-        
+        public List<IndustryIdentifier> IndustryIdentifiers { get; set; }
     }
 }

@@ -6,12 +6,8 @@ namespace SuggeBook.Api.ViewModels
 {
     public class CreateAuthorViewModel : BaseViewModel
     {
-        [JsonProperty(PropertyName = "firstname")]
-        public string FirstName { get; set; }
-
-        [Required]
-        [JsonProperty(PropertyName = "lastname")]
-        public string LastName { get; set; }
+        [JsonProperty(PropertyName = "Name")]
+        public string Name { get; set; }
 
         public string BabelioId{ get; set; }
 
@@ -19,8 +15,7 @@ namespace SuggeBook.Api.ViewModels
         {
             return new Author
             {
-                Firstname =  FirstName,
-                Lastname = LastName,
+                Name =  Name,
                 BabelioId =  BabelioId
             };
         }

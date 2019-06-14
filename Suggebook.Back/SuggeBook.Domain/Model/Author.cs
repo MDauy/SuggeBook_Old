@@ -9,8 +9,7 @@ namespace SuggeBook.Domain.Model
             this.WrongProperties = string.Empty;
         }
 
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string Name { get; set; }
         public int NbSuggestions { get; set; }
         public IList<Book> Books{ get; set; }
 
@@ -18,9 +17,9 @@ namespace SuggeBook.Domain.Model
         public override bool TestValidation()
         {
 
-            if (string.IsNullOrEmpty(Lastname))
+            if (string.IsNullOrEmpty(Name))
             {
-                WrongProperties += "Lastname is null or empty;";
+                WrongProperties += "Name is null or empty;";
             }
 
             return this.TestWrongProperties();

@@ -18,7 +18,7 @@ namespace SuggeBook.Api.ViewModels
             BookAuthor = new SuggestionAuthorViewModel
             {
                 Id = suggestion.Book.Author.Id,
-                Fullname =  $"'{suggestion.Book.Author.Firstname} {suggestion.Book.Author.Lastname}"
+                Fullname = suggestion.Book.Author.Name
             };
             CreationDate = suggestion.CreationDate;
             BookTitle = suggestion.Book.Title;

@@ -47,14 +47,14 @@ namespace SuggeBook.Infrastructure.Repositories
         public async Task<Author> GetSimilar(Author author)
         {
             var authorsDocuments = await _baseRepository.Get(a =>
-                string.Equals(a.Lastname, author.Lastname) && string.Equals(a.Firstname, author.Firstname));
+                string.Equals(a.Name, author.Name));
             if (authorsDocuments.IsNullOrEmpty())
             {
                 return null;
             }
             if (authorsDocuments.Count > 1)
             {
-                throw new ObjectNotUniqueException("Author", $"{author.Firstname} {author.Lastname}");
+                throw new ObjectNotUniqueException("Author", $"{author.Name}");
             }
             return authorsDocuments.First().ToModel();
         }

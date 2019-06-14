@@ -12,13 +12,10 @@ namespace SuggeBook.Api.ViewModels
         public AuthorViewModel(Author author)
         {
             Id = author.Id;
-            FirstName = author.Firstname;
-            LastName = author.Lastname;
+            Name = author.Name;
             NbSuggestions = author.NbSuggestions;
         }
-		public string FirstName { get; set; }
-
-		public string LastName { get; set; }
+		public string Name { get; set; }
 
         public int NbSuggestions { get; set; }
 	}

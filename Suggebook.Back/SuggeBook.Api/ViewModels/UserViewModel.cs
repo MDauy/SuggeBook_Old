@@ -30,7 +30,7 @@ namespace SuggeBook.Api.ViewModels
             public UserBook(Book book)
             {
                 Id = book.Id;
-                AuthorFullName = $"{book.Author.Firstname} {book.Author.Lastname}";
+                AuthorName = book.Author.Name;
                 Title = book.Title;
                 
             }
@@ -39,7 +39,7 @@ namespace SuggeBook.Api.ViewModels
 
             public string Title { get; set; }
 
-            public string AuthorFullName { get; set; }
+            public string AuthorName { get; set; }
         }
     
         public struct UserSuggestion

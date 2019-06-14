@@ -6,6 +6,6 @@ namespace SuggeBookScrapper.JsonObjects
 {
     public class Item
     {
-        public VolumeInfo volumeInfo { get; set; }
+        public VolumeInfo VolumeInfo { get; set; }
     }
 }

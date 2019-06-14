@@ -18,7 +18,7 @@ namespace SuggeBook.Api.ViewModels
             Author = new BookAuthorViewModel()
             {
                 Id = book.Author.Id,
-                Fullname = $"{book.Author.Firstname} {book.Author.Lastname}"
+                Name = book.Author.Name 
             };
             Categories = book.Categories;
         }
@@ -43,6 +43,6 @@ namespace SuggeBook.Api.ViewModels
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "fullname")]
-        public string Fullname { get; set; }
+        public string Name { get; set; }
     }
 }
