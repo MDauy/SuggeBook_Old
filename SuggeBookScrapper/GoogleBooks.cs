@@ -16,7 +16,7 @@ namespace SuggeBookScrapper
     public class GoogleBooks
     {
         private string _baseUrl = "https://www.googleapis.com/books/v1/volumes";
-        public async void GetAuthorBooks(string authorName, string authorBabelioId)
+        public async void GetAuthorBooks(string authorName, int authorBabelioId)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
 
@@ -33,7 +33,7 @@ namespace SuggeBookScrapper
                 RootObject responseObject = JsonConvert.DeserializeObject<RootObject>(trimmedResponse);
                 CreateAuthorViewModel authorViewModel = new CreateAuthorViewModel()
                 {
-                    BabelioId = authorBabelioId,
+                    BabelioId = authorBabelioId.ToString(),
                     Name = authorName
                 };
                 var author = await RegisterAuthor(authorViewModel);
@@ -46,14 +46,15 @@ namespace SuggeBookScrapper
 
         }
 
-        private async Task Registerbook (CreateBookViewModel book)
+        private async Task<BookViewModel> Registerbook (CreateBookViewModel book)
         {
             UriBuilder builder = new UriBuilder();
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["book"] = JsonConvert.SerializeObject(book);
             builder.Query = parameters.ToString();
 
-            var result = await HttpClientHelper.Call(builder, "POST");
+            var result = await HttpClientHelper.CallWithJsonResponse(builder, "POST");
+            return JsonConvert.DeserializeObject<BookViewModel>(result);
         }
 
 

@@ -57,7 +57,7 @@ namespace SuggeBookScrapper
                                         if (authorNameTags != null)
                                         {
                                             var name = Regex.Replace(authorNameTags.InnerHtml, @"\t|\n|\r", "");
-                                            //_googleBooks.GetAuthorBooks(name);
+                                            _googleBooks.GetAuthorBooks(name, index);
                                         }                        
 
                                     }                                    
