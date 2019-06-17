@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Domain.UseCases;
 using SuggeBook.Domain.UseCasesInterfaces;
@@ -16,11 +17,13 @@ namespace SuggeBook.IoC
             services.AddTransient<IBaseRepository<BookDocument>, BaseRepository<BookDocument>>();
             services.AddTransient<IBaseRepository<SuggestionDocument>, BaseRepository<SuggestionDocument>>();
             services.AddTransient<IBaseRepository<UserDocument>, BaseRepository<UserDocument>>();
+            services.AddTransient<IBaseRepository<SagaDocument>, BaseRepository<SagaDocument>>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<ISuggestionRepository, SuggestionRepository>();
             services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<ISagaRepository, SagaRepository>();
         }
 
         public static void InjectUseCases(this IServiceCollection services)
@@ -33,6 +36,7 @@ namespace SuggeBook.IoC
             services.AddSingleton<IGetBook, GetBook>();
             services.AddSingleton<IGetUser, GetUser>();
             services.AddSingleton<IGetHomeBooks, GetHomeBooks>();
+            services.AddSingleton<ICreateSaga, CreateSaga>();
 
         }
     }

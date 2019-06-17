@@ -16,7 +16,7 @@ namespace SuggeBook.Domain.UseCases
 
         public async Task<Author> Create(Author author)
         {
-            if (author.TestValidation())
+            if (author.TestCreationValidation())
             {
                 var similarAuthor = await _authorRepository.GetSimilar(author);
                 if (similarAuthor == null)

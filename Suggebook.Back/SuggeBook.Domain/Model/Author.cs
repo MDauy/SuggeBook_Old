@@ -14,7 +14,7 @@ namespace SuggeBook.Domain.Model
         public IList<Book> Books{ get; set; }
 
         public string BabelioId { get; set; }
-        public override bool TestValidation()
+        public override bool TestCreationValidation()
         {
 
             if (string.IsNullOrEmpty(Name))

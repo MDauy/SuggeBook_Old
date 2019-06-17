@@ -9,7 +9,7 @@ namespace SuggeBook.Domain.Model
     {
         public string Id { get; set; }
 
-        public abstract bool TestValidation();
+        public abstract bool TestCreationValidation();
 
         protected string WrongProperties { get; set; }
 

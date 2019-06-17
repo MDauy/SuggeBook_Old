@@ -25,6 +25,10 @@ namespace SuggeBook.Api.ViewModels
         [JsonProperty(PropertyName = "isbn13")]
         public string Isbn13 { get; set; }
 
+        public string SagaId { get; set; }
+
+        public double? SagaPosition { get; set; }
+
         [Required]
         [JsonProperty(PropertyName = "categories")]
         public List<string> Categories { get; set; }
@@ -42,7 +46,12 @@ namespace SuggeBook.Api.ViewModels
                 Categories = Categories,
                 Isbn10 = Isbn10,
                 Isbn13 = Isbn13,
-               PublishedDate =  PublishedDate
+               PublishedDate =  PublishedDate,
+               Saga = new Saga
+               {
+                   Id = SagaId
+               },
+               SagaPosition = SagaPosition
             };
         }
     }

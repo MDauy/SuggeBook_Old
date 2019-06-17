@@ -131,5 +131,20 @@ namespace SuggeBook.Infrastructure.Repositories
 
             return booksResults;
         }
+
+        public async Task<IList<Book>> GetBySaga(string sagaId)
+        {
+            var books = await _baseRepository.Get(b => b.Saga.Id == ObjectId.Parse(sagaId));
+
+            List<Book> result = new List<Book>();
+
+            foreach (var book in books)
+            {
+                result.Add(book.ToModel());
+            }
+
+            return result;
+        }
     }
+
 }

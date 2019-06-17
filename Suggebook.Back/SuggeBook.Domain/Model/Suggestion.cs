@@ -16,7 +16,7 @@ namespace SuggeBook.Domain.Model
         public Book Book { get; set; }
         public User User { get; set; }
 
-        public override bool TestValidation()
+        public override bool TestCreationValidation()
         {
             if (string.IsNullOrEmpty(Title))
             {

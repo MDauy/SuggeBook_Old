@@ -15,5 +15,6 @@ namespace SuggeBook.Domain.Repositories
         Task<Book> Create(Book book);
         Task<Book> GetSimilar(Book book);
         Task<IList<Book>> GetHomeBooks();
+        Task<IList<Book>> GetBySaga(string sagaId);
     }
 }

@@ -15,7 +15,7 @@ namespace SuggeBook.Domain.Model
         public string Email{ get; set; }      
         public string Username { get; set; }
         public IList<string> FavoriteCategories { get; set; }
-        public override bool TestValidation()
+        public override bool TestCreationValidation()
         {
             if (string.IsNullOrEmpty(Email))
             {

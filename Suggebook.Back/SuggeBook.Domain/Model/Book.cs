@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace SuggeBook.Domain.Model
-{
-    public class Book : BaseModel
+{public class Book : BaseModel
     {
         public Book ()
         {
@@ -18,7 +17,11 @@ namespace SuggeBook.Domain.Model
 
         public string PublishedDate { get; set; }
 
-        public override bool TestValidation()
+        public Saga Saga { get; set; }
+
+        public double? SagaPosition { get; set; }
+
+        public override bool TestCreationValidation()
         {
             if (string.IsNullOrEmpty(Title))
             {

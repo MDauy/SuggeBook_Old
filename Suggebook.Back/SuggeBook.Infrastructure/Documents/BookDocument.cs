@@ -18,11 +18,12 @@ namespace SuggeBook.Infrastructure.Documents
             Isbn13= book.Isbn13;
             Title = book.Title;
             PublishedDate = book.PublishedDate;
-
+            Saga = new SagaDocument(book.Saga);
+            SagaPosition = book.SagaPosition;
         }
 
-		[BsonElement("Title")]
-		public string Title { get; set; }
+        [BsonElement("Title")]
+        public string Title { get; set; }
 
 		[BsonElement("ISBN10")]
 		public string Isbn10 { get; set; }
@@ -41,6 +42,12 @@ namespace SuggeBook.Infrastructure.Documents
 
         [BsonElement("PublishedDate")]
         public string PublishedDate{ get; set; }
+
+        [BsonElement("Saga")]
+        public SagaDocument Saga { get; set; }
+
+        [BsonElement("SagaPosition")]
+        public double? SagaPosition { get; set; }
 
         public class BookAuthor : BaseDocument
         {
@@ -67,7 +74,9 @@ namespace SuggeBook.Infrastructure.Documents
                 },
                 Title = Title,
                 Categories = Categories,
-                PublishedDate =  PublishedDate
+                PublishedDate =  PublishedDate,
+                Saga = Saga.ToModel(),
+                SagaPosition = SagaPosition
             };
         }
     }
