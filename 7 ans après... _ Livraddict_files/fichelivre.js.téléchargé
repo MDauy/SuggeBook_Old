@@ -1,0 +1,132 @@
+$(document).ready(function()
+{
+    ratingBook();           // noter le livre
+    modalReaders();         // afficher les lecteurs du livre
+    addBiblio();            // ajouter/supprimer de sa bibliothèque
+    bookChangeStatus();     // modifier statut d'une édition (lu / en train de lire / abandonné...)
+    zoneChronique();        // zone chronique
+    mixitupBook();			// Pour switcher l'ordre des chroniques
+    editionsFilters();		// 
+});
+
+function mixitupBook()
+{
+	$('.sortChroniques').on('click',function() 
+	{
+		$('#mixChroniques li').removeClass('active');
+		$(this).parent().addClass('active');
+		
+		$('#listingChroniques').mixitup().mixitup('sort',$(this).attr('data-sort'));
+		return false;
+	});
+}
+
+function addBiblio()
+{
+    $('.add_biblio').on('click', function()
+    {
+            
+            var id_edition = underscoreId($(this).attr('id'));
+
+            if ($(this).hasClass('turquoise')) var action = 'delete_biblio';
+            else var action = 'add_biblio';
+
+            bookChange(id_edition,action);
+
+            return false;
+    });
+}
+
+function bookChangeStatus()
+{
+    $('.selectActionBook').dropkick(
+    {
+            width:260,
+            change: function (value, label,id) 
+            {
+				log(value);
+                    var id_edition = underscoreId($(this).attr('name'));
+                    var action = value;
+                    bookChange(id_edition,action);
+            }
+    });
+}
+
+function zoneChronique()
+{
+   $("a.toggleFormChronique").on('click', function() // quand on clique sur un lien...
+   { 
+       $("#formChronique").slideToggle(); 
+       return false;
+   }); 
+}
+
+/**** Modal Readers *****/
+function modalReaders()
+{
+    $('#modalReaders').on('shown.bs.modal', function () {
+        dataTableFicheLivre();
+    });    
+}
+
+function dataTableFicheLivre()
+{
+    if (jQuery().dataTable) {
+
+        // begin second table
+        if ($('#lecteursLivre_wrapper').length == 0)
+        {
+                var dataLecteurs = $('#lecteursLivre').dataTable({
+                   
+                    "aLengthMenu": [
+                            [5, 10, 15, 20],
+                            [5, 10, 15, 20] // change per page values here
+                    ],
+                    "iDisplayLength": 10,
+                    /*"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                    "sPaginationType": "bootstrap",
+                     
+//					 "tableTools": {
+//						"sRowSelect": "multi",
+//						"sSwfPath":  "/assets3.6.2/plugins/data-tables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+//					},
+                     */
+                    "oLanguage": {
+                        "sLengthMenu": "_MENU_ par page", // _SELECTEDMENU_
+                        "oPaginate": {
+                                "sPrevious": "Précédent",
+                                "sNext": "Suivant"
+                        },
+                        "sInfoEmpty": "Aucune entrée à afficher",
+                        "sLoadingRecords": "Chargement...",
+                        "sInfo": "_START_ à _END_ sur un total de _TOTAL_ membres",
+                        "sZeroRecords": "Aucun résultat à afficher",
+                        "sInfoFiltered": " - filtrés sur _MAX_ entrées",
+                        "sSearch": "Recherche :",
+                        "oFilterSelectedOptions": {
+                                AllText: "All Widgets",
+                                SelectedText: "Selected Widgets"
+                        },
+                    },
+                   
+            });
+        }
+
+    }
+}
+
+function editionsFilters(){
+	$('.filter_type, .filter_lang').on('change',function(){
+		var type = $('.filter_type').val();
+		var lang = $('.filter_lang').val();
+		
+		$('.editionBlock').hide();
+		var filter = '.editionBlock';
+		if (type != 'all') filter += '.etype_'+type;
+		if (lang != 'all') filter += '.elang_'+lang;
+		$(filter).show();
+		
+		return false;
+	});
+}
+

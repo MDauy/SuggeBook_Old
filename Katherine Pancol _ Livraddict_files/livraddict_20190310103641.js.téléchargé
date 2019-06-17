@@ -1,0 +1,741 @@
+var aliasPage = $('body').attr('id');
+
+cookieConsent();
+
+$(document).ready(function()
+{
+    if ($('.fancy').length) $('.fancy').fancybox({ padding: 0 });
+    if ($('.btooltip').length) $('.btooltip').tooltip({ html : true });
+    if ($('.select2Nationalites').length) select2Nationalites();
+    if ($('.selectAuteurAjax').length) selectAuteurAjax();
+    if ($('.selectEditeurAjax').length) selectEditeurAjax();
+    if ($('.selectSagaAjax').length) selectSagaAjax();
+	if ($('.select2').length) $('.select2').select2();
+    if (jQuery().datepicker){
+        $('.date-picker').datepicker({
+			language: "fr",
+			format : 'dd/mm/yyyy',
+			autoclose:true,
+			rtl : Metronic.isRTL() 
+		});
+    }
+
+    panelLivreEbookAudio();
+
+    change_time_lu();
+
+    slickSliderHome();
+    
+    pagesLues();
+    
+    ratingBook();
+    
+    manageTroc();
+
+    if (aliasPage == 'admin'){
+		adminFunctions();
+    }
+    else if (aliasPage == 'admin_chroniques'){
+		approvedChroniques();
+    }
+	else if (aliasPage == 'profil'){
+		loadFunctionsProfile();
+    }
+	
+	topMessage();
+	searchMobile();
+});
+
+$(window).load(function()
+{
+    
+});
+
+
+/****************************/
+// Ajouter un livre - select2 ajax search authors
+
+function formatResultAuteurAjax(user) {
+    return user.prenom + ' ' + user.nom;
+};
+
+function formatSelectionAuteurAjax(data) {
+    return data.prenom + ' ' + data.nom;
+};
+
+function select2Nationalites() {
+    $(".select2Nationalites").select2({
+		placeholder: "Sélectionner une nationalité",
+		allowClear:true
+	});
+}
+
+function selectAuteurAjax() {
+    $(".selectAuteurAjax").select2({
+		placeholder: "Rechercher un auteur",
+		minimumInputLength: 2,
+		allowClear:true,
+		multiple: false,
+		id: function(e) { return e.id; },
+	    ajax: {
+			url: '/include/ajaxLivraddict.php',
+			dataType: 'json',
+			data: function(term, page) {
+				return {
+					q_author: term,
+					// page_limit: 10
+				};
+			},
+			results: function(data, page) {
+				// alert(data);
+				return {
+					results: data
+				};
+			}
+	    },
+	    formatResult: formatResultAuteurAjax,
+	    formatSelection: formatSelectionAuteurAjax,
+	    initSelection: function(element, callback) {
+			var element_id = element.val();
+			var dataAuthor = '';
+			if (element_id > 0)
+			{
+				$.ajax('/include/ajaxLivraddict.php?author_id='+element_id, {
+				dataType: "json",
+				async: false,
+				success: function(data)
+				{
+					dataAuthor = {id: data.id_editeur, nom: data.nom, prenom: data.prenom }; 
+				}
+				});
+			}
+
+			callback(dataAuthor);
+	    }
+	});
+}
+
+/********************/
+// Ajouter un livre - select2 ajax search editors
+
+function selectEditeurAjax()
+{
+    $(".selectEditeurAjax").select2({
+		placeholder: "Rechercher un éditeur",
+		minimumInputLength: 2,
+	    multiple: false,
+		id: function(e) { return e.id; },
+	    ajax: {
+			url: '/include/ajaxLivraddict.php',
+			dataType: 'json',
+			data: function(term, page) {
+				return {
+					q_editeur : term,
+				};
+			},
+			results: function(data, page) {
+				return {
+					results: data
+				};
+			}
+	    },
+	    formatResult: function(data) {
+			var result = '';
+			if (data.flag != null) result += '<img src="/assets3.6.2/global/img/flags/'+data.flag+'.png" alt=""/> ';
+			result += data.name_editeur; // .toUpperCase()
+
+			return result;
+		},
+	    formatSelection: function(data) {
+			return data.name_editeur;
+		},
+	    initSelection: function(element, callback) {
+			var element_id = element.val();
+			var dataEditeur = '';
+			if (element_id > 0){
+				$.ajax('/include/ajaxLivraddict.php?info_editeurid='+element_id, {
+					dataType: "json",
+					async: false,
+					success: function(data){
+						dataEditeur = {
+							id: data.id, 
+							name_editeur: data.name_editeur, 
+							flag: data.flag 
+						};
+					}
+				});
+				
+				var id_collection = $('#search_id_collection select[name=id_collection]').val();
+				if (id_collection == 0){
+					chargeCollectionEditeur(element_id);
+				}
+			}
+			
+			callback(dataEditeur);
+	    }
+	});
+	
+    $('.selectEditeurAjax').change(function(){
+		var id_editeur = $(this).val();
+		chargeCollectionEditeur(id_editeur);
+    });
+	
+}
+
+function chargeCollectionEditeur(id_editeur)
+{
+	$.ajax(
+		{
+			type: "GET",
+			url: '/include/ajaxLivraddict.php',
+			data: 'collecs_editeur='+id_editeur,
+			success: function(data)
+			{
+				var object = $.parseJSON(data);
+				var items = '';
+				var nbItems = 0;
+				items += '<option value=""></option>';
+				$.each(object, function(i, item) {
+					items += '<option value="'+item.id_collection+'">'+item.name_collection+'</option>';
+					nbItems++;
+				});
+				
+				$('#search_id_collection select[name=id_collection]').empty().append(items);
+				
+				if (nbItems == 0)
+					$('#search_id_collection').hide();
+				else
+					$('#search_id_collection').show();
+			}
+		}
+	);
+}
+
+function selectSagaAjax()
+{
+    $(".selectSagaAjax").select2({
+		placeholder: "Rechercher une saga",
+		minimumInputLength: 2,
+	    multiple: false,
+		id: function(e) { return e.id; },
+	    ajax: {
+			url: '/include/ajaxLivraddict.php',
+			dataType: 'json',
+			data: function(term, page) {
+				return {
+					q_saga : term,
+				};
+			},
+			results: function(data, page) {
+				return {
+					results: data
+				};
+			}
+	    },
+	    formatResult: function(data) {
+			if (data.id > 0){
+				return data.title_saga+' ('+data.alias_saga+')';
+			}
+			else
+				return null;
+		},
+	    formatSelection: function(data) {
+			if (data.id > 0){
+				return data.title_saga+' ('+data.alias_saga+')';
+			}
+			else
+				return null;
+		},
+	    initSelection: function(element, callback) {
+			var element_id = element.val();
+			var dataSaga = '';
+			if (element_id > 0){
+				$.ajax('/include/ajaxLivraddict.php?info_saga_id='+element_id, {
+					dataType: "json",
+					async: false,
+					success: function(data){
+						dataSaga = {
+							id: data.id, 
+							title_saga: data.title_saga,
+							alias_saga: data.alias_saga
+						};
+					}
+				});
+			}
+			
+			callback(dataSaga);
+	    }
+	});
+}
+
+/****************************/
+
+// Ajout lié au template metronic
+function launchSearch()
+{
+    $('.sidebar-search').submit();
+}
+
+
+function approvedChroniques()
+{
+	$("div.decision a.decision_yes").live('click', function() // on approuve une chronique
+	{
+		var idChronique = $(this).attr("id"); var Contener = $(this).parent();
+		$.post("_critiques.php", {approved: 1, id_c: idChronique}, function success(data){
+		Contener.empty().append(data).fadeIn(); return false;  }); 
+		return false;
+	});
+	
+	$("div.decision a.decision_no").live('click', function() // on d�sapprouve
+	{
+		var idChronique = $(this).attr("id"); var Contener = $(this).parent();
+		$.post("_critiques.php", {approved: 2, id_c: idChronique}, function success(data){
+		Contener.empty().append(data).fadeIn(); return false; }); 
+		return false;
+	});
+}
+
+function panelLivreEbookAudio()
+{
+	if ($('.type_L').length)
+	{
+		$(".type_L").hide(); $(".type_E").hide(); $(".type_A").hide();
+		var idType = $('input[type=radio][name=type]:checked').attr('value'); $(".type_"+idType).show();
+		
+		$("#type").live('click', function() 
+		{ 
+			var idType = $('input[type=radio][name=type]:checked').attr('value');
+			if (idType == 'L') { $(".type_L").show();  $(".type_E").hide(); $(".type_A").hide(); }
+			if (idType == 'E') { $(".type_L").hide();  $(".type_E").show(); $(".type_A").hide(); }
+			if (idType == 'A') { $(".type_L").hide();  $(".type_E").hide(); $(".type_A").show();} 
+		});
+	}
+}
+
+/******************************************************************/
+/*** Homepage ***/
+/******************************************************************/
+
+function change_time_lu()
+{
+    $(document).on('click', '.change_time_lu', function()
+    {
+       // On récupère les infos de cette lecture (livre + time lecture)
+       $.ajax(
+		{
+			type: "GET",
+			url: '/include/ajaxLivraddict.php',
+			data: 'lecture='+$(this).attr('rel'),
+			success: function(data)
+			{
+				// On crée la modale si elle existe pas déjà
+				 if ($('#modalChangeTimeLu').length == 0)
+				 {
+					 var newmodal = '<div class="modal fade" id="modalChangeTimeLu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+						// newmodal += '<div class="modal-dialog">';
+						   newmodal += '<div class="modal-content">';
+							 newmodal += '<div class="modal-header">';
+							   newmodal += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+							   newmodal += '<h4 class="modal-title">Modifier la date de lecture</h4>';
+							 newmodal += '</div>';
+							 newmodal += '<div class="modal-body">';
+							 newmodal += '</div>';
+							 newmodal += '<div class="modal-footer">';
+							   newmodal += '<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>';
+							   newmodal += '<button type="button" class="btn turquoise save_change_time_lu">Sauvegarder</button>';
+							 newmodal += '</div>';
+						   newmodal += '</div>';
+						// newmodal += '</div>';
+					   newmodal += '</div>';
+					 $('body').append(newmodal);
+				 }
+
+				 $('#modalChangeTimeLu .modal-body')
+					 .empty()
+					 .append(data);
+
+				$('.modal-footer').show();
+				
+				 $('#modalChangeTimeLu').modal('show');
+				 
+				 $(".form_datetime").datetimepicker({
+					autoclose: true,
+					isRTL: Metronic.isRTL(),
+					language: 'fr',
+					format: "dd MM yyyy - hh:ii",
+					pickerPosition: (Metronic.isRTL() ? "bottom-right" : "bottom-left")
+				});
+			}
+		});
+		  
+        return false;
+    });
+	
+	$('.save_change_time_lu').live('click',function()
+	{
+		$('.modal-footer').hide();
+		
+		$.ajax(
+		 {
+			 type: "GET",
+			 url: '/include/ajaxLivraddict.php',
+			 data: $('#formChangeLectureTime').serialize(),
+			 success: function(data)
+			 {
+				 $('#modalChangeTimeLu .modal-body')
+					 .empty()
+					 .append(data);
+			 
+				if (data.indexOf("alert-success") != -1)
+				{
+					// $('.modal-footer').show();
+				}
+				else
+				{
+						$(".form_datetime").datetimepicker({
+							autoclose: true,
+							language: 'fr',
+							format: "dd MM yyyy - hh:ii",
+							pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
+						});
+				}
+			 }
+		 });
+		
+//		$('#modalChangeTimeLu').modal('hide');
+		return false;
+	});
+}
+
+/******************************************************************/
+/*** Fiche Livre ***/
+/******************************************************************/
+
+function bookChange(id_edition,action){
+	$.ajax({
+	   type: "GET",
+	   url: domain+"/include/ajax/ajaxBiblio.php",
+	   data: 'ed='+id_edition+'&act='+action,
+	   success: function(data)
+	   {
+			if (isNumber(action)){
+				$('#edition_'+id_edition+' .selectBookChange').removeClass().addClass('selectBookChange book_status_'+action);
+			}
+			else if (action == 'add_biblio'){
+				var button = $('#edition_'+id_edition+' .add_biblio');
+				button.addClass('turquoise');
+				button.find('span.default').hide();
+				button.find('span.got_it').show();
+			}
+			else if (action == 'delete_biblio'){
+				var button = $('#edition_'+id_edition+' .add_biblio');
+				button.removeClass('turquoise');
+				button.find('span.default').show();
+				button.find('span.got_it').hide();
+			}
+	   }
+	});
+}
+
+function ratingBook(){
+    $('.myVote').on('change',function(){
+            var parent = $(this).parents('.displayNoteWrapper');
+            var idLivre = parent.find('.ivote_id_livre').val();
+            var newNote = parseInt($(this).val());
+            
+            $.ajax({
+              type: 'POST',
+              url: '/include/ajaxLivraddict.php',
+              data: 
+              {
+                    action:'rating', 
+                    idBox:idLivre, 
+                    rate: newNote
+              },
+              success: function(data) 
+              {
+                    var splitted = data.split('_');
+                    var moyenne = parseFloat(splitted[0]);
+                    var nbrevotes = parseInt(splitted[1]);
+                    
+                    // On change la moyenne
+                    if (nbrevotes == 0) moyenne = '-';
+                    parent.find('.displayMoyenne .displayNoteNote').empty().prepend(moyenne);
+                    
+                    // on change l'affichage du nombre de votes total (moyenne)
+                    parent.find('.nbrevotes').empty().prepend(nbrevotes); 
+                    if (nbrevotes > 1) var wordvote = 'votes'; else var wordvote = 'vote';
+					parent.find('.wordvote').empty().prepend(wordvote);
+                    
+                    // MAJ COlor Moyenne
+                    parent.find('.displayMoyenne .displayNoteEvaluation').hide(); 
+                    if (moyenne > 0)
+                    {
+                        parent.find('.displayMoyenne .displayNoteEvaluationColor').each(function()
+                        {
+                            var $this = $(this);
+                            if (moyenne >= parseInt($this.attr('data-min')) && moyenne < parseInt($this.attr('data-max'))) $this.show();
+                        });
+                    }
+                    else
+                        parent.find('.displayMoyenne .displayNoteEvaluation.displayNoteEvaluationNone').show();
+                    
+                    // MAJ COlor Note
+                    parent.find('.displayMyNote .displayNoteEvaluation').hide();
+                    if (newNote > 0)
+                    {
+                        parent.find('.displayMyNote .displayNoteEvaluationColor').each(function()
+                        {
+                            var $this = $(this);
+                            if (newNote >= $this.attr('data-min') && newNote < $this.attr('data-max')) $this.show();
+                        });
+                    }
+                    else
+                        parent.find('.displayMyNote .displayNoteEvaluation.displayNoteEvaluationNone').show();
+              }
+            });
+
+            return false;
+    });
+}
+
+/******************************************************************/
+/*** Admin ***/
+/******************************************************************/
+
+function adminFunctions()
+{
+	$(".type_L").hide(); $(".type_E").hide(); $(".type_A").hide();
+	var idType = $('input[type=radio][name=type]:checked').attr('value'); $(".type_"+idType).show();
+	
+	$("#type").live('click', function() // quand on clique sur un lien...
+	{ var idType = $('input[type=radio][name=type]:checked').attr('value');
+	if (idType == 'L') { $(".type_L").show();  $(".type_E").hide(); $(".type_A").hide(); }
+	if (idType == 'E') { $(".type_L").hide();  $(".type_E").show(); $(".type_A").hide(); }
+	if (idType == 'A') { $(".type_L").hide();  $(".type_E").hide(); $(".type_A").show();} });
+}
+	
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function underscoreId(textToSplit)
+{
+	var Split = textToSplit.split('_');
+	var idToReturn = Split[1];
+	return idToReturn;
+}
+
+
+function log(txt)
+{
+	try 
+	{	console.log(txt); } 
+	catch (e) 
+	{ }
+	
+}
+
+function slickSliderHome(){
+    
+    if ($('.slick_slider').length){
+        $('.slick_slider').slick({
+               dots: true,
+               arrows:false,
+               slide : '.flux_item',
+               draggable:false,
+               accessibility:false
+        });
+    }
+}
+
+function pagesLues()
+{
+    if ($('.pageslues').length){
+	$(".pageslues input.submit").live('click', function() // quand on clique sur un lien...
+	{
+		var idEdition = underscoreId($(this).attr("id")); 
+		
+		var linkBook = $(this).parents('.flux_item').find('.flux_cover_link').attr('href');
+		var numberPages = $('#number_'+idEdition).val();
+		var pagesLues = $('#pages_'+idEdition).val();
+		var progress = $(this).parents('.pageslues').find('.progress_pageslues');
+		var where = $('#pageslues_'+idEdition+' input');
+		
+		if (pagesLues <= pagesLues)
+		{
+			$.ajax(
+				{
+					type: "POST",
+					url: '/include/ajaxLivraddict.php',
+					data: 'pageslues=1&id_edition='+idEdition+'&pages='+pagesLues+'&number='+numberPages,
+					success: function(data)
+					{
+						// where.fadeOut(500, function () { 	}); 
+						progress.find('.percent').val(data); 
+						progress.find('.divpercent').animate({ 'width' :data+'%' }, 500); 
+						progress.find('.txtpercent span').empty().append(data); 
+						where.val(pagesLues); where.fadeIn(500);
+					}
+				});
+			
+			var parentDiv = $(this).parents('.pageslues');
+			var txt_twitter1 = parentDiv.find('.twitter1').text();
+			var txt_twitter2 = parentDiv.find('.twitter2').text();
+			
+			var args = '<a href="https://twitter.com/intent/tweet?text='+txt_twitter1+pagesLues+txt_twitter2+'&url='+linkBook+'&via=Livraddict" class="btn btn-sm btn-default new_twitter_btn" target="_blank">Twitter</a>';
+			
+			parentDiv.find('.twittershare').empty().append(args);
+		}
+		
+		return false; 
+	});
+    }
+}
+
+function manageTroc()
+{
+    $("div.notepublic a").live('click', function() // quand on clique sur un lien...
+    { 
+            var idTroc = $(this).attr("id");
+            $("#forma"+idTroc ).slideToggle(); 
+            return false; 
+    });
+
+    $("div.noteprive a").live('click', function() // quand on clique sur un lien...
+    { 
+            var idTroc = $(this).attr("id");
+            $("#form"+idTroc ).slideToggle(); 
+            return false; 
+    });
+	
+}
+
+function loadFunctionsProfile(){
+	$('.saga_add').on('click',function(){
+        var saga_id = $(this).attr('data-saga');
+        var td = $(this).parent();
+        $(this).hide();
+        $.ajax(
+            {
+                type: "POST",
+                url: '/include/ajax/ajaxProfil.php',
+                data: 'add_saga='+saga_id,
+                success: function(data)
+                {
+                    td.empty().append('<span class="label label-success">Saga ajoutée !</span>');
+                }
+            });
+        
+        return false;
+    });
+    
+    $('.listing_mysagas').on('click','.saga_remove',function(){
+        var saga_id = $(this).attr('data-saga');
+        var open_saga = $(this).parents('.open_saga');
+        
+        $.ajax(
+            {
+                type: "POST",
+                url: '/include/ajax/ajaxProfil.php',
+                data: 'remove_saga='+saga_id,
+                success: function(data)
+                {
+                    open_saga.empty().append('<p class="alert alert-danger">Cette saga a été supprimé de vos sagas !<br />Vous pouvez la réajouter via la fiche dédiée ou via la recherche automatique de saga (bouton situé en bas de la page "Profil > Sagas") si vous avez déjà lu un des livres qui la compose.</p>');
+                }
+            });
+        
+        return false;
+    });
+    
+    $('.listing_mysagas h3 a').on('click',function(){
+        var li = $(this).parents('li');
+        var saga_id = li.attr('data-saga');
+        
+        var listing = $(this).parents('.listing_mysagas');
+        var id_user = listing.attr('data-user');
+        
+        var open_saga = li.find('.open_saga');
+        
+        if (open_saga.length == 0){
+            $.ajax(
+                {
+                    type: "POST",
+                    url: '/include/ajax/ajaxProfil.php',
+                    data: 'open_saga='+saga_id+'&id_user='+id_user,
+                    success: function(data)
+                    {
+						var open_saga_recheck = li.find('.open_saga');
+						if (open_saga_recheck.length == 0){
+							li.append(data);
+						}
+                    }
+                });
+        }
+        else{
+            open_saga.toggle();
+        }
+            
+        return false;
+    });
+	
+	$('.open_books_read_month').on('click',function(){
+		$('#'+$(this).data('month')).toggle();
+		return false;
+	});
+	
+	$('.open_books_genre_year').on('click',function(){
+		$('#'+$(this).data('genre')).toggle();
+		return false;
+	});
+}
+
+function cookieConsent(){
+	window.addEventListener("load", function(){
+	window.cookieconsent.initialise({
+	  "palette": {
+		"popup": {
+		  "background": "#333"
+		},
+		"button": {
+		  "background": "#f33466"
+		}
+	  },
+	  "position": "bottom-right",
+	  "content": {
+		"message": "Nous utilisons des cookies pour vous garder connecté au site mais également pour avoir des stats de visites. Pour en savoir plus, ",
+		"link": "cliquez ici. ",
+		 "dismiss": "OK",
+		"href": domain+"/legal/cookies.php"
+	  }
+	})});
+}
+
+function topMessage(){
+	var topMessageContainer = $('#topMessageContainer');
+	
+	if (topMessageContainer.length){
+		$(document).on('click','.close_topmsg',function(){
+			topMessageContainer.hide();
+			$.post(domain+"/include/ajax/ajaxGlobal.php", { hide_actu_update: 1 }, function success(data){});
+			return false;
+		});
+	}
+}
+
+function searchMobile(){
+	if ($('.search_mobile').length){
+		$(document).on('click','.search_mobile',function(){
+			$('.search-form').addClass('open');
+			$('.search-form .form-control').focus();
+			return false;
+		});
+		
+		$(document).on('click','.search-form .search_close',function(){
+			$('.search-form').removeClass('open');
+			return false;
+		});
+	}
+}

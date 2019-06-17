@@ -16,6 +16,7 @@ namespace SuggeBook.Domain.Model
         public string Isbn10 { get; set; }
         public string Isbn13 { get; set; }
 
+        public string PublishedDate { get; set; }
 
         public override bool TestValidation()
         {

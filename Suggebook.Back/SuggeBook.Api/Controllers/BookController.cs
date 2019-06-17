@@ -36,15 +36,23 @@ namespace SuggeBook.Api.Controllers
         [Route("create")]
         public async Task<JsonResult> Create([FromBody] CreateBookViewModel book)
         {
-            var bookModel = book.ToModel();
-            if (bookModel == null)
+            try
             {
-                throw new ObjectCreationException("Book");
+                var bookModel = book.ToModel();
+                if (bookModel == null)
+                {
+                    throw new ObjectCreationException("Book");
+                }
+
+                bookModel.Author = new Author {Id = book.AuthorId};
+                bookModel = await _createBook.Create(bookModel);
+                var bookViewModel = new BookViewModel(bookModel);
+                return new JsonResult(bookViewModel);
             }
-            bookModel.Author = new Author { Id = book.AuthorId };
-            bookModel = await _createBook.Create(bookModel);
-            var bookViewModel = new BookViewModel(bookModel);
-            return new JsonResult(bookViewModel);
+            catch (Exception exception)
+            {
+                return new JsonResult(exception.Message);
+            }
         }
 
         [HttpGet]

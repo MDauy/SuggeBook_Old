@@ -35,7 +35,8 @@ namespace SuggeBook.Api.ViewModels
         [JsonProperty(PropertyName = "categories")]
         public IList<string> Categories { get; set; }
 
-        
+        [JsonProperty(PropertyName = "published_date")]
+        public string PublishedDate { get; set; }
     }
     public struct BookAuthorViewModel
     {

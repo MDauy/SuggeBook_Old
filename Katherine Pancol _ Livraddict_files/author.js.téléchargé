@@ -1,0 +1,97 @@
+$(document).ready(function()
+{
+    becomeFan();
+    // bookAuthorDataTable();
+	authorGoogleMaps();
+	
+	$.localScroll.hash({queue: true, duration: 1500, offset: {top: -50}, reset: true});
+	$.localScroll({hash: true, offset: {top: -50}, queue: true});
+});
+
+function becomeFan()
+{
+	$("div#fanplus a").live('click', function() // quand on clique sur un lien...
+	{
+		$("div#fan1").slideToggle();
+		return false;
+	});
+	
+	$("a#liresuite").toggle(function(){
+	   $('#bio2').css("display","inline"); $("a#liresuite").empty().append("Cacher");
+	 },function(){
+	   $('#bio2').css("display","none"); $("a#liresuite").empty().append("Lire la suite...");
+	 });
+}
+
+function bookAuthorDataTable(){
+    $('#bookAuthor').dataTable( {
+            "bPaginate": false,
+            "bLengthChange": true,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": true,
+            "sScrollX": "100%",
+//			"sScrollXInner": "100%",
+            "bScrollCollapse": false
+    } );
+}
+
+/* Snazzy maps */
+var light_dream = [{"featureType":"landscape","stylers":[{"hue":"#FFBB00"},{"saturation":43.400000000000006},{"lightness":37.599999999999994},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#FFC200"},{"saturation":-61.8},{"lightness":45.599999999999994},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":51.19999999999999},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":52},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#0078FF"},{"saturation":-13.200000000000003},{"lightness":2.4000000000000057},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#00FF6A"},{"saturation":-1.0989010989011234},{"lightness":11.200000000000017},{"gamma":1}]}];
+
+function authorGoogleMaps()
+{
+	var idMap = 'author_birthday_map';
+	
+	if ($('#'+idMap).length){
+		var address = $('#'+idMap).attr('data-address');
+		var zoom = parseInt($('#'+idMap).attr('data-zoom'));
+		var poslat = $('#'+idMap).attr('data-lat');
+		var poslng = $('#'+idMap).attr('data-lng');
+		var centerlat = poslat;
+		var centerlng = poslng;
+		
+		function init(){
+			// Basic options for a simple Google Map
+			// For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+			
+			var myOptions = {
+				zoom: zoom,
+				// center: centerMap,
+				disableDefaultUI:true,
+				scrollwheel: false,
+				scaleControl: false,
+				draggable: true,
+				zoomControl: true,
+				disableDoubleClickZoom: true,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				styles: light_dream
+			};
+			
+			var mymap = new google.maps.Map(document.getElementById(idMap), myOptions);
+			
+			if (address != ''){
+				var geocoder = new google.maps.Geocoder();
+				geocoder.geocode({'address': address}, function(results, status) {
+					if (status === google.maps.GeocoderStatus.OK) {
+						var lat=results[0].geometry.location.lat();
+						var lng=results[0].geometry.location.lng();
+						
+						mymap.setCenter(results[0].geometry.location);
+						
+						var marker = new google.maps.Marker({
+							map: mymap,
+							position: results[0].geometry.location,
+							animation: google.maps.Animation.DROP,
+							// icon: '/files/design/gmaps_pin.png'
+						});
+					}
+				});
+			}
+		}
+		
+		// When the window has finished loading create our google map below
+		google.maps.event.addDomListener(window, 'load', init);	
+	}
+}

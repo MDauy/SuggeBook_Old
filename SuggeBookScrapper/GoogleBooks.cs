@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -36,51 +37,55 @@ namespace SuggeBookScrapper
                     BabelioId = authorBabelioId.ToString(),
                     Name = authorName
                 };
-                var author = await RegisterAuthor(authorViewModel);
-
-                foreach (var item in responseObject.Items)
+                try
                 {
-                    await Registerbook(CreateBookViewModel(item, author));
+                    var author = await RegisterAuthor(authorViewModel);
+
+                    foreach (var item in responseObject.Items)
+                    {
+                        await RegisterBook(CreateBookViewModel(item, author));
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             }
 
         }
 
-        private async Task<BookViewModel> Registerbook (CreateBookViewModel book)
+        private async Task<BookViewModel> RegisterBook(CreateBookViewModel book)
         {
-            UriBuilder builder = new UriBuilder();
-            var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["book"] = JsonConvert.SerializeObject(book);
-            builder.Query = parameters.ToString();
+            UriBuilder builder = new UriBuilder($"{ConfigurationManager.AppSettings["sbapi_url"]}book/create");
 
-            var result = await HttpClientHelper.CallWithJsonResponse(builder, "POST");
+            var result = await HttpClientHelper.CallWithJsonResponse(builder, "POST", JsonConvert.SerializeObject(book));
             return JsonConvert.DeserializeObject<BookViewModel>(result);
         }
 
 
-        private async Task<AuthorViewModel> RegisterAuthor (CreateAuthorViewModel author)
+        private async Task<AuthorViewModel> RegisterAuthor(CreateAuthorViewModel author)
         {
-            UriBuilder builder = new UriBuilder($"{ConfigurationManager.AppSettings["sbapi_url"]}/author/create");
-            var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["author"] = JsonConvert.SerializeObject(author);
-            builder.Query = parameters.ToString();
+            UriBuilder builder = new UriBuilder($"{ConfigurationManager.AppSettings["sbapi_url"]}author/create");
 
-            var result = await HttpClientHelper.CallWithJsonResponse(builder, "POST");
+            var result = await HttpClientHelper.CallWithJsonResponse(builder, "POST", JsonConvert.SerializeObject(author));
+
             return JsonConvert.DeserializeObject<AuthorViewModel>(result);
+
         }
 
         private CreateBookViewModel CreateBookViewModel(Item item, AuthorViewModel author)
         {
-            var bookVieWModel = new CreateBookViewModel
+            var bookViewModel = new CreateBookViewModel
             {
-               Isbn10 = item.VolumeInfo.IndustryIdentifiers.FirstOrDefault(i => string.Equals(i.Type, "ISBN_10"))?.Type,
-               Isbn13 = item.VolumeInfo.IndustryIdentifiers.FirstOrDefault(i => string.Equals(i.Type, "ISBN_13"))?.Type,
-               Title = item.VolumeInfo.Title,
-               Year = DateTime.Parse(item.VolumeInfo.PublishedDate),
-               AuthorId = author.Id
+                Isbn10 =
+                    item.VolumeInfo.IndustryIdentifiers.FirstOrDefault(i => string.Equals(i.Type, "ISBN_10"))?.Type,
+                Isbn13 =
+                    item.VolumeInfo.IndustryIdentifiers.FirstOrDefault(i => string.Equals(i.Type, "ISBN_13"))?.Type,
+                Title = item.VolumeInfo.Title,
+                AuthorId = author.Id,
+                PublishedDate = item.VolumeInfo.PublishedDate
             };
-
-            return bookVieWModel;
+            return bookViewModel;
         }
     }
 }

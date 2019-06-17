@@ -8,20 +8,28 @@ namespace SuggeBookScrapper
 {
     public static class HttpClientHelper
     {
-        public static async Task<WebResponse> Call(UriBuilder builder, string method)
+        public static async Task<WebResponse> Call(UriBuilder builder, string method, string body = null)
         {
             var request = WebRequest.Create(builder.Uri.ToString());
             request.Method = method;
             request.ContentType = "application/json; charset=utf-8";
+
+            if (!string.IsNullOrEmpty(body))
+            {
+                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+                    streamWriter.Write(body);
+                }
+            }
 
             WebResponse response = await request.GetResponseAsync();
 
             return response;
         }
 
-        public static async Task<string> CallWithJsonResponse(UriBuilder builder, string method)
+        public static async Task<string> CallWithJsonResponse(UriBuilder builder, string method, string body = null)
         {
-            var response = await Call(builder, method);
+            var response = await Call(builder, method, body);
             var dataStream = response.GetResponseStream();
             if (dataStream != null)
             {

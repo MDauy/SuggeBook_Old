@@ -17,7 +17,7 @@ namespace SuggeBook.Api.ViewModels
         public string AuthorId { get; set; }
 
         [JsonProperty(PropertyName = "year")]
-        public DateTime Year { get; set; }
+        public string PublishedDate { get; set; }
 
         [JsonProperty(PropertyName = "isbn10")]
         public string Isbn10 { get; set; }
@@ -41,7 +41,8 @@ namespace SuggeBook.Api.ViewModels
                 Id = Id,
                 Categories = Categories,
                 Isbn10 = Isbn10,
-                Isbn13 = Isbn13
+                Isbn13 = Isbn13,
+               PublishedDate =  PublishedDate
             };
         }
     }

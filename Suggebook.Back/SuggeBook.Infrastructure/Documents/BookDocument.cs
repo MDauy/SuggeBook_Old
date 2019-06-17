@@ -17,7 +17,8 @@ namespace SuggeBook.Infrastructure.Documents
             Isbn10 = book.Isbn10;
             Isbn13= book.Isbn13;
             Title = book.Title;
-            
+            PublishedDate = book.PublishedDate;
+
         }
 
 		[BsonElement("Title")]
@@ -37,6 +38,9 @@ namespace SuggeBook.Infrastructure.Documents
 
         [BsonElement("NbSuggestions")]
         public int NbSuggestions { get; set; }
+
+        [BsonElement("PublishedDate")]
+        public string PublishedDate{ get; set; }
 
         public class BookAuthor : BaseDocument
         {
@@ -62,7 +66,8 @@ namespace SuggeBook.Infrastructure.Documents
                     Name = Author.Name,
                 },
                 Title = Title,
-                Categories = Categories
+                Categories = Categories,
+                PublishedDate =  PublishedDate
             };
         }
     }
