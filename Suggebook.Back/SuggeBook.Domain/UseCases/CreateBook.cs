@@ -19,8 +19,7 @@ namespace SuggeBook.Domain.UseCases
         }
 
         public async Task<Book> Create(Book book)
-        {
-            throw new InvalidObjectException("Author", book.Author.Id, "Author doesn't exist");
+        {            
             book.TestCreationValidation();
             
                 var author = await _authorRepository.Get(book.Author.Id);

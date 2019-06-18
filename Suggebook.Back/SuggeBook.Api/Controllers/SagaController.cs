@@ -20,6 +20,7 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpPost]
+        [Route("create")]
         public async Task<JsonResult> Create([FromBody] CreateSagaViewModel saga)
         {
             try
@@ -32,6 +33,7 @@ namespace SuggeBook.Api.Controllers
             }
         }
 
+        [HttpGet]
         public Task<JsonResult> Get(string sagaId)
         {
             return null;

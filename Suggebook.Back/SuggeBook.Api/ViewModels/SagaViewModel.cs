@@ -4,7 +4,7 @@ using SuggeBook.Domain.Model;
 
 namespace SuggeBook.Api.ViewModels
 {
-    public class SagaViewModel
+    public class SagaViewModel : BaseViewModel
     {
         public SagaViewModel()
         {
@@ -28,7 +28,5 @@ namespace SuggeBook.Api.ViewModels
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
     }
 }

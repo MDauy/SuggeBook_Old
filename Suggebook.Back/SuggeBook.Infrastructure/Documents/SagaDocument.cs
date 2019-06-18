@@ -14,7 +14,14 @@ namespace SuggeBook.Infrastructure.Documents
         public SagaDocument(Saga saga)
         {
             Title = saga.Title;
-            Id = ObjectId.Parse(saga.Id);
+            if (!string.IsNullOrEmpty(saga.Id))
+            {
+                Id = ObjectId.Parse(saga.Id);
+            }
+            else
+            {
+                Id = ObjectId.Empty;
+            }
         }
 
         [BsonElement("Title")]

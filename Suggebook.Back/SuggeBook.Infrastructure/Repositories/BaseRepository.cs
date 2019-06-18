@@ -26,6 +26,8 @@ namespace SuggeBook.Infrastructure.Repositories
                     return "Authors";
                 case UserDocument _:
                     return "Users";
+                case SagaDocument _:
+                    return "Sagas";
                 default:
                     return "Books";
 

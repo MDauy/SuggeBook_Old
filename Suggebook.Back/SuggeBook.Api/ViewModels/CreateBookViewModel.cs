@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using SuggeBook.Domain.Model;
+using SuggeBook.Framework;
 
 namespace SuggeBook.Api.ViewModels
 {
@@ -25,8 +26,11 @@ namespace SuggeBook.Api.ViewModels
         [JsonProperty(PropertyName = "isbn13")]
         public string Isbn13 { get; set; }
 
+        [JsonProperty(PropertyName = "saga_id")]
         public string SagaId { get; set; }
 
+        [RequiredIfNot("SagaId", "")]
+        [JsonProperty(PropertyName = "saga_position")]
         public double? SagaPosition { get; set; }
 
         [Required]
