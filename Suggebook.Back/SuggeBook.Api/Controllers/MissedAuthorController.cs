@@ -28,7 +28,7 @@ namespace SuggeBook.Api.Controllers
             {
                 model = await _registerMissedAuthor.Register(model);
 
-                return new JsonResult ($"MissedAuthor {model.Name} has been registered");
+                return new JsonResult ($"{model.Name} registered");
             }
             catch (Exception e)
             {

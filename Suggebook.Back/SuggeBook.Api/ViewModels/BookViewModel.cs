@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SuggeBook.Domain.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SuggeBook.Api.ViewModels
 {
@@ -14,20 +15,24 @@ namespace SuggeBook.Api.ViewModels
         public BookViewModel(Book book)
         {
             Id = book.Id;
-            Title = book.Title;
-            Author = new BookAuthorViewModel()
-            {
-                Id = book.Author.Id,
-                Name = book.Author.Name 
-            };
+            Title = book.Title;            
             Categories = book.Categories;
+
+            Authors = book.Authors.ToList().ConvertAll(b =>
+            {
+                return new BookAuthorViewModel
+                {
+                    Name = b.Name,
+                    Id = b.Id
+                };
+            });
         }
 
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
-        [JsonProperty(PropertyName = "author")]
-        public BookAuthorViewModel Author { get; set; }
+        [JsonProperty(PropertyName = "authors")]
+        public IList<BookAuthorViewModel> Authors { get; set; }
 
         [JsonProperty(PropertyName = "nb_suggestions")]
         public int NbSuggestions { get; set; }

@@ -10,7 +10,7 @@ namespace SuggeBook.Domain.Model
 
         public IList<string> Categories { get; set; }
         public string Title { get; set; }
-        public Author Author { get; set; }
+        public IList<Author> Authors { get; set; }
 
         public string Isbn10 { get; set; }
         public string Isbn13 { get; set; }
@@ -28,7 +28,7 @@ namespace SuggeBook.Domain.Model
                 WrongProperties += $"Title is null or empty;";
             }
 
-            if (Author == null)
+            if (Authors == null)
             {
                 WrongProperties += "Author is null;";
             }

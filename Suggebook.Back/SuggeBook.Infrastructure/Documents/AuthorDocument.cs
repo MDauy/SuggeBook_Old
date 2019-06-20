@@ -19,8 +19,6 @@ namespace SuggeBook.Infrastructure.Documents
         [BsonElement("NbSuggestions")]
         public int NbSuggestions { get; set; }
 
-        [BsonElement("BabelioId")]
-        public string BabelioId { get; set; }
 
         public Author ToModel()
         {
@@ -29,8 +27,7 @@ namespace SuggeBook.Infrastructure.Documents
                 Id = Id.ToString(),
                 Name = Name,
                 Books = new List<Book>(),
-                NbSuggestions = NbSuggestions,
-                BabelioId =  BabelioId
+                NbSuggestions = NbSuggestions
             };
         }
     }

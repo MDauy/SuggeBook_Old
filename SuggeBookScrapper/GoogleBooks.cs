@@ -28,7 +28,7 @@ namespace SuggeBookScrapper
             {
                 Query = parameters.ToString()
             };
-            string trimmedResponse = await HttpClientHelper.CallWithJsonResponse(builder, "GET");
+            string trimmedResponse = await UrlCallerHelper.CallWithJsonResponse(builder, "GET");
             if (trimmedResponse != null)
             {
                 RootObject responseObject = JsonConvert.DeserializeObject<RootObject>(trimmedResponse);
@@ -58,7 +58,7 @@ namespace SuggeBookScrapper
         {
             UriBuilder builder = new UriBuilder($"{ConfigurationManager.AppSettings["sbapi_url"]}book/create");
 
-            var result = await HttpClientHelper.CallWithJsonResponse(builder, "POST", JsonConvert.SerializeObject(book));
+            var result = await UrlCallerHelper.CallWithJsonResponse(builder, "POST", JsonConvert.SerializeObject(book));
             return JsonConvert.DeserializeObject<BookViewModel>(result);
         }
 
@@ -67,7 +67,7 @@ namespace SuggeBookScrapper
         {
             UriBuilder builder = new UriBuilder($"{ConfigurationManager.AppSettings["sbapi_url"]}author/create");
 
-            var result = await HttpClientHelper.CallWithJsonResponse(builder, "POST", JsonConvert.SerializeObject(author));
+            var result = await UrlCallerHelper.CallWithJsonResponse(builder, "POST", JsonConvert.SerializeObject(author));
 
             return JsonConvert.DeserializeObject<AuthorViewModel>(result);
 

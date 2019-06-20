@@ -44,7 +44,8 @@ namespace SuggeBook.Api.Controllers
                     throw new ObjectCreationException("Book");
                 }
 
-                bookModel.Author = new Author {Id = book.AuthorId};
+                bookModel.Authors = new List<Author>();
+                bookModel.Authors.Add(new Author {Id = book.AuthorId});
                 bookModel = await _createBook.Create(bookModel);
                 var bookViewModel = new BookViewModel(bookModel);
                 return new JsonResult(bookViewModel);
