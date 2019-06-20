@@ -18,6 +18,9 @@ namespace SuggeBook.Api.Controllers
         {
             _registerMissedAuthor = registerMissedAuthor;
         }
+
+        [HttpPost]
+        [Route("register")]
         public async Task<JsonResult> Register([FromBody] RegisterMissedAuthorViewModel missedAuthorViewModel)
         {
             var model = missedAuthorViewModel.ToModel();

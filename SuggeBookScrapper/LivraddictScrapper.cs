@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SuggeBook.Api.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -31,7 +34,20 @@ namespace SuggeBookScrapper
                     {
                         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {
-                            //Inscrire le nom loupé dans la base
+                            var missedAuthorViewModel = new RegisterMissedAuthorViewModel
+                            {
+                                Name = name,
+                                Message = response.RequestMessage.ToString(),
+                                StatusCode = response.StatusCode.ToString(),
+                                TriedUrl = finalUrl
+                            };
+
+                            var registeringUrl = $"{ConfigurationManager.AppSettings["register_missed_author_url"]}";
+                            Console.WriteLine(await HttpClientHelper.CallWithJsonResponse(registeringUrl, null, "GET", JsonConvert.SerializeObject(missedAuthorViewModel)));
+                        }
+                        else
+                        {
+                            //scrapper la page des auteurs
                         }
                     }
                 }

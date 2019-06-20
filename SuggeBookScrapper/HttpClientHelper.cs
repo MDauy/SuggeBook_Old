@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -39,6 +40,17 @@ namespace SuggeBookScrapper
                 return trimmedResponse;
             }
             return null;
+        }
+
+        public static async Task<string> CallWithJsonResponse (string url, NameValueCollection parameters, string method, string body = null)
+        {
+            var builder = new UriBuilder (url);
+            if (parameters != null)
+            {
+                builder.Query = parameters.ToString();
+            }
+
+            return await CallWithJsonResponse(builder, method, body);
         }
     }
 }
