@@ -74,5 +74,6 @@ namespace SuggeBook.Infrastructure.Repositories
 
             await _baseRepository.Update(author);
         }
+
     }
 }

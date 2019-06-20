@@ -18,12 +18,14 @@ namespace SuggeBook.IoC
             services.AddTransient<IBaseRepository<SuggestionDocument>, BaseRepository<SuggestionDocument>>();
             services.AddTransient<IBaseRepository<UserDocument>, BaseRepository<UserDocument>>();
             services.AddTransient<IBaseRepository<SagaDocument>, BaseRepository<SagaDocument>>();
+            services.AddTransient<IBaseRepository<MissedAuthorDocument>, BaseRepository<MissedAuthorDocument>>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<ISuggestionRepository, SuggestionRepository>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<ISagaRepository, SagaRepository>();
+            services.AddTransient<IMissedAuthorRepository, MissedAuthorRepository>();
         }
 
         public static void InjectUseCases(this IServiceCollection services)
@@ -37,6 +39,8 @@ namespace SuggeBook.IoC
             services.AddSingleton<IGetUser, GetUser>();
             services.AddSingleton<IGetHomeBooks, GetHomeBooks>();
             services.AddSingleton<ICreateSaga, CreateSaga>();
+            services.AddSingleton<IRegisterMissedAuthor, RegisterMissedAuthor>();
+
 
         }
     }
