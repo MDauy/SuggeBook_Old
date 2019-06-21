@@ -37,45 +37,55 @@ namespace SuggeBookScrapper
                 //Auteur trouvé
                 else
                 {
-                    var htmlDocument = new HtmlDocument();
-                    var pageContent = await response.Content.ReadAsStringAsync();
-                    if (pageContent != null)
+                    //Création de l'auteur
+                    var authorToCreate = new CreateAuthorViewModel
                     {
-                        htmlDocument.LoadHtml(pageContent);
-                        var tBody = htmlDocument.DocumentNode.SelectSingleNode("//table[contains(@id, 'bookAuthor')]//tbody[1]");
-
-                        var sagaPosition = 1;
-                        var curentSagaId = string.Empty;
-                        var books = tBody.SelectNodes("//tr");
-                        foreach (var bookElt in books)
+                        Name = name
+                    };
+                    var authorString = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_AUTHOR, JsonConvert.SerializeObject(authorToCreate));
+                    if (JsonConvert.DeserializeObject<AuthorViewModel>(authorString) != null)
+                    {
+                        var htmlDocument = new HtmlDocument();
+                        var pageContent = await response.Content.ReadAsStringAsync();
+                        if (pageContent != null)
                         {
-                            var sagaH3 = bookElt.SelectSingleNode("//td//h3[contains(@class, 'author_saga_title')][1]");
-                            if (sagaH3 != null)
-                            {
-                                var saga = new CreateSagaViewModel
-                                {
-                                    Title = sagaH3.InnerText
-                                };
-                                //Création de la saga
-                                try
-                                {
-                                    var jsonResult = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_SAGA, JsonConvert.SerializeObject(saga));
-                                    curentSagaId = JsonConvert.DeserializeObject<SagaViewModel>(jsonResult).Id;
-                                    sagaPosition = 1;
-                                    continue;
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine(e.Message);
-                                };
+                            htmlDocument.LoadHtml(pageContent);
+                            var tBody = htmlDocument.DocumentNode.SelectSingleNode("//table[contains(@id, 'bookAuthor')]//tbody[1]");
 
-                                var bookTitle = bookElt.SelectSingleNode("//td//a");
-                                var bookUrl = bookTitle.GetAttributeValue("href", "");
-                                ScrappBookPage(bookUrl, bookTitle.InnerText, sagaPosition, curentSagaId);
+                            var sagaPosition = 1;
+                            var curentSagaId = string.Empty;
+                            var books = tBody.SelectNodes("//tr");
+                            foreach (var bookElt in books)
+                            {
+                                var sagaH3 = bookElt.SelectSingleNode("td/h3[contains(@class, 'author_saga_title')]");
+                                if (sagaH3 != null)
+                                {
+                                    var saga = new CreateSagaViewModel
+                                    {
+                                        Title = sagaH3.InnerText
+                                    };
+                                    //Création de la saga
+                                    try
+                                    {
+                                        var jsonResult = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_SAGA, JsonConvert.SerializeObject(saga));
+                                        curentSagaId = JsonConvert.DeserializeObject<SagaViewModel>(jsonResult).Id;
+                                        sagaPosition = 1;
+                                        sagaH3 = null;
+                                        continue;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine(e.Message);
+                                    };
+
+                                    var bookTitle = bookElt.SelectSingleNode("//td//a");
+                                    var bookUrl = bookTitle.GetAttributeValue("href", "");
+                                    ScrappBookPage(bookUrl, bookTitle.InnerText, sagaPosition, curentSagaId);
+                                }
                             }
                         }
+                        //scrapper la page des auteurs
                     }
-                    //scrapper la page des auteurs
                 }
             }
         }

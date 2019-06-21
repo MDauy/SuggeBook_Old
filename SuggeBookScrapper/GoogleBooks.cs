@@ -34,7 +34,7 @@ namespace SuggeBookScrapper
                 RootObject responseObject = JsonConvert.DeserializeObject<RootObject>(trimmedResponse);
                 CreateAuthorViewModel authorViewModel = new CreateAuthorViewModel()
                 {
-                    BabelioId = authorBabelioId.ToString(),
+                    
                     Name = authorName
                 };
                 try
