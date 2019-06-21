@@ -19,9 +19,16 @@ namespace SuggeBook.Domain.UseCases
 
         public async Task<Saga> Create(Saga saga)
         {
-            var result = await _sagaRepository.Create(saga);
-
-            return result;
+            var exisingSaga = await _sagaRepository.Get(saga.Title);
+            if (exisingSaga == null)
+            {
+                var result = await _sagaRepository.Create(saga);
+                return result;
+            }
+            else
+            {
+                return exisingSaga;
+            }
         }
     }
 }
