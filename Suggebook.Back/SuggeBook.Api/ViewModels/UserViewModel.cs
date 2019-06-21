@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SuggeBook.Domain.Model;
 
 namespace SuggeBook.Api.ViewModels
@@ -30,8 +31,12 @@ namespace SuggeBook.Api.ViewModels
             public UserBook(Book book)
             {
                 Id = book.Id;
-                AuthorName = book.Author.Name;
                 Title = book.Title;
+                AuthorName = string.Empty;
+                foreach (var author in book.Authors)
+                {
+                    AuthorName += $"{author.Name} ";
+                }
                 
             }
 

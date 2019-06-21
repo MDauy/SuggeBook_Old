@@ -9,9 +9,11 @@ namespace SuggeBook.Domain.Model
             this.WrongProperties = string.Empty;
         }
 
+        
+
         public string Name { get; set; }
         public int NbSuggestions { get; set; }
-        public IList<Book> Books{ get; set; }
+        public IList<Book> Books { get; set; }
         public override bool TestCreationValidation()
         {
 

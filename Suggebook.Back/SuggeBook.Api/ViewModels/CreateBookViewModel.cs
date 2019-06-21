@@ -42,20 +42,20 @@ namespace SuggeBook.Api.ViewModels
             return new Book
             {
                 Title = Title,
-                Author = new Author
+                Authors = new List<Author>()
                 {
-                    Id = AuthorId,
+                    new Author {Id = AuthorId}
                 },
                 Id = Id,
                 Categories = Categories,
                 Isbn10 = Isbn10,
                 Isbn13 = Isbn13,
-               PublishedDate =  PublishedDate,
-               Saga = new Saga
-               {
-                   Id = SagaId
-               },
-               SagaPosition = SagaPosition
+                PublishedDate = PublishedDate,
+                Saga = new Saga
+                {
+                    Id = SagaId
+                },
+                SagaPosition = SagaPosition
             };
         }
     }

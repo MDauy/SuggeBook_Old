@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SuggeBook.Framework
 {
@@ -17,6 +18,17 @@ namespace SuggeBook.Framework
                 return true;
             }
             return false;
+        }
+
+
+        public static List<T> GetMatches<T> (this List<T> list1, List<T> list2)
+        {
+            return list2.Except(list1).ToList();
+        }
+
+        public static bool HasMatches<T> (this List<T> list1, List<T> list2)
+        {
+            return !list1.GetMatches(list2).IsNullOrEmpty();
         }
     }
 }

@@ -19,7 +19,10 @@ namespace SuggeBook.Domain.UseCases
         public async Task<Book> Get(string bookId)
         {
             var book = await _bookRepository.Get(bookId);
-            book.Author = await _authorRepository.Get(book.Author.Id);
+            foreach (var author in book.Authors)
+            {
+                book.Authors.Add (await _authorRepository.Get(author.Id));
+            }
             return book;
         }
     }

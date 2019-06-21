@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using SuggeBook.Domain.Model;
+using System.Collections.Generic;
 
 namespace SuggeBook.Api.ViewModels
 {
@@ -34,9 +35,9 @@ namespace SuggeBook.Api.ViewModels
                 Book = new Book()
                 {
                     Id = BookId,
-                    Author = new Author()
+                    Authors = new List<Author>()
                     {
-                        Id = AuthorId
+                        new Author() {Id = AuthorId}
                     }
                 },
                 Content = Content,

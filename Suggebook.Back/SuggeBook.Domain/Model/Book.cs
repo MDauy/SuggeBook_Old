@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SuggeBook.Domain.Model
 {public class Book : BaseModel
@@ -20,6 +21,11 @@ namespace SuggeBook.Domain.Model
         public Saga Saga { get; set; }
 
         public double? SagaPosition { get; set; }
+
+        public List<string>AuthorsIds
+        {
+            get { return Authors.ToList().Select(author => author.Id).ToList(); }
+        }
 
         public override bool TestCreationValidation()
         {

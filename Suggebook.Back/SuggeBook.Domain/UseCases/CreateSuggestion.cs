@@ -25,7 +25,11 @@ namespace SuggeBook.Domain.UseCases
             var createdSuggestion = await _suggestionRepository.Insert(suggestion);
             createdSuggestion.Book = suggestion.Book;
             createdSuggestion.User = suggestion.User;
-            await _authorRepository.UpdateNbSuggestions(suggestion.Book.Author.Id, createdSuggestion.Id);
+            foreach (var author in suggestion.Book.Authors)
+            {
+                 await _authorRepository.UpdateNbSuggestions(author.Id, createdSuggestion.Id);
+            }
+           
             await _bookRepository.UpdateSuggestions(suggestion.Book.Id, createdSuggestion.Id);
 
             return createdSuggestion;

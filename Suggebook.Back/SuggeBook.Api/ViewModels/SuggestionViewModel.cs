@@ -15,11 +15,15 @@ namespace SuggeBook.Api.ViewModels
             Id = suggestion.Id;
             Title = suggestion.Title;
             Categories = suggestion.Book.Categories;
-            BookAuthor = new SuggestionAuthorViewModel
+            BookAuthors = new List<SuggestionAuthorViewModel>();
+            foreach (var author in suggestion.Book.Authors)
             {
-                Id = suggestion.Book.Author.Id,
-                Fullname = suggestion.Book.Author.Name
-            };
+                BookAuthors.Add (new SuggestionAuthorViewModel
+                {
+                     Id = author.Id,
+                Fullname = author.Name
+                });
+            }
             CreationDate = suggestion.CreationDate;
             BookTitle = suggestion.Book.Title;
             CreatorUsername = suggestion.User.Username;
@@ -32,8 +36,8 @@ namespace SuggeBook.Api.ViewModels
         [JsonProperty(PropertyName = "bookTitle")]  
         public string BookTitle { get; set; }
 
-        [JsonProperty(PropertyName = "bookAuthor")]
-        public SuggestionAuthorViewModel BookAuthor { get; set; }
+        [JsonProperty(PropertyName = "bookAuthors")]
+        public IList<SuggestionAuthorViewModel> BookAuthors { get; set; }
 
         [JsonProperty(PropertyName = "creatorUsername")]
         public string CreatorUsername { get; set; }

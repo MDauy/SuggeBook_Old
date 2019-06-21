@@ -34,13 +34,12 @@ namespace SuggeBook.Infrastructure.Repositories
             if (!string.IsNullOrEmpty(book.Id))
             {
                 existingBooks = await _baseRepository.Get(b =>
-                   (b.Title == book.Title && b.Author.Id == new ObjectId(book.Author.Id)) ||
-                   b.Id == new ObjectId(book.Id));
+                   (b.Title == book.Title && book.AuthorsIds.HasMatches<string>(b.Authors.Select(a => a.Id.ToString()).ToList()) || b.Id == ObjectId.Parse(book.Id)));
             }
             else
             {
                 existingBooks = await _baseRepository.Get(b =>
-                    b.Title == book.Title && b.Author.Id == new ObjectId(book.Author.Id));
+                    b.Title == book.Title && book.AuthorsIds.HasMatches<string>(b.Authors.Select(a => a.Id.ToString()).ToList()));
             }
 
             if (existingBooks.IsNullOrEmpty())
@@ -49,8 +48,8 @@ namespace SuggeBook.Infrastructure.Repositories
             }
 
             if (existingBooks.Count > 2)
-            {
-                throw new ObjectNotUniqueException("Book", $"{book.Id} {book.Author.Id}");
+            {                
+                throw new ObjectNotUniqueException("Book", $"{book.Id} {string.Concat(book.Authors.Select(a => a.Id))}");
             }
 
             return existingBooks.First().ToModel();
@@ -75,7 +74,7 @@ namespace SuggeBook.Infrastructure.Repositories
 
         public async Task<List<Book>> GetFromAuthor(string authorId)
         {
-            var document = await _baseRepository.Get(b => b.Author.Id == ObjectId.Parse(authorId));
+            var document = await _baseRepository.Get(b => b.Authors.Where(author => author.Id == ObjectId.Parse(authorId)).FirstOrDefault() != null);
             List<Book> result = new List<Book>();
 
             foreach (var book in document)
