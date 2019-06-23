@@ -10,15 +10,6 @@ namespace SuggeBook.Infrastructure.Documents
         {
         }
 
-        public UserDocument(User user)
-        {
-            Firstname = user.Firstname;
-            Lastname = user.Lastname;
-            FavoriteCategories = user.FavoriteCategories;
-            Email = user.Email;
-            UserName = user.Username;
-        }
-
         [BsonElement("Firstname")]
         public string Firstname { get; set; }
 
@@ -36,18 +27,5 @@ namespace SuggeBook.Infrastructure.Documents
 
         [BsonElement("Password")]
         public string Password { get; set; }
-
-        public User ToModel()
-        {
-            return new User
-            {
-                Id = Id.ToString(),
-                Firstname = Firstname,
-                Lastname = Lastname,
-                FavoriteCategories = FavoriteCategories,
-                Email = Email,
-                Username = UserName
-            };
-        }
     }
 }

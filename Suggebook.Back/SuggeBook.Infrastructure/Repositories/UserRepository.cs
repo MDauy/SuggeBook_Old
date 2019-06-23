@@ -22,8 +22,8 @@ namespace SuggeBook.Infrastructure.Repositories
 
         public async Task<User> Create(User user)
         {
-            var userDocument = await _baseRepository.Insert(new UserDocument(user));
-            return userDocument.ToModel();
+            var userDocument = await _baseRepository.Insert(CustomAutoMapper.Map<User, UserDocument>(user));
+            return CustomAutoMapper.Map<UserDocument, User>(userDocument);
         }
 
         private async Task<User> BasicGetUser(Expression<Func<UserDocument, bool>> func, string userIdentifier)
@@ -34,7 +34,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("User", userIdentifier);
             }
 
-            return users.First().ToModel();
+            return CustomAutoMapper.Map<UserDocument, User>(users.First());
         }
 
         public async Task<User> GetFromUsername(string username)
@@ -62,7 +62,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("User", $"{username}");
             }
 
-            return existingUser.First().ToModel();
+            return CustomAutoMapper.Map<UserDocument, User>(existingUser.First());
         }
 
         public async Task<User> GetSimilarMail(string mail)
@@ -80,7 +80,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("User", $"{mail}");
             }
 
-            return existingUser.First().ToModel();
+            return CustomAutoMapper.Map<UserDocument, User>(existingUser.First());
         }
 
         public async Task<User> Connect(string usernameOrEmail, string password)
@@ -103,7 +103,7 @@ namespace SuggeBook.Infrastructure.Repositories
                 if (string.Equals(user.Password, password))
                 {
 
-                    return user.ToModel();
+                    return CustomAutoMapper.Map<UserDocument, User>(user);
                 }
             }
 

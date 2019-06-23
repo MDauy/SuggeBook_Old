@@ -12,21 +12,21 @@ namespace SuggeBook.Api.ViewModels
 
         }
 
-        public BookViewModel(Book book)
-        {
-            Id = book.Id;
-            Title = book.Title;            
-            Categories = book.Categories;
+        //public BookViewModel(Book book)
+        //{
+        //    Id = book.Id;
+        //    Title = book.Title;            
+        //    Categories = book.Categories;
 
-            Authors = book.Authors.ToList().ConvertAll(b =>
-            {
-                return new BookAuthorViewModel
-                {
-                    Name = b.Name,
-                    Id = b.Id
-                };
-            });
-        }
+        //    Authors = book.Authors.ToList().ConvertAll(b =>
+        //    {
+        //        return new BookAuthorViewModel
+        //        {
+        //            Name = b.Name,
+        //            Id = b.Id
+        //        };
+        //    });
+        //}
 
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }

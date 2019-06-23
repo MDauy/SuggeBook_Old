@@ -16,11 +16,11 @@ namespace SuggeBook.Infrastructure.Repositories
 
         public async Task<MissedAuthor> Register(MissedAuthor missedAuthor)
         {
-            var missedAuthorDocument = new MissedAuthorDocument(missedAuthor);
+            var missedAuthorDocument = CustomAutoMapper.Map<MissedAuthor, MissedAuthorDocument>(missedAuthor);
 
             missedAuthorDocument = await _baseRepository.Insert(missedAuthorDocument);
 
-            return missedAuthorDocument.ToModel();
+            return CustomAutoMapper.Map<MissedAuthorDocument, MissedAuthor>(missedAuthorDocument);
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SuggeBook.Api.ViewModels;
 using SuggeBook.Domain.UseCasesInterfaces;
 using System.Threading.Tasks;
+using SuggeBook.Framework;
+using SuggeBook.Domain.Model;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -25,7 +27,7 @@ namespace SuggeBook.Api.Controllers
         {
             var author = await _getAuthor.Get(authorId);
 
-            var authorViewModel = new AuthorViewModel(author);
+            var authorViewModel =CustomAutoMapper.Map<Author, AuthorViewModel>(author);
 
             return new JsonResult(authorViewModel);
         }
@@ -36,9 +38,9 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                var authorModel = author.ToModel();
+                var authorModel = CustomAutoMapper.Map<CreateAuthorViewModel, Author>(author);
                 authorModel = await _createAuthor.Create(authorModel);
-                return new JsonResult(new AuthorViewModel(authorModel));
+                return new JsonResult(CustomAutoMapper.Map<Author, AuthorViewModel>(authorModel));
             }
             catch (Exception exception)
             {

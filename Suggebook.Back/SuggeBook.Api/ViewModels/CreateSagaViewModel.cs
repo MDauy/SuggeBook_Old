@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using SuggeBook.Domain.Model;
+﻿using Newtonsoft.Json;
 
 namespace SuggeBook.Api.ViewModels
 {
@@ -11,13 +6,5 @@ namespace SuggeBook.Api.ViewModels
     {
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
-
-        public Saga ToModel()
-        {
-            return new Saga()
-            {
-                Title = Title
-            };
-        }
     }
 }

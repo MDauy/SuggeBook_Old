@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SuggeBook.Api.ViewModels;
+using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
+using SuggeBook.Framework;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -25,7 +27,7 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                return new JsonResult (await _createSaga.Create(saga.ToModel()));
+                return new JsonResult (await _createSaga.Create(CustomAutoMapper.Map<CreateSagaViewModel, Saga>(saga)));
             }
             catch (Exception e)
             {

@@ -11,12 +11,6 @@ namespace SuggeBook.Api.ViewModels
     {
         public UserViewModel() { }
 
-        public UserViewModel(User user)
-        {
-            Id = user.Id;
-            UserName = user.Username;
-            FavoriteCategories = user.FavoriteCategories;
-        }
 
         public string UserName { get; set; }
 
@@ -24,7 +18,7 @@ namespace SuggeBook.Api.ViewModels
 
         public IList<UserSuggestion> Suggestions { get; set; }
 
-        public IList<string> FavoriteCategories{ get; set; }
+        public IList<string> FavoriteCategories { get; set; }
 
         public struct UserBook
         {
@@ -37,7 +31,6 @@ namespace SuggeBook.Api.ViewModels
                 {
                     AuthorName += $"{author.Name} ";
                 }
-                
             }
 
             public string Id { get; set; }
@@ -46,7 +39,7 @@ namespace SuggeBook.Api.ViewModels
 
             public string AuthorName { get; set; }
         }
-    
+
         public struct UserSuggestion
         {
             public UserSuggestion(Suggestion suggestion)
@@ -54,7 +47,7 @@ namespace SuggeBook.Api.ViewModels
                 Title = suggestion.Title;
             }
             public string Title { get; set; }
-        }  
-        
+        }
+
     }
 }

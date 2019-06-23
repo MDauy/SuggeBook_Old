@@ -7,6 +7,7 @@ using SuggeBook.Domain.Repositories;
 using SuggeBook.Framework;
 using SuggeBook.Infrastructure.Documents;
 using SuggeBook.Infrastructure.Exceptions;
+using static SuggeBook.Infrastructure.Documents.BookDocument;
 
 namespace SuggeBook.Infrastructure.Repositories
 {
@@ -23,9 +24,12 @@ namespace SuggeBook.Infrastructure.Repositories
 
         public async Task<Book> Create(Book book)
         {
-            var bookDocument = new BookDocument(book);
+            var bookDocument = CustomAutoMapper.Map<Book, BookDocument>(book);
+            bookDocument.Authors = CustomAutoMapper.MapLists<Author, BookDocument.BookAuthorDocument>(book.Authors);
             bookDocument = await _baseRepository.Insert(bookDocument);
-            return bookDocument.ToModel();
+            var bookResult =  CustomAutoMapper.Map<BookDocument, Book>(bookDocument);
+            bookResult.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(bookDocument.Authors);
+            return bookResult;
         }
 
         public async Task<Book> GetSimilar(Book book)
@@ -52,7 +56,9 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Book", $"{book.Id} {string.Concat(book.Authors.Select(a => a.Id))}");
             }
 
-            return existingBooks.First().ToModel();
+            var bookResult = CustomAutoMapper.Map<BookDocument,Book> (existingBooks.First());
+            bookResult.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(existingBooks.First().Authors);
+            return bookResult;
         }
 
         public async Task<Book> Get(string bookId)
@@ -69,7 +75,9 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Book", bookId);
             }
 
-            return books.First().ToModel();
+            var bookModel = CustomAutoMapper.Map<BookDocument, Book>(books.First());
+            bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(books.First().Authors);
+            return bookModel;
         }
 
         public async Task<List<Book>> GetFromAuthor(string authorId)
@@ -79,7 +87,9 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var book in document)
             {
-                result.Add(book.ToModel());
+                var bookModel = CustomAutoMapper.Map<BookDocument, Book>(book);
+                bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(book.Authors);
+                result.Add(bookModel);
             }
 
             return result;
@@ -95,7 +105,9 @@ namespace SuggeBook.Infrastructure.Repositories
                 {
                     if (results.FirstOrDefault(b => string.Equals(b.Id, book.Id.ToString())) == null)
                     {
-                        results.Add(book.ToModel());
+                        var bookModel = CustomAutoMapper.Map<BookDocument, Book>(book);
+                        bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(book.Authors);
+                        results.Add(bookModel);
                     }
                 }
             }
@@ -125,7 +137,9 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var document in booksDocuments)
             {
-                booksResults.Add(document.ToModel());
+               var bookModel = CustomAutoMapper.Map<BookDocument, Book>(document);
+                bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(document.Authors);
+                booksResults.Add( bookModel);
             }
 
             return booksResults;
@@ -139,7 +153,9 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var book in books)
             {
-                result.Add(book.ToModel());
+                var bookModel = CustomAutoMapper.Map<BookDocument, Book>(book);
+                bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(book.Authors);
+                result.Add(bookModel);
             }
 
             return result;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using SuggeBook.Domain.Model;
+using SuggeBook.Framework;
 
 namespace SuggeBook.Api.ViewModels
 {
@@ -10,18 +11,6 @@ namespace SuggeBook.Api.ViewModels
         {
 
         }
-
-        public SagaViewModel(Saga saga)
-        {
-            Books = new List<BookViewModel>();
-            Title = saga.Title;
-            Id = saga.Id;
-            foreach (var book in saga.Books)
-            {
-                Books.Add(new BookViewModel(book));
-            }
-        }
-
         [JsonProperty(PropertyName = "books")]
         public List<BookViewModel> Books{ get; set; }
 

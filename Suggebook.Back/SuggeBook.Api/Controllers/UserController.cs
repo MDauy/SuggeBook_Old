@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuggeBook.Api.ViewModels;
+using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
+using SuggeBook.Framework;
 using System;
 using System.Threading.Tasks;
 
@@ -43,9 +45,9 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                var user = userToCreate.ToModel();
+                var user = CustomAutoMapper.Map<CreateUserViewModel, User>(userToCreate);
                 user = await _createUser.Create(user);
-                return new JsonResult(new UserViewModel(user));
+                return new JsonResult(CustomAutoMapper.Map<User, UserViewModel>(user));
 
             }
             catch (Exception e)

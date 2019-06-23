@@ -65,7 +65,7 @@ namespace SuggeBook.Infrastructure.Repositories
         //}
         public async Task<Suggestion> Insert(Suggestion suggestion)
         {
-            var document = await _baseRepository.Insert(new SuggestionDocument(suggestion));
+            var document = await _baseRepository.Insert(CustomAutoMapper.Map<Suggestion, SuggestionDocument>(suggestion));
             return document.ToModel();
         }
 

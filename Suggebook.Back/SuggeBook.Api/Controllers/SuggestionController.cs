@@ -6,6 +6,7 @@ using SuggeBook.Domain.UseCasesInterfaces;
 using SuggeBook.Framework;
 using System;
 using System.Threading.Tasks;
+using static SuggeBook.Api.ViewModels.SuggestionViewModel;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -24,9 +25,10 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                var suggestion = suggestionToCreate.ToModel();
+                var suggestion = CustomAutoMapper.Map<CreateSuggestionViewModel, Suggestion>(suggestionToCreate);
                 suggestion = await _createSuggestion.Create(suggestion);
-                return new JsonResult(new SuggestionViewModel(suggestion));
+                var suggestionViewModel= CustomAutoMapper.Map<Suggestion, SuggestionViewModel>(suggestion);
+                return new JsonResult(suggestionViewModel);
             }
             catch (Exception e)
             {

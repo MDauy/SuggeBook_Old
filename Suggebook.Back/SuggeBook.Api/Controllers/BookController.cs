@@ -28,7 +28,9 @@ namespace SuggeBook.Api.Controllers
         public async Task<JsonResult> Get(string bookId)
         {
             var book = await _getBook.Get(bookId);
-            var bookViewModel = new BookViewModel(book);
+
+            var bookViewModel = CustomAutoMapper.Map<Book, BookViewModel>(book);
+            bookViewModel.Authors = CustomAutoMapper.MapLists<Author, BookAuthorViewModel>(book.Authors);
             return new JsonResult(bookViewModel);
         }
 
@@ -38,16 +40,23 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                var bookModel = book.ToModel();
+                var bookModel = CustomAutoMapper.Map<CreateBookViewModel, Book>(book);
+                bookModel.Authors = new List<Author>();
+                foreach (var authorId in book.AuthorsIds)
+                {
+                    bookModel.Authors.Add(new Author
+                    {
+                        Id = authorId
+                    });
+                }
                 if (bookModel == null)
                 {
                     throw new ObjectCreationException("Book");
-                }
-
-                bookModel.Authors = new List<Author>();
-                bookModel.Authors.Add(new Author {Id = book.AuthorId});
+                }           
+                
                 bookModel = await _createBook.Create(bookModel);
-                var bookViewModel = new BookViewModel(bookModel);
+                var bookViewModel = CustomAutoMapper.Map<Book, BookViewModel>(bookModel);
+                bookViewModel.Authors = CustomAutoMapper.MapLists<Author, BookAuthorViewModel>(bookModel.Authors);
                 return new JsonResult(bookViewModel);
             }
             catch (Exception exception)
@@ -64,7 +73,9 @@ namespace SuggeBook.Api.Controllers
             var viewModels = new List<BookViewModel>();
             foreach (var model in booksModels)
             {
-                viewModels.Add(new BookViewModel(model));
+                var bookViewModel = CustomAutoMapper.Map<Book, BookViewModel>(model);
+                bookViewModel.Authors = CustomAutoMapper.MapLists<Author, BookAuthorViewModel>(model.Authors);
+                viewModels.Add(bookViewModel);
             }
             return new JsonResult(viewModels);
         }

@@ -23,17 +23,5 @@ namespace SuggeBook.Api.ViewModels
 
         [JsonProperty(PropertyName = "favorite_categories")]
         public IList<string> FavoriteCategories { get; set; }
-
-        public User ToModel()
-        {
-            return new User
-            {
-                FavoriteCategories = FavoriteCategories,
-                Firstname = Firstname,
-                Lastname = Lastname,
-                Email = Mail,
-                Username = Username
-            };
-        }
     }
 }

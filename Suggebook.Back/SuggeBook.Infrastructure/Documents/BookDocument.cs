@@ -11,21 +11,6 @@ namespace SuggeBook.Infrastructure.Documents
     {
         public BookDocument() { }
 
-        public BookDocument(Book book)
-        {
-             Authors = book.Authors.ToList().ConvertAll(b => 
-             {
-                 return new BookAuthor(b);
-             });
-            Categories = book.Categories;
-            Isbn10 = book.Isbn10;
-            Isbn13 = book.Isbn13;
-            Title = book.Title;
-            PublishedDate = book.PublishedDate;
-            Saga = new SagaDocument(book.Saga);
-            SagaPosition = book.SagaPosition;
-        }
-
         [BsonElement("Title")]
         public string Title { get; set; }
 
@@ -39,7 +24,7 @@ namespace SuggeBook.Infrastructure.Documents
         public IList<string> Categories { get; set; }
 
         [BsonElement("Authors")]
-        public IList<BookAuthor> Authors { get; set; }
+        public IList<BookAuthorDocument> Authors { get; set; }
 
         [BsonElement("NbSuggestions")]
         public int NbSuggestions { get; set; }
@@ -53,9 +38,9 @@ namespace SuggeBook.Infrastructure.Documents
         [BsonElement("SagaPosition")]
         public double? SagaPosition { get; set; }
 
-        public class BookAuthor : BaseDocument
+        public class BookAuthorDocument : BaseDocument
         {
-            public BookAuthor(Author author)
+            public BookAuthorDocument(Author author)
             {
                 Id = new ObjectId(author.Id);
                 Name = author.Name;
@@ -64,29 +49,6 @@ namespace SuggeBook.Infrastructure.Documents
             [BsonElement("Name")]
             public string Name { get; set; }
 
-        }
-
-        public Book ToModel()
-        {
-            var book = new Book
-            {
-                Id = Id.ToString(),
-                Authors = new List<Author>(),
-                Title = Title,
-                Categories = Categories,
-                PublishedDate = PublishedDate,
-                Saga = Saga.ToModel(),
-                SagaPosition = SagaPosition
-            };
-            book.Authors = Authors.ToList().ConvertAll(author =>
-            {
-                return new Author
-                {
-                    Name = author.Name,
-                    Id = author.Id.ToString()
-                };
-            });
-            return book;
         }
     }
 }

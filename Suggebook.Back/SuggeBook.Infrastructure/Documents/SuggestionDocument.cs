@@ -12,14 +12,6 @@ namespace SuggeBook.Infrastructure.Documents
         {
         }
 
-        public SuggestionDocument(Suggestion suggestion)
-        {
-            Title = suggestion.Title;
-            CreationDate = suggestion.CreationDate;
-            Content = suggestion.Content;
-            BookId = new ObjectId(suggestion.Book.Id);
-        }
-
         [BsonElement("Title")]
         public string Title { get; set; }
 

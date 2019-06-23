@@ -30,6 +30,8 @@ namespace SuggeBook.Infrastructure.Repositories
                     return "Sagas";
                     case MissedAuthorDocument _:
                     return "MissedAuthors";
+                    case MissedBookDocument _:
+                    return "MissedBooks";
                 default:
                     return "Books";
 

@@ -5,26 +5,7 @@ namespace SuggeBook.Infrastructure.Documents
 {
     public class MissedAuthorDocument : BaseDocument
     {
-        public MissedAuthorDocument(){}
-
-        public MissedAuthorDocument(MissedAuthor missedAuthor)
-        {
-            Name = missedAuthor.Name;
-            TriedUrl = missedAuthor.TriedUrl;
-            StatusCode = missedAuthor.StatusCode;
-            Message = missedAuthor.Message;
-        }
-
-        public MissedAuthor ToModel ()
-        {
-            return new MissedAuthor
-            {
-                Name = Name,
-                Message = Message,
-                StatusCode = StatusCode,
-                TriedUrl = TriedUrl
-            };
-        }
+        public MissedAuthorDocument() { }
 
         [BsonElement("Name")]
         public string Name { get; set; }

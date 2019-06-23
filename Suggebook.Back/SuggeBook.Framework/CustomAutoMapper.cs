@@ -6,33 +6,32 @@ namespace SuggeBook.Framework
 {
     public static class CustomAutoMapper
     {
-        public static T2 Map<T1, T2>(T1 source)
+        public static TDestination Map<TSource, TDestination>(TSource source)
         {
             try
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<T1, T2>());
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<TSource, TDestination>());
 
                 var iMapper = config.CreateMapper();
-
-                return iMapper.Map<T1, T2>(source);
+                return iMapper.Map<TSource, TDestination>(source);
             }
             catch (Exception)
             {
-                throw new Exception($"Error matching {typeof(T1).Name} in {typeof(T2).Name}");
+                throw new Exception($"Error matching {typeof(TSource).Name} in {typeof(TDestination).Name}");
             }
         }
 
-        public static IList<T2> MapLists<T1, T2>(IList<T1> source)
+        public static IList<TDestination> MapLists<TSource, TDestination>(IList<TSource> source)
         {
             try
             {
-                var result = new List<T2>();
+                var result = new List<TDestination>();
 
                 if (source != null)
                 {
-                    foreach (var t1 in source)
+                    foreach (var elt in source)
                     {
-                        result.Add(Map<T1, T2>(t1));
+                        result.Add(Map<TSource, TDestination>(elt));
                     }
                 }
 
@@ -41,7 +40,7 @@ namespace SuggeBook.Framework
 
             catch (Exception)
             {
-                throw new Exception($"Error matching lists of {typeof(T1).Name} in {typeof(T2).Name}");
+                throw new Exception($"Error matching lists of {typeof(TSource).Name} in {typeof(TDestination).Name}");
             }
         }
     }

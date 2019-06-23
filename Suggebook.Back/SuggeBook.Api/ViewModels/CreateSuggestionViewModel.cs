@@ -27,26 +27,5 @@ namespace SuggeBook.Api.ViewModels
         [Required]
         [JsonProperty(PropertyName = "authorId")]
         public string AuthorId { get; set; }
-
-        public Suggestion ToModel()
-        {
-            return new Suggestion
-            {
-                Book = new Book()
-                {
-                    Id = BookId,
-                    Authors = new List<Author>()
-                    {
-                        new Author() {Id = AuthorId}
-                    }
-                },
-                Content = Content,
-                Title = Title,
-                User = new User
-                {
-                    Id = UserId
-                }
-            };
-        }
     }
 }

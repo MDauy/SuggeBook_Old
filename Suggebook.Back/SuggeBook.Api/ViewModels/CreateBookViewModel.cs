@@ -14,8 +14,8 @@ namespace SuggeBook.Api.ViewModels
         public string Title { get; set; }
 
         [Required]
-        [JsonProperty(PropertyName = "author_id")]
-        public string AuthorId { get; set; }
+        [JsonProperty(PropertyName = "authors_ids")]
+        public List<string> AuthorsIds { get; set; }
 
         [JsonProperty(PropertyName = "year")]
         public string PublishedDate { get; set; }
@@ -36,27 +36,6 @@ namespace SuggeBook.Api.ViewModels
         [Required]
         [JsonProperty(PropertyName = "categories")]
         public List<string> Categories { get; set; }
-
-        public Book ToModel()
-        {
-            return new Book
-            {
-                Title = Title,
-                Authors = new List<Author>()
-                {
-                    new Author {Id = AuthorId}
-                },
-                Id = Id,
-                Categories = Categories,
-                Isbn10 = Isbn10,
-                Isbn13 = Isbn13,
-                PublishedDate = PublishedDate,
-                Saga = new Saga
-                {
-                    Id = SagaId
-                },
-                SagaPosition = SagaPosition
-            };
-        }
     }
 }
+

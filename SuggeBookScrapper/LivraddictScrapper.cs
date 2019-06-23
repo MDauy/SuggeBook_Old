@@ -70,17 +70,21 @@ namespace SuggeBookScrapper
                                         var jsonResult = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_SAGA, JsonConvert.SerializeObject(saga));
                                         curentSagaId = JsonConvert.DeserializeObject<SagaViewModel>(jsonResult).Id;
                                         sagaPosition = 1;
-                                        sagaH3 = null;
                                         continue;
                                     }
                                     catch (Exception e)
                                     {
                                         Console.WriteLine(e.Message);
                                     };
-
-                                    var bookTitle = bookElt.SelectSingleNode("//td//a");
+                                }
+                                var bookTitle = bookElt.SelectSingleNode("td/a");
+                                if (bookTitle != null)
+                                {
                                     var bookUrl = bookTitle.GetAttributeValue("href", "");
-                                    ScrappBookPage(bookUrl, bookTitle.InnerText, sagaPosition, curentSagaId);
+                                    if (bookUrl != null)
+                                    {
+                                        await ScrappBookPage(bookUrl, bookTitle.InnerText, sagaPosition, curentSagaId);
+                                    }
                                 }
                             }
                         }
@@ -90,9 +94,16 @@ namespace SuggeBookScrapper
             }
         }
 
-        private void ScrappBookPage(string url, string bookTitle, double sagaPositionl, string sagaId = null)
+        private async Task ScrappBookPage(string url, string bookTitle, double sagaPositionl, string sagaId = null)
         {
+            var bookUrl = $"{ApiUrls.LIVRADDICT_BASE_URL}{url}";
+            using (var response = await UrlCallerHelper.CallUri_ReponseResult(HttpMethod.Get, bookUrl))
+            {
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
 
+                }
+            }
         }
 
     }

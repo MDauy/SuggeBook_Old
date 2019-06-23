@@ -34,14 +34,14 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Saga", title);
             }
 
-            return saga.First().ToModel();
+            return CustomAutoMapper.Map<SagaDocument, Saga>(saga.First());
         }
 
         public async Task<Saga> Create(Saga saga)
         {
-            var sagaDocument = new SagaDocument(saga);
+            var sagaDocument = CustomAutoMapper.Map<Saga, SagaDocument>(saga);
             sagaDocument = await _baseRepository.Insert(sagaDocument);
-            return sagaDocument.ToModel();
+            return CustomAutoMapper.Map<SagaDocument, Saga>(sagaDocument);
         }
     }
 }
