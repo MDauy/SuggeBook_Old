@@ -24,7 +24,7 @@ namespace SuggeBookScrapper
                 //Auteur non trouvé
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    var missedAuthorViewModel = new RegisterMissedAuthorViewModel
+                    var missedAuthorViewModel = new MissedAuthorViewModel
                     {
                         Name = name,
                         Message = response.RequestMessage.ToString(),

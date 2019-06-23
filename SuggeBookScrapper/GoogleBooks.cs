@@ -82,7 +82,7 @@ namespace SuggeBookScrapper
                 Isbn13 =
                     item.VolumeInfo.IndustryIdentifiers.FirstOrDefault(i => string.Equals(i.Type, "ISBN_13"))?.Type,
                 Title = item.VolumeInfo.Title,
-                AuthorId = author.Id,
+                AuthorsIds = new List<string>(){ author.Id },
                 PublishedDate = item.VolumeInfo.PublishedDate
             };
             return bookViewModel;
