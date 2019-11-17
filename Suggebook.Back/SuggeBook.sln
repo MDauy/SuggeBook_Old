@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Framework", "Sugg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Domain", "SuggeBook.Domain\SuggeBook.Domain.csproj", "{4F02EDC7-564D-4B9B-9F3A-22108EAB9482}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuggeBookTests", "SuggeBookTests\SuggeBookTests.csproj", "{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,22 @@ Global
 		{4F02EDC7-564D-4B9B-9F3A-22108EAB9482}.Release|x64.Build.0 = Release|Any CPU
 		{4F02EDC7-564D-4B9B-9F3A-22108EAB9482}.Release|x86.ActiveCfg = Release|Any CPU
 		{4F02EDC7-564D-4B9B-9F3A-22108EAB9482}.Release|x86.Build.0 = Release|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Debug|ARM.Build.0 = Debug|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Debug|x64.Build.0 = Debug|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Debug|x86.Build.0 = Debug|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Release|ARM.ActiveCfg = Release|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Release|ARM.Build.0 = Release|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Release|x64.ActiveCfg = Release|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Release|x64.Build.0 = Release|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Release|x86.ActiveCfg = Release|Any CPU
+		{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

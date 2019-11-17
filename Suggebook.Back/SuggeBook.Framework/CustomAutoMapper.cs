@@ -1,47 +1,60 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using AutoMapper;
+using System.Linq;
 
 namespace SuggeBook.Framework
 {
     public static class CustomAutoMapper
     {
-        public static TDestination Map<TSource, TDestination>(TSource source)
+        public static object Map(object source, Type typeDestination)
         {
-            try
-            {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<TSource, TDestination>());
-
-                var iMapper = config.CreateMapper();
-                return iMapper.Map<TSource, TDestination>(source);
-            }
-            catch (Exception)
-            {
-                throw new Exception($"Error matching {typeof(TSource).Name} in {typeof(TDestination).Name}");
-            }
+                var destinationObject = Activator.CreateInstance(typeDestination);
+                foreach (var property in source.GetType().GetProperties())
+                {
+                    var destinationProperty = destinationObject.GetType().GetProperty(property.Name);
+                    if (destinationProperty.PropertyType == property.PropertyType)
+                    {
+                        destinationProperty.SetValue(destinationObject, property.GetValue(source));
+                    }
+                    else
+                    {
+                        var sourceValue = property.GetValue(source);
+                        if (sourceValue != null)
+                        {
+                            if (typeof(IEnumerable).IsAssignableFrom(sourceValue.GetType()))
+                            {
+                            var listType = typeof(List<>);
+                                var sourceListType = property.PropertyType.GenericTypeArguments.First();
+                                var destinationListType = destinationProperty.PropertyType.GenericTypeArguments.First();
+                                var constructedListType = listType.MakeGenericType(destinationListType);
+                                var destinationList = Activator.CreateInstance(constructedListType) as IList;
+                                var sourceList = sourceValue as IList;
+                                foreach (var item in sourceList)
+                                {
+                                    destinationList.Add(CustomAutoMapper.Map(item, destinationListType));
+                                }
+                                destinationProperty.SetValue(destinationObject, destinationList);
+                            }
+                            else
+                            {
+                                var propertyValue = CustomAutoMapper.Map(property.GetValue(source), destinationProperty.PropertyType);
+                                destinationProperty.SetValue(destinationObject, propertyValue);
+                            }
+                        }
+                    }
+                    //if (typeof(ICollection<>).IsAssignableFrom(property.PropertyType))
+                    //{
+                    //    var property2 = source.GetType().GetProperty(property.Name);
+                    //}
+                }
+                return destinationObject;
+            
         }
 
-        public static IList<TDestination> MapLists<TSource, TDestination>(IList<TSource> source)
+        public static TDestination Map<TDestination>(object source) where TDestination : new()
         {
-            try
-            {
-                var result = new List<TDestination>();
-
-                if (source != null)
-                {
-                    foreach (var elt in source)
-                    {
-                        result.Add(Map<TSource, TDestination>(elt));
-                    }
-                }
-
-                return result;
-            }
-
-            catch (Exception)
-            {
-                throw new Exception($"Error matching lists of {typeof(TSource).Name} in {typeof(TDestination).Name}");
-            }
+            return ((TDestination)Map(source, typeof(TDestination)));
         }
     }
 }
