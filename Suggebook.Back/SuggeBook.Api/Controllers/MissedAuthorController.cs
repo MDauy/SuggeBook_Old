@@ -25,7 +25,7 @@ namespace SuggeBook.Api.Controllers
         [Route("register")]
         public async Task<JsonResult> Register([FromBody] MissedAuthorViewModel missedAuthorViewModel)
         {
-            var model = CustomAutoMapper.Map<MissedAuthorViewModel, MissedAuthor> (missedAuthorViewModel);
+            var model = CustomAutoMapper.Map<MissedAuthor> (missedAuthorViewModel);
             try
             {
                 model = await _registerMissedAuthor.Register(model);

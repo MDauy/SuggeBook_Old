@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
@@ -34,14 +31,14 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Saga", title);
             }
 
-            return CustomAutoMapper.Map<SagaDocument, Saga>(saga.First());
+            return CustomAutoMapper.Map<Saga>(saga.First());
         }
 
         public async Task<Saga> Create(Saga saga)
         {
-            var sagaDocument = CustomAutoMapper.Map<Saga, SagaDocument>(saga);
+            var sagaDocument = CustomAutoMapper.Map<SagaDocument>(saga);
             sagaDocument = await _baseRepository.Insert(sagaDocument);
-            return CustomAutoMapper.Map<SagaDocument, Saga>(sagaDocument);
+            return CustomAutoMapper.Map<Saga>(sagaDocument);
         }
     }
 }

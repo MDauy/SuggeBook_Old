@@ -4,6 +4,7 @@ using SuggeBook.Domain.UseCasesInterfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SuggeBook.Domain.Exceptions;
+using System.Linq;
 
 namespace SuggeBook.Domain.UseCases
 {
@@ -37,7 +38,7 @@ namespace SuggeBook.Domain.UseCases
 
                 }
             }
-            if (authors.Count == book.Authors.Count)
+            if (authors.Count == book.Authors.ToList().Count)
             {
                 book.Authors = authors;
                 var similarBook = await _bookRepository.GetSimilar(book);

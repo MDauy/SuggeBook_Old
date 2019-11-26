@@ -1,7 +1,7 @@
 ﻿using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Domain.UseCasesInterfaces;
-using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Domain.UseCases
@@ -21,7 +21,7 @@ namespace SuggeBook.Domain.UseCases
             var book = await _bookRepository.Get(bookId);
             foreach (var author in book.Authors)
             {
-                book.Authors.Add (await _authorRepository.Get(author.Id));
+                book.Authors.ToList().Add (await _authorRepository.Get(author.Id));
             }
             return book;
         }

@@ -9,9 +9,9 @@ namespace SuggeBook.Domain.Model
             WrongProperties = string.Empty;
         }
 
-        public IList<string> Categories { get; set; }
+        public IEnumerable<string> Categories { get; set; }
         public string Title { get; set; }
-        public IList<Author> Authors { get; set; }
+        public IEnumerable<Author> Authors { get; set; }
 
         public string Isbn10 { get; set; }
         public string Isbn13 { get; set; }
@@ -22,9 +22,9 @@ namespace SuggeBook.Domain.Model
 
         public double? SagaPosition { get; set; }
 
-        public List<string>AuthorsIds
+        public List<string>AuthorsIds ()
         {
-            get { return Authors.ToList().Select(author => author.Id).ToList(); }
+            return Authors.ToList().Select(author => author.Id).ToList();
         }
 
         public override bool TestCreationValidation()

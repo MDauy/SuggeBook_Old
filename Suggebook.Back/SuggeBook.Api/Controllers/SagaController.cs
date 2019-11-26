@@ -27,7 +27,7 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                return new JsonResult (await _createSaga.Create(CustomAutoMapper.Map<CreateSagaViewModel, Saga>(saga)));
+                return new JsonResult (await _createSaga.Create(CustomAutoMapper.Map<Saga>(saga)));
             }
             catch (Exception e)
             {

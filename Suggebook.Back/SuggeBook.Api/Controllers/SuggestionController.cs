@@ -25,9 +25,9 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                var suggestion = CustomAutoMapper.Map<CreateSuggestionViewModel, Suggestion>(suggestionToCreate);
+                var suggestion = CustomAutoMapper.Map<Suggestion>(suggestionToCreate);
                 suggestion = await _createSuggestion.Create(suggestion);
-                var suggestionViewModel= CustomAutoMapper.Map<Suggestion, SuggestionViewModel>(suggestion);
+                var suggestionViewModel= CustomAutoMapper.Map<SuggestionViewModel>(suggestion);
                 return new JsonResult(suggestionViewModel);
             }
             catch (Exception e)

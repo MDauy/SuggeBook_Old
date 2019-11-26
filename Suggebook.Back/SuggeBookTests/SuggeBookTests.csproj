@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SuggeBook.Api\SuggeBook.Api.csproj" />
     <ProjectReference Include="..\SuggeBook.Framework\SuggeBook.Framework.csproj" />
   </ItemGroup>
 

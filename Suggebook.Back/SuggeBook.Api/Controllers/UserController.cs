@@ -45,9 +45,9 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                var user = CustomAutoMapper.Map<CreateUserViewModel, User>(userToCreate);
+                var user = CustomAutoMapper.Map<User>(userToCreate);
                 user = await _createUser.Create(user);
-                return new JsonResult(CustomAutoMapper.Map<User, UserViewModel>(user));
+                return new JsonResult(CustomAutoMapper.Map<UserViewModel>(user));
 
             }
             catch (Exception e)

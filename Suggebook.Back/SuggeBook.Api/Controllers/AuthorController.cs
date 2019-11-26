@@ -27,7 +27,7 @@ namespace SuggeBook.Api.Controllers
         {
             var author = await _getAuthor.Get(authorId);
 
-            var authorViewModel =CustomAutoMapper.Map<Author, AuthorViewModel>(author);
+            var authorViewModel =CustomAutoMapper.Map<AuthorViewModel>(author);
 
             return new JsonResult(authorViewModel);
         }
@@ -38,9 +38,9 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                var authorModel = CustomAutoMapper.Map<CreateAuthorViewModel, Author>(author);
+                var authorModel = CustomAutoMapper.Map<Author>(author);
                 authorModel = await _createAuthor.Create(authorModel);
-                return new JsonResult(CustomAutoMapper.Map<Author, AuthorViewModel>(authorModel));
+                return new JsonResult(CustomAutoMapper.Map<AuthorViewModel>(authorModel));
             }
             catch (Exception exception)
             {

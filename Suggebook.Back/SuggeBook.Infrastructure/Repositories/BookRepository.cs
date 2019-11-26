@@ -24,11 +24,11 @@ namespace SuggeBook.Infrastructure.Repositories
 
         public async Task<Book> Create(Book book)
         {
-            var bookDocument = CustomAutoMapper.Map<Book, BookDocument>(book);
-            bookDocument.Authors = CustomAutoMapper.MapLists<Author, BookDocument.BookAuthorDocument>(book.Authors);
+            var bookDocument = CustomAutoMapper.Map<BookDocument>(book);
+            bookDocument.Authors = CustomAutoMapper.MapLists<BookAuthorDocument>(book.Authors);
             bookDocument = await _baseRepository.Insert(bookDocument);
-            var bookResult =  CustomAutoMapper.Map<BookDocument, Book>(bookDocument);
-            bookResult.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(bookDocument.Authors);
+            var bookResult =  CustomAutoMapper.Map<Book>(bookDocument);
+            bookResult.Authors = CustomAutoMapper.MapLists<Author>(bookDocument.Authors);
             return bookResult;
         }
 
@@ -38,12 +38,12 @@ namespace SuggeBook.Infrastructure.Repositories
             if (!string.IsNullOrEmpty(book.Id))
             {
                 existingBooks = await _baseRepository.Get(b =>
-                   (b.Title == book.Title && book.AuthorsIds.HasMatches<string>(b.Authors.Select(a => a.Id.ToString()).ToList()) || b.Id == ObjectId.Parse(book.Id)));
+                   (b.Title == book.Title && book.AuthorsIds().HasMatches<string>(b.Authors.Select(a => a.Id.ToString()).ToList()) || b.Id == ObjectId.Parse(book.Id)));
             }
             else
             {
                 existingBooks = await _baseRepository.Get(b =>
-                    b.Title == book.Title && book.AuthorsIds.HasMatches<string>(b.Authors.Select(a => a.Id.ToString()).ToList()));
+                    b.Title == book.Title && book.AuthorsIds().HasMatches<string>(b.Authors.Select(a => a.Id.ToString()).ToList()));
             }
 
             if (existingBooks.IsNullOrEmpty())
@@ -56,8 +56,8 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Book", $"{book.Id} {string.Concat(book.Authors.Select(a => a.Id))}");
             }
 
-            var bookResult = CustomAutoMapper.Map<BookDocument,Book> (existingBooks.First());
-            bookResult.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(existingBooks.First().Authors);
+            var bookResult = CustomAutoMapper.Map<Book> (existingBooks.First());
+            bookResult.Authors = CustomAutoMapper.MapLists<Author>(existingBooks.First().Authors);
             return bookResult;
         }
 
@@ -75,8 +75,8 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Book", bookId);
             }
 
-            var bookModel = CustomAutoMapper.Map<BookDocument, Book>(books.First());
-            bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(books.First().Authors);
+            var bookModel = CustomAutoMapper.Map<Book>(books.First());
+            bookModel.Authors = CustomAutoMapper.MapLists<Author>(books.First().Authors);
             return bookModel;
         }
 
@@ -87,8 +87,8 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var book in document)
             {
-                var bookModel = CustomAutoMapper.Map<BookDocument, Book>(book);
-                bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(book.Authors);
+                var bookModel = CustomAutoMapper.Map<Book>(book);
+                bookModel.Authors = CustomAutoMapper.MapLists<Author>(book.Authors);
                 result.Add(bookModel);
             }
 
@@ -105,8 +105,8 @@ namespace SuggeBook.Infrastructure.Repositories
                 {
                     if (results.FirstOrDefault(b => string.Equals(b.Id, book.Id.ToString())) == null)
                     {
-                        var bookModel = CustomAutoMapper.Map<BookDocument, Book>(book);
-                        bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(book.Authors);
+                        var bookModel = CustomAutoMapper.Map<Book>(book);
+                        bookModel.Authors = CustomAutoMapper.MapLists<Author>(book.Authors);
                         results.Add(bookModel);
                     }
                 }
@@ -137,8 +137,8 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var document in booksDocuments)
             {
-               var bookModel = CustomAutoMapper.Map<BookDocument, Book>(document);
-                bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(document.Authors);
+               var bookModel = CustomAutoMapper.Map<Book>(document);
+                bookModel.Authors = CustomAutoMapper.MapLists<Author>(document.Authors);
                 booksResults.Add( bookModel);
             }
 
@@ -153,8 +153,8 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var book in books)
             {
-                var bookModel = CustomAutoMapper.Map<BookDocument, Book>(book);
-                bookModel.Authors = CustomAutoMapper.MapLists<BookAuthorDocument, Author>(book.Authors);
+                var bookModel = CustomAutoMapper.Map<Book>(book);
+                bookModel.Authors = CustomAutoMapper.MapLists<Author>(book.Authors);
                 result.Add(bookModel);
             }
 

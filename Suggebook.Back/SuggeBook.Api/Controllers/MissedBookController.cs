@@ -23,11 +23,11 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-            var missedBook = CustomAutoMapper.Map<MissedBookViewModel, MissedBook>(missedBookViewModel);
+            var missedBook = CustomAutoMapper.Map<MissedBook>(missedBookViewModel);
 
             missedBook = await _registerMissedBook.Register(missedBook);
 
-                return new JsonResult(CustomAutoMapper.Map<MissedBook, MissedBookViewModel> (missedBook));
+                return new JsonResult(CustomAutoMapper.Map<MissedBookViewModel> (missedBook));
             }
             catch (Exception e)
             {

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using MongoDB.Bson;
 using SuggeBook.Domain.Model;
-using SuggeBook.Framework;
-using System.Linq;
 
 namespace SuggeBook.Infrastructure.Documents
 {
@@ -21,10 +19,10 @@ namespace SuggeBook.Infrastructure.Documents
         public string Isbn13 { get; set; }
 
         [BsonElement("Categories")]
-        public IList<string> Categories { get; set; }
+        public IEnumerable<string> Categories { get; set; }
 
         [BsonElement("Authors")]
-        public IList<BookAuthorDocument> Authors { get; set; }
+        public IEnumerable<BookAuthorDocument> Authors { get; set; }
 
         [BsonElement("NbSuggestions")]
         public int NbSuggestions { get; set; }
@@ -44,6 +42,11 @@ namespace SuggeBook.Infrastructure.Documents
             {
                 Id = new ObjectId(author.Id);
                 Name = author.Name;
+            }
+
+            public BookAuthorDocument()
+            {
+
             }
 
             [BsonElement("Name")]
