@@ -29,10 +29,10 @@ namespace SuggeBook.Api.Controllers
         [Route("create")]
         public async Task<JsonResult> Create([FromBody]CreateSuggestionViewModel suggestionToCreate)
         {
-            var suggestion = CustomAutoMapper.Map<CreateSuggestionViewModel, Suggestion>(suggestionToCreate);
+            var suggestion = _mapper.Map<Suggestion>(suggestionToCreate);
             suggestion.Book = await _getBook.Get(suggestionToCreate.BookId);
             suggestion = await _createSuggestion.Create(suggestion);
-            var suggestionViewModel = CustomAutoMapper.Map<Suggestion, SuggestionViewModel>(suggestion);
+            var suggestionViewModel = _mapper.Map<SuggestionViewModel>(suggestion);
             return new JsonResult(suggestionViewModel);
         }
     }

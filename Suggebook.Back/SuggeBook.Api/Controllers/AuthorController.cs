@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using SuggeBook.Framework;
 using SuggeBook.Domain.Model;
 using SuggeBook.ViewModels;
+using AutoMapper;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -13,11 +14,13 @@ namespace SuggeBook.Api.Controllers
     {
         private readonly IGetAuthor _getAuthor;
         private readonly ICreateAuthor _createAuthor;
-
-        public AuthorController(IGetAuthor getAuthor, ICreateAuthor createAuthor)
+        private readonly IMapper _mapper;
+        public AuthorController(IGetAuthor getAuthor, ICreateAuthor createAuthor,
+            IMapper mapper)
         {
             _getAuthor = getAuthor;
             _createAuthor = createAuthor;
+            _mapper = mapper;
         }
 
 
@@ -27,7 +30,7 @@ namespace SuggeBook.Api.Controllers
         {
             var author = await _getAuthor.Get(authorId);
 
-            var authorViewModel =CustomAutoMapper.Map<Author, AuthorViewModel>(author);
+            var authorViewModel =_mapper.Map<AuthorViewModel>(author);
 
             return new JsonResult(authorViewModel);
         }
@@ -38,9 +41,9 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                var authorModel = CustomAutoMapper.Map<CreateAuthorViewModel, Author>(author);
+                var authorModel = _mapper.Map<Author>(author);
                 authorModel = await _createAuthor.Create(authorModel);
-                return new JsonResult(CustomAutoMapper.Map<Author, AuthorViewModel>(authorModel));
+                return new JsonResult(_mapper.Map<AuthorViewModel>(authorModel));
             }
             catch (Exception exception)
             {

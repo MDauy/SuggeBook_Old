@@ -5,6 +5,7 @@ using SuggeBook.Domain.UseCasesInterfaces;
 using SuggeBook.Framework;
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -14,12 +15,14 @@ namespace SuggeBook.Api.Controllers
         private readonly IGetUser _getUser;
         private readonly ICreateUser _createUser;
         private readonly IConnectUser _connectUser;
-
-        public UserController(IGetUser getUser, ICreateUser createUser, IConnectUser connectUser)
+        private readonly IMapper _mapper;
+        public UserController(IGetUser getUser, ICreateUser createUser, IConnectUser connectUser,
+            IMapper mapper)
         {
             _getUser = getUser;
             _createUser = createUser;
             _connectUser = connectUser;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -45,9 +48,9 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                var user = CustomAutoMapper.Map<CreateUserViewModel, User>(userToCreate);
+                var user = _mapper.Map<User>(userToCreate);
                 user = await _createUser.Create(user);
-                return new JsonResult(CustomAutoMapper.Map<User, UserViewModel>(user));
+                return new JsonResult(_mapper.Map<UserViewModel>(user));
 
             }
             catch (Exception e)

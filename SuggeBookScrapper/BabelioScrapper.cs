@@ -1,8 +1,5 @@
 ﻿using HtmlAgilityPack;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,9 +8,10 @@ namespace SuggeBookScrapper
 {
     public class BabelioScrapper
     {
+        private LivraddictScrapper _scrapper;
         public BabelioScrapper()
         {
-
+            _scrapper = new LivraddictScrapper();
         }
 
         public async Task Scrapp()
@@ -55,7 +53,7 @@ namespace SuggeBookScrapper
                                         if (authorNameTags != null)
                                         {
                                             var name = Regex.Replace(authorNameTags.InnerHtml, @"\t|\n|\r", "");
-                                            //Appeler LivraddictScrapper avec le name
+                                            await _scrapper.ScrappAuthorPage(name);
                                         }
 
                                     }

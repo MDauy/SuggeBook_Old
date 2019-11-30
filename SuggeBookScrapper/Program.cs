@@ -9,9 +9,8 @@ namespace SuggeBookScrapper
 
         static void Main(string[] args)
         {
-            LivraddictScrapper laScrapper = new LivraddictScrapper();
-            AsyncContext.Run(() => laScrapper.ScrappAuthorPage("Katherine Pancol"));
-
+            BabelioScrapper bScrapper = new BabelioScrapper();
+            AsyncContext.Run(() => bScrapper.Scrapp());
         }
 
         

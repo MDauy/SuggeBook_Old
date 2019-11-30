@@ -8,6 +8,7 @@ using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
 using SuggeBook.Framework;
+using AutoMapper;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -16,16 +17,20 @@ namespace SuggeBook.Api.Controllers
     public class MissedAuthorController : Controller
     {
         private readonly IRegisterMissedAuthor _registerMissedAuthor;
-        public MissedAuthorController(IRegisterMissedAuthor registerMissedAuthor)
+        private readonly IMapper _mapper;
+
+        public MissedAuthorController(IRegisterMissedAuthor registerMissedAuthor,
+            IMapper mapper)
         {
             _registerMissedAuthor = registerMissedAuthor;
+            _mapper = mapper;
         }
 
         [HttpPost]
         [Route("register")]
         public async Task<JsonResult> Register([FromBody] MissedAuthorViewModel missedAuthorViewModel)
         {
-            var model = CustomAutoMapper.Map<MissedAuthorViewModel, MissedAuthor> (missedAuthorViewModel);
+            var model = _mapper.Map<MissedAuthor> (missedAuthorViewModel);
             try
             {
                 model = await _registerMissedAuthor.Register(model);

@@ -5,6 +5,7 @@ using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
 using SuggeBook.Framework;
+using AutoMapper;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -13,9 +14,12 @@ namespace SuggeBook.Api.Controllers
     public class SagaController : Controller
     {
         private readonly ICreateSaga _createSaga;
-        public SagaController(ICreateSaga createSaga)
+        private readonly IMapper _mapper;
+        public SagaController(ICreateSaga createSaga,
+            IMapper mapper)
         {
             _createSaga = createSaga;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -24,7 +28,7 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-                return new JsonResult (await _createSaga.Create(CustomAutoMapper.Map<CreateSagaViewModel, Saga>(saga)));
+                return new JsonResult (await _createSaga.Create(_mapper.Map<Saga>(saga)));
             }
             catch (Exception e)
             {

@@ -25,9 +25,9 @@ namespace SuggeBook.Infrastructure.Repositories
         {
             var saga = await _baseRepository.Get(s => s.Title == title);
 
-            if (!saga.IsNullOrEmpty())
+            if (saga.IsNullOrEmpty())
             {
-                throw new ObjectNotFoundException("Saga", title);
+                return null;
             }
 
             if (saga.Count > 1)

@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using SuggeBook.ViewModels;
 using System;
 using System.Configuration;
+using System.Globalization;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -17,7 +19,7 @@ namespace SuggeBookScrapper
 
         public async Task ScrappAuthorPage(string name)
         {
-            var formattedName = Regex.Replace(name, @"\.| ", "-");
+            var formattedName = Regex.Replace(await RemoveDiacritics(name), @"\.| ", "-");
             var finalUrl = $"{ConfigurationManager.AppSettings["livraddict_author_url"]}{formattedName.ToLower()}.html";
             using (var response = await UrlCallerHelper.CallUri_ReponseResult(HttpMethod.Get, finalUrl))
             {
@@ -54,7 +56,7 @@ namespace SuggeBookScrapper
 
                             var sagaPosition = 1;
                             var curentSagaId = string.Empty;
-                            var books = tBody.SelectNodes("//tr");
+                            var books = tBody.SelectNodes("tr");
                             foreach (var bookElt in books)
                             {
                                 var sagaH3 = bookElt.SelectSingleNode("td/h3[contains(@class, 'author_saga_title')]");
@@ -101,9 +103,26 @@ namespace SuggeBookScrapper
             {
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-
+                    //parsing de la page de livre
                 }
             }
+        }
+
+        private async Task<string> RemoveDiacritics(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
 
     }
