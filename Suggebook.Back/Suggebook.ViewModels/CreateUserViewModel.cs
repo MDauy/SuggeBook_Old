@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using SuggeBook.Domain.Model;
 
-namespace SuggeBook.Api.ViewModels
+namespace SuggeBook.ViewModels
 {
     public class CreateUserViewModel : BaseViewModel
     {

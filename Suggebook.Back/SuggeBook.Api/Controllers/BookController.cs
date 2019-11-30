@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuggeBook.Api.Exceptions;
-using SuggeBook.Api.ViewModels;
+using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
-using SuggeBook.Framework;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -16,12 +15,20 @@ namespace SuggeBook.Api.Controllers
         private readonly IGetBook _getBook;
         private readonly ICreateBook _createBook;
         private readonly IGetHomeBooks _getHomeBooks;
+        private readonly IGetSaga _getSaga;
+        private readonly IMapper _mapper;
 
-        public BookController(IGetBook getBook, ICreateBook createBook, IGetHomeBooks getHomeBooks)
+        public BookController(IGetBook getBook,
+            ICreateBook createBook,
+            IGetHomeBooks getHomeBooks,
+            IGetSaga getSaga,
+            IMapper mapper)
         {
             _getBook = getBook;
             _createBook = createBook;
             _getHomeBooks = getHomeBooks;
+            _getSaga = getSaga;
+            _mapper = mapper;
         }
 
         [Route("{bookId}")]
@@ -29,8 +36,7 @@ namespace SuggeBook.Api.Controllers
         {
             var book = await _getBook.Get(bookId);
 
-            var bookViewModel = CustomAutoMapper.Map<BookViewModel>(book);
-            bookViewModel.Authors = CustomAutoMapper.MapLists<BookAuthorViewModel>(book.Authors);
+            var bookViewModel = _mapper.Map<Book, BookViewModel>(book);
             return new JsonResult(bookViewModel);
         }
 
@@ -38,31 +44,27 @@ namespace SuggeBook.Api.Controllers
         [Route("create")]
         public async Task<JsonResult> Create([FromBody] CreateBookViewModel book)
         {
-            try
+            var bookModel = _mapper.Map<Book>(book);
+            if (!string.IsNullOrEmpty(book.SagaId))
             {
-                var bookModel = CustomAutoMapper.Map<Book>(book);
-                var authors = new List<Author>();
-                foreach (var authorId in book.AuthorsIds)
-                {
-                    authors.Add(new Author
-                    {
-                        Id = authorId
-                    });
-                }
-                if (bookModel == null)
-                {
-                    throw new ObjectCreationException("Book");
-                }           
-                bookModel.Authors = authors;
-                bookModel = await _createBook.Create(bookModel);
-                var bookViewModel = CustomAutoMapper.Map<BookViewModel>(bookModel);
-                bookViewModel.Authors = CustomAutoMapper.MapLists<BookAuthorViewModel>(bookModel.Authors);
-                return new JsonResult(bookViewModel);
+                bookModel.Saga = await _getSaga.GetSaga(book.SagaId);
             }
-            catch (Exception exception)
+            var authors = new List<Author>();
+            foreach (var authorId in book.AuthorsIds)
             {
-                return new JsonResult(exception.Message);
+                authors.Add(new Author
+                {
+                    Id = authorId
+                });
             }
+            if (bookModel == null)
+            {
+                throw new ObjectCreationException("Book");
+            }
+            bookModel.Authors = authors;
+            bookModel = await _createBook.Create(bookModel);
+            var bookViewModel = _mapper.Map<BookViewModel>(bookModel);
+            return new JsonResult(bookViewModel);
         }
 
         [HttpGet]
@@ -73,8 +75,7 @@ namespace SuggeBook.Api.Controllers
             var viewModels = new List<BookViewModel>();
             foreach (var model in booksModels)
             {
-                var bookViewModel = CustomAutoMapper.Map<BookViewModel>(model);
-                bookViewModel.Authors = CustomAutoMapper.MapLists<BookAuthorViewModel>(model.Authors);
+                var bookViewModel = _mapper.Map<Book, BookViewModel>(model);
                 viewModels.Add(bookViewModel);
             }
             return new JsonResult(viewModels);

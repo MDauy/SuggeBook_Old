@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MongoDB.Bson;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
@@ -13,10 +14,13 @@ namespace SuggeBook.Infrastructure.Repositories
     {
 
         private readonly IBaseRepository<SuggestionDocument> _baseRepository;
+        private readonly IMapper _mapper;
 
-        public SuggestionRepository(IBaseRepository<SuggestionDocument> baseRepository)
+        public SuggestionRepository(IBaseRepository<SuggestionDocument> baseRepository,
+            IMapper mapper)
         {
             _baseRepository = baseRepository;
+            _mapper = mapper;
         }
 
         //public async Task<List<Suggestion>> GetFromBook(string bookId)
@@ -65,13 +69,13 @@ namespace SuggeBook.Infrastructure.Repositories
         //}
         public async Task<Suggestion> Insert(Suggestion suggestion)
         {
-            var document = await _baseRepository.Insert(CustomAutoMapper.Map<SuggestionDocument>(suggestion));
+            var document = await _baseRepository.Insert(_mapper.Map<SuggestionDocument>(suggestion));
             return document.ToModel();
         }
 
         public async Task<Suggestion> Get(string id)
         {
-            var document = await _baseRepository.Get(s => s.Id == ObjectId.Parse(id));
+            var document = await _baseRepository.Get(s => s.Oid == ObjectId.Parse(id));
 
             if (document == null)
             {

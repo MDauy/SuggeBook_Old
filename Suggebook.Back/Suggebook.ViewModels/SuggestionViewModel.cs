@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using SuggeBook.Domain.Model;
 
-namespace SuggeBook.Api.ViewModels
+namespace SuggeBook.ViewModels
 {
     [Serializable]
     public class SuggestionViewModel : BaseViewModel
@@ -15,6 +14,9 @@ namespace SuggeBook.Api.ViewModels
 
         [JsonProperty(PropertyName = "bookTitle")]
         public string BookTitle { get; set; }
+
+        [JsonProperty(PropertyName = "authorName")]
+        public string AuthorName { get; set; }
 
         [JsonProperty(PropertyName = "creatorUsername")]
         public string CreatorUsername { get; set; }

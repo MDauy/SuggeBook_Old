@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using SuggeBook.Domain.Model;
-using SuggeBook.Framework;
 
-namespace SuggeBook.Api.ViewModels
+namespace SuggeBook.ViewModels
 {
     public class SagaViewModel : BaseViewModel
     {

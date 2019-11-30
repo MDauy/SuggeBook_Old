@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
-using SuggeBook.Domain.Model;
-using System.Collections.Generic;
 
-namespace SuggeBook.Api.ViewModels
+namespace SuggeBook.ViewModels
 {
     [Serializable]
     public class CreateSuggestionViewModel : BaseViewModel
@@ -23,9 +21,5 @@ namespace SuggeBook.Api.ViewModels
         [Required]
         [JsonProperty(PropertyName = "bookId")]
         public string BookId { get; set; }
-
-        [Required]
-        [JsonProperty(PropertyName = "authorId")]
-        public string AuthorId { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace SuggeBook.Infrastructure.Documents
         {
             return new Suggestion
             {
-                Id = Id.ToString(),
+                Id = Oid.ToString(),
                 Book = new Book()
                 {
                     Id = BookId.ToString()

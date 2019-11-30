@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SuggeBook.Api.ViewModels;
+using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
 using SuggeBook.Framework;
@@ -25,7 +25,7 @@ namespace SuggeBook.Api.Controllers
         [Route("register")]
         public async Task<JsonResult> Register([FromBody] MissedAuthorViewModel missedAuthorViewModel)
         {
-            var model = CustomAutoMapper.Map<MissedAuthor> (missedAuthorViewModel);
+            var model = CustomAutoMapper.Map<MissedAuthorViewModel, MissedAuthor> (missedAuthorViewModel);
             try
             {
                 model = await _registerMissedAuthor.Register(model);

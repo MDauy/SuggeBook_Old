@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SuggeBook.Domain.Model;
 using SuggeBook.IoC;
+using SuggeBook.ViewModels;
 
 namespace SuggeBook.Api
 {
@@ -30,13 +33,13 @@ namespace SuggeBook.Api
                     });
             });
             services.AddCors();
+            services.DeclareMaps();
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ViewModelValidationFilter));
             });
             services.InjectRepositories();
             services.InjectUseCases();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

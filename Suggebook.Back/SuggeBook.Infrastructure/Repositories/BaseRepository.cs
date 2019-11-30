@@ -65,7 +65,7 @@ namespace SuggeBook.Infrastructure.Repositories
             try
             {
                 var objectId = new ObjectId(id);
-                var document = await Collection.FindAsync(d => d.Id == objectId);
+                var document = await Collection.FindAsync(d => d.Oid == objectId);
                 return document.FirstOrDefault();
             }
             catch (Exception e)
@@ -83,7 +83,7 @@ namespace SuggeBook.Infrastructure.Repositories
 
         public async Task<bool> Delete(T document)
         {
-            var result = await Collection.DeleteOneAsync(s => s.Id == document.Id);
+            var result = await Collection.DeleteOneAsync(s => s.Oid == document.Oid);
 
             if (result.DeletedCount == 1)
             {
@@ -92,13 +92,13 @@ namespace SuggeBook.Infrastructure.Repositories
             else
             {
                 throw new Exception(
-                    $"Deletion with {document.GetType()} {document.Id} went wrong : maybe not found or two many suggestions with same id");
+                    $"Deletion with {document.GetType()} {document.Oid} went wrong : maybe not found or two many suggestions with same id");
             }
         }
 
         public async Task<bool> Update(T document)
         {
-            var result = await Collection.ReplaceOneAsync(s => s.Id == document.Id, document);
+            var result = await Collection.ReplaceOneAsync(s => s.Oid == document.Oid, document);
 
             if (result.IsModifiedCountAvailable && result.ModifiedCount == 1)
             {
@@ -107,7 +107,7 @@ namespace SuggeBook.Infrastructure.Repositories
             else
             {
                 throw new Exception(
-                    $"Update with {document.GetType()} {document.Id} went wrong : maybe not found or two many suggestions with same id");
+                    $"Update with {document.GetType()} {document.Oid} went wrong : maybe not found or two many suggestions with same id");
             }
         }
 

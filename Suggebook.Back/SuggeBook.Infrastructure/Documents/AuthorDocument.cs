@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
-using SuggeBook.Domain.Model;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace SuggeBook.Infrastructure.Documents
 {

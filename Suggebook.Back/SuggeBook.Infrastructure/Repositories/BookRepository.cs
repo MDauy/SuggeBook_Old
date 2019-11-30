@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MongoDB.Bson;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Framework;
 using SuggeBook.Infrastructure.Documents;
 using SuggeBook.Infrastructure.Exceptions;
-using static SuggeBook.Infrastructure.Documents.BookDocument;
 
 namespace SuggeBook.Infrastructure.Repositories
 {
@@ -15,35 +15,44 @@ namespace SuggeBook.Infrastructure.Repositories
     {
         private readonly IBaseRepository<BookDocument> _baseRepository;
         private readonly ISuggestionRepository _suggestionRepository;
+        private readonly IMapper _mapper;
 
-        public BookRepository(IBaseRepository<BookDocument> baseRepository, ISuggestionRepository suggestionRepository)
+        public BookRepository(IBaseRepository<BookDocument> baseRepository, ISuggestionRepository suggestionRepository,
+            IMapper mapper)
         {
             _baseRepository = baseRepository;
             _suggestionRepository = suggestionRepository;
+            _mapper = mapper;
         }
 
         public async Task<Book> Create(Book book)
         {
-            var bookDocument = CustomAutoMapper.Map<BookDocument>(book);
-            bookDocument.Authors = CustomAutoMapper.MapLists<BookAuthorDocument>(book.Authors);
+            var bookDocument = _mapper.Map<BookDocument>(book);
             bookDocument = await _baseRepository.Insert(bookDocument);
-            var bookResult =  CustomAutoMapper.Map<Book>(bookDocument);
-            bookResult.Authors = CustomAutoMapper.MapLists<Author>(bookDocument.Authors);
+            var bookResult = _mapper.Map<Book>(bookDocument);
             return bookResult;
         }
 
         public async Task<Book> GetSimilar(Book book)
         {
-            IList<BookDocument> existingBooks;
+            IList<BookDocument> existingBooks = new List<BookDocument>();
             if (!string.IsNullOrEmpty(book.Id))
             {
                 existingBooks = await _baseRepository.Get(b =>
-                   (b.Title == book.Title && book.AuthorsIds().HasMatches<string>(b.Authors.Select(a => a.Id.ToString()).ToList()) || b.Id == ObjectId.Parse(book.Id)));
+                   (b.Title == book.Title && book.AuthorsIds().HasMatches<string>(b.Authors.Select(a => a.Oid.ToString()).ToList()) || b.Oid == ObjectId.Parse(book.Id)));
             }
             else
             {
-                existingBooks = await _baseRepository.Get(b =>
-                    b.Title == book.Title && book.AuthorsIds().HasMatches<string>(b.Authors.Select(a => a.Id.ToString()).ToList()));
+                var booksWithSameTitle = await _baseRepository.Get (b => b.Title == book.Title);
+
+                foreach (var simBook in booksWithSameTitle)
+                {
+                    var authorsIds = simBook.Authors.Select(a => a.Oid.ToString()).ToList();
+                   if (book.AuthorsIds().HasMatches<string>(authorsIds))
+                    {
+                        existingBooks.Add (simBook);
+                    }
+                }
             }
 
             if (existingBooks.IsNullOrEmpty())
@@ -56,14 +65,13 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Book", $"{book.Id} {string.Concat(book.Authors.Select(a => a.Id))}");
             }
 
-            var bookResult = CustomAutoMapper.Map<Book> (existingBooks.First());
-            bookResult.Authors = CustomAutoMapper.MapLists<Author>(existingBooks.First().Authors);
+            var bookResult = _mapper.Map<Book> (existingBooks.First());
             return bookResult;
         }
 
         public async Task<Book> Get(string bookId)
         {
-            var books = await _baseRepository.Get(b => b.Id == ObjectId.Parse(bookId));
+            var books = await _baseRepository.Get(b => b.Oid == ObjectId.Parse(bookId));
 
             if (books.IsNullOrEmpty())
             {
@@ -75,21 +83,18 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Book", bookId);
             }
 
-            var bookModel = CustomAutoMapper.Map<Book>(books.First());
-            bookModel.Authors = CustomAutoMapper.MapLists<Author>(books.First().Authors);
+            var bookModel = _mapper.Map<Book>(books.First());
             return bookModel;
         }
 
         public async Task<List<Book>> GetFromAuthor(string authorId)
         {
-            var document = await _baseRepository.Get(b => b.Authors.Where(author => author.Id == ObjectId.Parse(authorId)).FirstOrDefault() != null);
+            var document = await _baseRepository.Get(b => b.Authors.Where(author => author.Oid == ObjectId.Parse(authorId)).FirstOrDefault() != null);
             List<Book> result = new List<Book>();
 
             foreach (var book in document)
             {
-                var bookModel = CustomAutoMapper.Map<Book>(book);
-                bookModel.Authors = CustomAutoMapper.MapLists<Author>(book.Authors);
-                result.Add(bookModel);
+                var bookModel = _mapper.Map<Book>(book);
             }
 
             return result;
@@ -103,11 +108,9 @@ namespace SuggeBook.Infrastructure.Repositories
                 var books = await _baseRepository.Get(b => b.Categories.Contains(category));
                 foreach (var book in books)
                 {
-                    if (results.FirstOrDefault(b => string.Equals(b.Id, book.Id.ToString())) == null)
+                    if (results.FirstOrDefault(b => string.Equals(b.Id, book.Oid.ToString())) == null)
                     {
-                        var bookModel = CustomAutoMapper.Map<Book>(book);
-                        bookModel.Authors = CustomAutoMapper.MapLists<Author>(book.Authors);
-                        results.Add(bookModel);
+                        var bookModel = _mapper.Map<BookDocument, Book>(book);
                     }
                 }
             }
@@ -137,9 +140,7 @@ namespace SuggeBook.Infrastructure.Repositories
 
             foreach (var document in booksDocuments)
             {
-               var bookModel = CustomAutoMapper.Map<Book>(document);
-                bookModel.Authors = CustomAutoMapper.MapLists<Author>(document.Authors);
-                booksResults.Add( bookModel);
+               var bookModel = _mapper.Map<BookDocument, Book>(document);
             }
 
             return booksResults;
@@ -147,15 +148,13 @@ namespace SuggeBook.Infrastructure.Repositories
 
         public async Task<IList<Book>> GetBySaga(string sagaId)
         {
-            var books = await _baseRepository.Get(b => b.Saga.Id == ObjectId.Parse(sagaId));
+            var books = await _baseRepository.Get(b => b.Saga.Oid == ObjectId.Parse(sagaId));
 
             List<Book> result = new List<Book>();
 
             foreach (var book in books)
             {
-                var bookModel = CustomAutoMapper.Map<Book>(book);
-                bookModel.Authors = CustomAutoMapper.MapLists<Author>(book.Authors);
-                result.Add(bookModel);
+                var bookModel = _mapper.Map<BookDocument, Book>(book);
             }
 
             return result;

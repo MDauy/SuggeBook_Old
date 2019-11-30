@@ -1,4 +1,4 @@
-﻿namespace SuggeBook.Api.ViewModels
+﻿namespace SuggeBook.ViewModels
 {
     public abstract class BaseViewModel
     {

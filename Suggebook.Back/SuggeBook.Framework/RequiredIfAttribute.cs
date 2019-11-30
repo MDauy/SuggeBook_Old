@@ -18,8 +18,8 @@ namespace SuggeBook.Framework
         {
             Object instance = context.ObjectInstance;
             Type type = instance.GetType();
-            Object propertyvalue = type.GetProperty(PropertyName).GetValue(instance, null);
-            if (propertyvalue.ToString() != DesiredValue.ToString())
+            Object propertyValue = type.GetProperty(PropertyName).GetValue(instance, null);
+            if (propertyValue !=null && propertyValue.ToString() != DesiredValue.ToString())
             {
                 ValidationResult result = base.IsValid(value, context);
                 return result;

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
-using SuggeBook.Domain.Model;
 using SuggeBook.Framework;
 
-namespace SuggeBook.Api.ViewModels
+namespace SuggeBook.ViewModels
 {
     public class CreateBookViewModel : BaseViewModel
     {

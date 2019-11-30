@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
-using SuggeBook.Domain.Model;
+﻿using Newtonsoft.Json;
 
-namespace SuggeBook.Api.ViewModels
+namespace SuggeBook.ViewModels
 {
     public class CreateAuthorViewModel : BaseViewModel
     {

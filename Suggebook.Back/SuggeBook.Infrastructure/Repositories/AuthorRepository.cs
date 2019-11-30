@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MongoDB.Bson;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
@@ -13,16 +14,19 @@ namespace SuggeBook.Infrastructure.Repositories
     {
         private readonly ISuggestionRepository _suggestionRepository;
         private readonly IBaseRepository<AuthorDocument> _baseRepository;
+        private readonly IMapper _mapper;
 
-        public AuthorRepository(ISuggestionRepository suggestionRepository, IBaseRepository<AuthorDocument> baseRepository)
+        public AuthorRepository(ISuggestionRepository suggestionRepository, IBaseRepository<AuthorDocument> baseRepository,
+            IMapper mapper)
         {
             _suggestionRepository = suggestionRepository;
             _baseRepository = baseRepository;
+            _mapper = mapper;
         }
 
         public async Task<Author> Get(string authorId)
         {
-            var author = await _baseRepository.Get(a => a.Id == ObjectId.Parse(authorId));
+            var author = await _baseRepository.Get(a => a.Oid == ObjectId.Parse(authorId));
 
             if (author.IsNullOrEmpty())
             {
@@ -34,16 +38,16 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Author", authorId);
             }
 
-            return CustomAutoMapper.Map<Author>(author.First());
+            return _mapper.Map<Author>(author.First());
         }
 
         public async Task<Author> Create(Author author)
         {
-            var authorDocument = CustomAutoMapper.Map<AuthorDocument>(author);
+            var authorDocument = _mapper.Map<AuthorDocument>(author);
             authorDocument = await _baseRepository.Insert(authorDocument);
-            return CustomAutoMapper.Map<Author>(authorDocument);
+            return _mapper.Map<Author>(authorDocument);
         }
-
+        
         public async Task<Author> GetSimilar(Author author)
         {
             var authorsDocuments = await _baseRepository.Get(a =>
@@ -56,7 +60,7 @@ namespace SuggeBook.Infrastructure.Repositories
             {
                 throw new ObjectNotUniqueException("Author", $"{author.Name}");
             }
-            return CustomAutoMapper.Map<Author>(authorsDocuments.First());
+            return _mapper.Map<Author>(authorsDocuments.First());
         }
 
         public async Task UpdateNbSuggestions(string authorId, string suggestionId)

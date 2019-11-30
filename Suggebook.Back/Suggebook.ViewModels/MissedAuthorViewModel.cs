@@ -1,10 +1,4 @@
-﻿using SuggeBook.Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SuggeBook.Api.ViewModels
+﻿namespace SuggeBook.ViewModels
 {
     public class MissedAuthorViewModel
     {

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using SuggeBook.Domain.Model;
 
-namespace SuggeBook.Api.ViewModels
+namespace SuggeBook.ViewModels
 {
     /// <summary>
     /// User tel qu'on voudrait l'afficher sur sa page user

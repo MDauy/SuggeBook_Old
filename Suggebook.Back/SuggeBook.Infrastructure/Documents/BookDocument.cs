@@ -40,7 +40,7 @@ namespace SuggeBook.Infrastructure.Documents
         {
             public BookAuthorDocument(Author author)
             {
-                Id = new ObjectId(author.Id);
+                Oid = new ObjectId(author.Id);
                 Name = author.Name;
             }
 

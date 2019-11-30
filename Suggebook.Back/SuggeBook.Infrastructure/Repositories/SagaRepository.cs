@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using MongoDB.Bson;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Framework;
@@ -11,11 +13,13 @@ namespace SuggeBook.Infrastructure.Repositories
     public class SagaRepository : ISagaRepository
     {
         private readonly IBaseRepository<SagaDocument> _baseRepository;
-        private readonly IBaseRepository<BookDocument> _bookRepository;
-        public SagaRepository(IBaseRepository<SagaDocument> baseRepository, IBaseRepository<BookDocument> bookRepository)
+        private readonly IMapper _mapper;
+
+        public SagaRepository(IBaseRepository<SagaDocument> baseRepository, IBaseRepository<BookDocument> bookRepository,
+        IMapper mapper)
         {
             _baseRepository = baseRepository;
-            _bookRepository = bookRepository;
+            _mapper = mapper;
         }
         public async Task<Saga> Get(string title)
         {
@@ -31,14 +35,25 @@ namespace SuggeBook.Infrastructure.Repositories
                 throw new ObjectNotUniqueException("Saga", title);
             }
 
-            return CustomAutoMapper.Map<Saga>(saga.First());
+            return _mapper.Map<Saga>(saga.First());
+        }
+
+        public async Task<Saga> GetById(string id)
+        {
+            var saga = await _baseRepository.Get(s => s.Oid == ObjectId.Parse(id));
+
+            if (!saga.IsNullOrEmpty())
+            {
+                return _mapper.Map<Saga>(saga.First());
+            }
+            return null;
         }
 
         public async Task<Saga> Create(Saga saga)
         {
-            var sagaDocument = CustomAutoMapper.Map<SagaDocument>(saga);
+            var sagaDocument = _mapper.Map<Saga, SagaDocument>(saga);
             sagaDocument = await _baseRepository.Insert(sagaDocument);
-            return CustomAutoMapper.Map<Saga>(sagaDocument);
+            return _mapper.Map<Saga>(sagaDocument);
         }
     }
 }

@@ -40,8 +40,7 @@ namespace SuggeBook.IoC
             services.AddSingleton<IGetHomeBooks, GetHomeBooks>();
             services.AddSingleton<ICreateSaga, CreateSaga>();
             services.AddSingleton<IRegisterMissedAuthor, RegisterMissedAuthor>();
-
-
-        }
+            services.AddSingleton<IGetSaga, GetSaga>();                     
+            }
     }
 }

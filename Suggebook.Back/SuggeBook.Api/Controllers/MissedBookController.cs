@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SuggeBook.Api.ViewModels;
+using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
 using SuggeBook.Framework;
@@ -23,11 +23,11 @@ namespace SuggeBook.Api.Controllers
         {
             try
             {
-            var missedBook = CustomAutoMapper.Map<MissedBook>(missedBookViewModel);
+            var missedBook = CustomAutoMapper.Map<MissedBookViewModel, MissedBook>(missedBookViewModel);
 
             missedBook = await _registerMissedBook.Register(missedBook);
 
-                return new JsonResult(CustomAutoMapper.Map<MissedBookViewModel> (missedBook));
+                return new JsonResult(CustomAutoMapper.Map<MissedBook, MissedBookViewModel> (missedBook));
             }
             catch (Exception e)
             {

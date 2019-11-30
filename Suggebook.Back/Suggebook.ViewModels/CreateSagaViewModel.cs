@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SuggeBook.Api.ViewModels
+namespace SuggeBook.ViewModels
 {
     public class CreateSagaViewModel : BaseViewModel
     {

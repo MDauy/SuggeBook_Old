@@ -1,15 +1,12 @@
 ﻿using Newtonsoft.Json;
-using SuggeBook.Domain.Model;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace SuggeBook.Api.ViewModels
+namespace SuggeBook.ViewModels
 {
-    public class BookViewModel : BaseViewModel
+    public class BookViewModel : BaseViewModel 
     {
         public BookViewModel()
         {
-
         }
 
         [JsonProperty(PropertyName = "title")]
@@ -32,12 +29,10 @@ namespace SuggeBook.Api.ViewModels
 
         [JsonProperty(PropertyName = "saga_position")]
         public double? SagaPosition { get; set; }
+
     }
     public struct BookAuthorViewModel
     {
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
         [JsonProperty(PropertyName = "fullname")]
         public string Name { get; set; }
     }

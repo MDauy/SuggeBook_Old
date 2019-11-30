@@ -1,6 +1,4 @@
-﻿using SuggeBook.Domain.Model;
-
-namespace SuggeBook.Api.ViewModels
+﻿namespace SuggeBook.ViewModels
 {
 	public class AuthorViewModel : BaseViewModel
 	{

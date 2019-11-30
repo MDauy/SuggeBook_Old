@@ -1,8 +1,4 @@
 ﻿using SuggeBook.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace SuggeBook.Domain.Model
 {
     public abstract class BaseModel
