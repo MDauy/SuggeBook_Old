@@ -1,9 +1,4 @@
-﻿using HtmlAgilityPack;
-using Nito.AsyncEx;
-using System;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading;
+﻿using Nito.AsyncEx;
 
 namespace SuggeBookScrapper
 {

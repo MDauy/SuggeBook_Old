@@ -14,9 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="SuggeBook.Api">
-      <HintPath>..\Suggebook.Back\SuggeBook.Api\bin\Debug\netcoreapp2.0\SuggeBook.Api.dll</HintPath>
-      <Private>true</Private>
+    <Reference Include="Suggebook.ViewModels">
+      <HintPath>..\Suggebook.Back\Suggebook.ViewModels\bin\Debug\netcoreapp2.0\Suggebook.ViewModels.dll</HintPath>
     </Reference>
   </ItemGroup>
 

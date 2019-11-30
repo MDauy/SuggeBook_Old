@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
-using SuggeBook.Api.ViewModels;
+using SuggeBook.ViewModels;
 using System;
 using System.Configuration;
 using System.Net.Http;
