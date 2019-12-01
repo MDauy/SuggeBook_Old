@@ -30,6 +30,9 @@ namespace SuggeBook.ViewModels
         [JsonProperty(PropertyName = "saga_position")]
         public double? SagaPosition { get; set; }
 
+        [JsonProperty(PropertyName ="synopsis")]
+        public string Synopsis { get; set; }
+
     }
     public struct BookAuthorViewModel
     {

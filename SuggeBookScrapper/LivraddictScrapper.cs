@@ -4,6 +4,8 @@ using SuggeBook.ViewModels;
 using System;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,8 +23,10 @@ namespace SuggeBookScrapper
         {
             var formattedName = Regex.Replace(await RemoveDiacritics(name), @"\.| ", "-");
             var finalUrl = $"{ConfigurationManager.AppSettings["livraddict_author_url"]}{formattedName.ToLower()}.html";
+            Console.Write($"fetching {finalUrl}");
             using (var response = await UrlCallerHelper.CallUri_ReponseResult(HttpMethod.Get, finalUrl))
             {
+                Console.WriteLine($"response for {finalUrl} {response.StatusCode}");
                 //Auteur non trouvé
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
@@ -44,9 +48,12 @@ namespace SuggeBookScrapper
                     {
                         Name = name
                     };
+
+                    Console.WriteLine($"Author createion : {authorToCreate.Name}");
                     var authorString = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_AUTHOR, JsonConvert.SerializeObject(authorToCreate));
                     if (JsonConvert.DeserializeObject<AuthorViewModel>(authorString) != null)
                     {
+                        Console.WriteLine($"Author {authorToCreate.Name} created !");
                         var htmlDocument = new HtmlDocument();
                         var pageContent = await response.Content.ReadAsStringAsync();
                         if (pageContent != null)
@@ -69,6 +76,7 @@ namespace SuggeBookScrapper
                                     //Création de la saga
                                     try
                                     {
+                                        Console.WriteLine($"Saga {saga.Title} creation...");
                                         var jsonResult = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_SAGA, JsonConvert.SerializeObject(saga));
                                         curentSagaId = JsonConvert.DeserializeObject<SagaViewModel>(jsonResult).Id;
                                         sagaPosition = 1;
@@ -85,25 +93,73 @@ namespace SuggeBookScrapper
                                     var bookUrl = bookTitle.GetAttributeValue("href", "");
                                     if (bookUrl != null)
                                     {
-                                        await ScrappBookPage(bookUrl, bookTitle.InnerText, sagaPosition, curentSagaId);
+                                        await ScrappBookPage(bookUrl, sagaPosition, curentSagaId);
+                                    }
+                                    if (!string.IsNullOrEmpty(curentSagaId))
+                                    {
+                                        sagaPosition++;
                                     }
                                 }
                             }
                         }
-                        //scrapper la page des auteurs
                     }
                 }
             }
         }
 
-        private async Task ScrappBookPage(string url, string bookTitle, double sagaPositionl, string sagaId = null)
+        private async Task ScrappBookPage(string url, double sagaPosition, string sagaId = null)
         {
             var bookUrl = $"{ApiUrls.LIVRADDICT_BASE_URL}{url}";
+            Console.WriteLine($"Fetching {bookUrl}");
             using (var response = await UrlCallerHelper.CallUri_ReponseResult(HttpMethod.Get, bookUrl))
             {
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                Console.WriteLine($"response for {bookUrl} {response.StatusCode.ToString()}");
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    //parsing de la page de livre
+                    var pageContent = await response.Content.ReadAsStringAsync();
+                    if (pageContent != null)
+                    {
+                        var viewModel = new CreateBookViewModel();
+                        var htmlDocument = new HtmlDocument();
+                        htmlDocument.LoadHtml(pageContent);
+
+                        //TITLE
+                        viewModel.Title = htmlDocument.DocumentNode.SelectSingleNode("//div[contains(@class, 'page-title')]/h1").InnerText;
+
+                        //SYNOPSIS
+                        viewModel.Synopsis = htmlDocument.DocumentNode.SelectSingleNode("//div[contains(@id, 'synopsis')]").ChildNodes[2]?.InnerText;
+
+                        //CATEGORIES
+                        var categoriesNodes = htmlDocument.DocumentNode.SelectNodes("//ul[contains(@class, 'sidebar-tags')]/li/a");
+                        if (categoriesNodes != null && categoriesNodes.Count > 0)
+                        {
+                            viewModel.Categories = new System.Collections.Generic.List<string>();
+                            foreach (var category in categoriesNodes)
+                            {
+                                viewModel.Categories.Add(category.InnerText);
+                            }
+                        }
+
+                        //COVER
+                        var coverLink = htmlDocument.DocumentNode.SelectSingleNode("//a[contains(@class, 'couvertureLivre')]").Attributes["href"].Value;
+                        if (coverLink != null)
+                        {
+                            using (WebClient webClient = new WebClient())
+                            {
+                                byte[] cover = webClient.DownloadData(coverLink);                                
+                                if (cover != null && cover.Length != 0)
+                                {
+                                    viewModel.Cover = cover;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No coverlink found for {viewModel.Title}");
+                        }
+                        viewModel.SagaId = sagaId;
+                        viewModel.SagaPosition = sagaPosition;
+                    }
                 }
             }
         }

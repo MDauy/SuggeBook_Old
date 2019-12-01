@@ -34,6 +34,12 @@ namespace SuggeBook.ViewModels
         [Required]
         [JsonProperty(PropertyName = "categories")]
         public List<string> Categories { get; set; }
+
+        [JsonProperty(PropertyName ="synopsis")]
+        public string Synopsis { get; set; }
+
+        [JsonProperty(PropertyName ="cover")]
+        public byte[] Cover { get; set; }
     }
 }
 

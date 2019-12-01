@@ -22,6 +22,10 @@ namespace SuggeBook.Domain.Model
 
         public double? SagaPosition { get; set; }
 
+        public string Synopsis { get; set; }
+
+        public byte[] Cover { get; set; }
+
         public List<string>AuthorsIds ()
         {
             return Authors.ToList().Select(author => author.Id).ToList();

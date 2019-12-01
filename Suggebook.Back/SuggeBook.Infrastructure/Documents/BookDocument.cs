@@ -36,6 +36,12 @@ namespace SuggeBook.Infrastructure.Documents
         [BsonElement("SagaPosition")]
         public double? SagaPosition { get; set; }
 
+        [BsonElement("Synopsys")]
+        public string Synopsis { get; set; }
+
+        [BsonElement("Cover")]
+        public byte[] Cover { get; set; }
+
         public class BookAuthorDocument : BaseDocument
         {
             public BookAuthorDocument(Author author)
