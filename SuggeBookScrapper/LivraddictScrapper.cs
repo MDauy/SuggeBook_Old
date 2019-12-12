@@ -24,80 +24,77 @@ namespace SuggeBookScrapper
             var formattedName = Regex.Replace(await RemoveDiacritics(name), @"\.| ", "-");
             var finalUrl = $"{ConfigurationManager.AppSettings["livraddict_author_url"]}{formattedName.ToLower()}.html";
             Console.Write($"fetching {finalUrl}");
-            using (var response = await UrlCallerHelper.CallUri_ReponseResult(HttpMethod.Get, finalUrl))
+            try
             {
-                Console.WriteLine($"response for {finalUrl} {response.StatusCode}");
-                //Auteur non trouvé
-                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                using (var response = await UrlCallerHelper.CallUri_ReponseResult(HttpMethod.Get, finalUrl))
                 {
-                    var missedAuthorViewModel = new MissedAuthorViewModel
+                    Console.WriteLine($"response for {finalUrl} {response.StatusCode}");
+                    //Auteur non trouvé
+                    if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                     {
-                        Name = name,
-                        Message = response.RequestMessage.ToString(),
-                        StatusCode = response.StatusCode.ToString(),
-                        TriedUrl = finalUrl
-                    };
-
-                    Console.WriteLine(await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.REGISTER_MISSED_AUTHOR, JsonConvert.SerializeObject(missedAuthorViewModel)));
-                }
-                //Auteur trouvé
-                else
-                {
-                    //Création de l'auteur
-                    var authorToCreate = new CreateAuthorViewModel
-                    {
-                        Name = name
-                    };
-
-                    Console.WriteLine($"Author createion : {authorToCreate.Name}");
-                    var authorString = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_AUTHOR, JsonConvert.SerializeObject(authorToCreate));
-                    if (JsonConvert.DeserializeObject<AuthorViewModel>(authorString) != null)
-                    {
-                        Console.WriteLine($"Author {authorToCreate.Name} created !");
-                        var htmlDocument = new HtmlDocument();
-                        var pageContent = await response.Content.ReadAsStringAsync();
-                        if (pageContent != null)
+                        var missedAuthorViewModel = new MissedAuthorViewModel
                         {
-                            htmlDocument.LoadHtml(pageContent);
-                            var tBody = htmlDocument.DocumentNode.SelectSingleNode("//table[contains(@id, 'bookAuthor')]//tbody[1]");
+                            Name = name,
+                            Message = response.RequestMessage.ToString(),
+                            StatusCode = response.StatusCode.ToString(),
+                            TriedUrl = finalUrl
+                        };
 
-                            var sagaPosition = 1;
-                            var curentSagaId = string.Empty;
-                            var books = tBody.SelectNodes("tr");
-                            foreach (var bookElt in books)
+                        Console.WriteLine(await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.REGISTER_MISSED_AUTHOR, JsonConvert.SerializeObject(missedAuthorViewModel)));
+                    }
+                    //Auteur trouvé
+                    else
+                    {
+                        //Création de l'auteur
+                        var authorToCreate = new CreateAuthorViewModel
+                        {
+                            Name = name
+                        };
+
+                        Console.WriteLine($"Author createion : {authorToCreate.Name}");
+                        var authorString = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_AUTHOR, JsonConvert.SerializeObject(authorToCreate));
+                        if (JsonConvert.DeserializeObject<AuthorViewModel>(authorString) != null)
+                        {
+                            Console.WriteLine($"Author {authorToCreate.Name} created !");
+                            var htmlDocument = new HtmlDocument();
+                            var pageContent = await response.Content.ReadAsStringAsync();
+                            if (pageContent != null)
                             {
-                                var sagaH3 = bookElt.SelectSingleNode("td/h3[contains(@class, 'author_saga_title')]");
-                                if (sagaH3 != null)
+                                htmlDocument.LoadHtml(pageContent);
+                                var tBody = htmlDocument.DocumentNode.SelectSingleNode("//table[contains(@id, 'bookAuthor')]//tbody[1]");
+
+                                var sagaPosition = 1;
+                                var curentSagaId = string.Empty;
+                                var books = tBody.SelectNodes("tr");
+                                foreach (var bookElt in books)
                                 {
-                                    var saga = new CreateSagaViewModel
+                                    var sagaH3 = bookElt.SelectSingleNode("td/h3[contains(@class, 'author_saga_title')]");
+                                    if (sagaH3 != null)
                                     {
-                                        Title = sagaH3.InnerText
-                                    };
-                                    //Création de la saga
-                                    try
-                                    {
+                                        var saga = new CreateSagaViewModel
+                                        {
+                                            Title = sagaH3.InnerText
+                                        };
+                                        //Création de la saga
+
                                         Console.WriteLine($"Saga {saga.Title} creation...");
                                         var jsonResult = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_SAGA, JsonConvert.SerializeObject(saga));
                                         curentSagaId = JsonConvert.DeserializeObject<SagaViewModel>(jsonResult).Id;
                                         sagaPosition = 1;
                                         continue;
                                     }
-                                    catch (Exception e)
+                                    var bookTitle = bookElt.SelectSingleNode("td/a");
+                                    if (bookTitle != null)
                                     {
-                                        Console.WriteLine(e.Message);
-                                    };
-                                }
-                                var bookTitle = bookElt.SelectSingleNode("td/a");
-                                if (bookTitle != null)
-                                {
-                                    var bookUrl = bookTitle.GetAttributeValue("href", "");
-                                    if (bookUrl != null)
-                                    {
-                                        await ScrappBookPage(bookUrl, sagaPosition, curentSagaId);
-                                    }
-                                    if (!string.IsNullOrEmpty(curentSagaId))
-                                    {
-                                        sagaPosition++;
+                                        var bookUrl = bookTitle.GetAttributeValue("href", "");
+                                        if (bookUrl != null)
+                                        {
+                                            await ScrappBookPage(bookUrl, sagaPosition, curentSagaId);
+                                        }
+                                        if (!string.IsNullOrEmpty(curentSagaId))
+                                        {
+                                            sagaPosition++;
+                                        }
                                     }
                                 }
                             }
@@ -105,62 +102,76 @@ namespace SuggeBookScrapper
                     }
                 }
             }
+            catch (Exception e)
+            {
+                await LogHelper.LogAuthorError(finalUrl, e.InnerException.Message);
+            }
         }
 
         private async Task ScrappBookPage(string url, double sagaPosition, string sagaId = null)
         {
-            var bookUrl = $"{ApiUrls.LIVRADDICT_BASE_URL}{url}";
-            Console.WriteLine($"Fetching {bookUrl}");
-            using (var response = await UrlCallerHelper.CallUri_ReponseResult(HttpMethod.Get, bookUrl))
+            try
             {
-                Console.WriteLine($"response for {bookUrl} {response.StatusCode.ToString()}");
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                var bookUrl = $"{ApiUrls.LIVRADDICT_BASE_URL}{url}";
+                Console.WriteLine($"Fetching {bookUrl}");
+                using (var response = await UrlCallerHelper.CallUri_ReponseResult(HttpMethod.Get, bookUrl))
                 {
-                    var pageContent = await response.Content.ReadAsStringAsync();
-                    if (pageContent != null)
+                    Console.WriteLine($"response for {bookUrl} {response.StatusCode.ToString()}");
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-                        var viewModel = new CreateBookViewModel();
-                        var htmlDocument = new HtmlDocument();
-                        htmlDocument.LoadHtml(pageContent);
-
-                        //TITLE
-                        viewModel.Title = htmlDocument.DocumentNode.SelectSingleNode("//div[contains(@class, 'page-title')]/h1").InnerText;
-
-                        //SYNOPSIS
-                        viewModel.Synopsis = htmlDocument.DocumentNode.SelectSingleNode("//div[contains(@id, 'synopsis')]").ChildNodes[2]?.InnerText;
-
-                        //CATEGORIES
-                        var categoriesNodes = htmlDocument.DocumentNode.SelectNodes("//ul[contains(@class, 'sidebar-tags')]/li/a");
-                        if (categoriesNodes != null && categoriesNodes.Count > 0)
+                        var pageContent = await response.Content.ReadAsStringAsync();
+                        if (pageContent != null)
                         {
-                            viewModel.Categories = new System.Collections.Generic.List<string>();
-                            foreach (var category in categoriesNodes)
-                            {
-                                viewModel.Categories.Add(category.InnerText);
-                            }
-                        }
+                            var viewModel = new CreateBookViewModel();
+                            var htmlDocument = new HtmlDocument();
+                            htmlDocument.LoadHtml(pageContent);
 
-                        //COVER
-                        var coverLink = htmlDocument.DocumentNode.SelectSingleNode("//a[contains(@class, 'couvertureLivre')]").Attributes["href"].Value;
-                        if (coverLink != null)
-                        {
-                            using (WebClient webClient = new WebClient())
+                            //TITLE
+                            viewModel.Title = htmlDocument.DocumentNode.SelectSingleNode("//div[contains(@class, 'page-title')]/h1").InnerText;
+
+                            //SYNOPSIS
+                            viewModel.Synopsis = htmlDocument.DocumentNode.SelectSingleNode("//div[contains(@id, 'synopsis')]").ChildNodes[2]?.InnerText;
+
+                            //CATEGORIES
+                            var categoriesNodes = htmlDocument.DocumentNode.SelectNodes("//ul[contains(@class, 'sidebar-tags')]/li/a");
+                            if (categoriesNodes != null && categoriesNodes.Count > 0)
                             {
-                                byte[] cover = webClient.DownloadData(coverLink);                                
-                                if (cover != null && cover.Length != 0)
+                                viewModel.Categories = new System.Collections.Generic.List<string>();
+                                foreach (var category in categoriesNodes)
                                 {
-                                    viewModel.Cover = cover;
+                                    viewModel.Categories.Add(category.InnerText);
                                 }
                             }
+
+                            //COVER
+                            var coverLink = htmlDocument.DocumentNode.SelectSingleNode("//a[contains(@class, 'couvertureLivre')]").Attributes["href"].Value;
+                            if (coverLink != null)
+                            {
+                                using (WebClient webClient = new WebClient())
+                                {
+                                    byte[] cover = webClient.DownloadData(coverLink);
+                                    if (cover.Length != 0)
+                                    {
+                                        viewModel.Cover = cover;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"No coverlink found for {viewModel.Title}");
+                            }
+                            viewModel.SagaId = sagaId;
+                            viewModel.SagaPosition = sagaPosition;
+
+                            var jsonResult = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_BOOK, JsonConvert.SerializeObject(viewModel));
+
                         }
-                        else
-                        {
-                            Console.WriteLine($"No coverlink found for {viewModel.Title}");
-                        }
-                        viewModel.SagaId = sagaId;
-                        viewModel.SagaPosition = sagaPosition;
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                await LogHelper.LogBookError(url, e.InnerException.Message);
             }
         }
 

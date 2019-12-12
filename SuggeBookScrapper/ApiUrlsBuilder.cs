@@ -11,5 +11,7 @@ namespace SuggeBookScrapper
         public static string CREATE_SAGA = $"{BASIC_URL}{ConfigurationManager.AppSettings["create_saga_url"]}";
 
         public static string CREATE_AUTHOR = $"{BASIC_URL}{ConfigurationManager.AppSettings["create_author_url"]}";
+
+        public static string CREATE_BOOK = $"{BASIC_URL}{ConfigurationManager.AppSettings['create_book_url']}";
     }
 }
