@@ -31,30 +31,30 @@ namespace SuggeBookScrapper
             return response;
         }
 
-        public static async Task<string> CallWithJsonResponse(UriBuilder builder, string method, string body = null)
-        {
-            var response = await Call(builder, method, body);
-            var dataStream = response.GetResponseStream();
-            if (dataStream != null)
-            {
-                StreamReader reader = new StreamReader(dataStream);
-                string responseString = reader.ReadToEnd();
-                var trimmedResponse = Regex.Replace(responseString, @"\t|\n|\r", "");
-                return trimmedResponse;
-            }
-            return null;
-        }
+        //public static async Task<string> CallWithJsonResponse(UriBuilder builder, string method, string body = null)
+        //{
+        //    var response = await Call(builder, method, body);
+        //    var dataStream = response.GetResponseStream();
+        //    if (dataStream != null)
+        //    {
+        //        StreamReader reader = new StreamReader(dataStream);
+        //        string responseString = reader.ReadToEnd();
+        //        var trimmedResponse = Regex.Replace(responseString, @"\t|\n|\r", "");
+        //        return trimmedResponse;
+        //    }
+        //    return null;
+        //}
 
-        public static async Task<string> CallWithJsonResponse(string url, NameValueCollection parameters, string method, string body = null)
-        {
-            var builder = new UriBuilder(url);
-            if (parameters != null)
-            {
-                builder.Query = parameters.ToString();
-            }
+        //public static async Task<string> CallWithJsonResponse(string url, NameValueCollection parameters, string method, string body = null)
+        //{
+        //    var builder = new UriBuilder(url);
+        //    if (parameters != null)
+        //    {
+        //        builder.Query = parameters.ToString();
+        //    }
 
-            return await CallWithJsonResponse(builder, method, body);
-        }
+        //    return await CallWithJsonResponse(builder, method, body);
+        //}
 
         public static async Task<string> CallUri_StringResult (HttpMethod method, string url, string body = null, NameValueCollection queryString = null)
         {
@@ -76,6 +76,7 @@ namespace SuggeBookScrapper
                 handler.AllowAutoRedirect = true;
                 using (HttpClient httpClient = new HttpClient(handler))
                 {
+                    httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/72.0");
                     var builder = new UriBuilder (url);
                     if (queryString != null)
                         {

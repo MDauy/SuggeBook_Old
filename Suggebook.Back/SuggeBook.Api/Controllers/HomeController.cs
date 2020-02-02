@@ -2,10 +2,11 @@
 
 namespace SuggeBook.Api.Controllers
 {
-    [Route("home")]
+    [Route("api/home")]
     public class HomeController : Controller
     {
-        public JsonResult Home (int? userId)
+        [HttpGet("")]
+        public JsonResult Home ()
         {
             return new JsonResult("Hello !");
         }

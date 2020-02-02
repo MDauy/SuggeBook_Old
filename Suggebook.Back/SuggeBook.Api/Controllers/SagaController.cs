@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
-using SuggeBook.Framework;
 using AutoMapper;
+using Suggebook.ViewModels;
 
 namespace SuggeBook.Api.Controllers
 {
     [Produces("application/json")]
-    [Route("saga")]
+    [Route("api/saga")]
     public class SagaController : Controller
     {
         private readonly ICreateSaga _createSaga;
@@ -23,20 +23,20 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpPost]
-        [Route("create")]
         public async Task<JsonResult> Create([FromBody] CreateSagaViewModel saga)
         {
             try
             {
-                return new JsonResult (await _createSaga.Create(_mapper.Map<Saga>(saga)));
+                var sagaModel = await _createSaga.Create(_mapper.Map<Saga>(saga));
+                return new JsonResult(new  HttpResultViewModel(System.Net.HttpStatusCode.Created, sagaModel.Id));
             }
             catch (Exception e)
             {
-                return new JsonResult(e.Message);
+                return new JsonResult(new HttpResultViewModel(System.Net.HttpStatusCode.InternalServerError, e.InnerException.Message));
             }
         }
 
-        [HttpGet]
+        [HttpGet("{sagaId}")]
         public Task<JsonResult> Get(string sagaId)
         {
             return null;

@@ -2,14 +2,15 @@
 using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
-using SuggeBook.Framework;
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using System.Net;
+using Suggebook.ViewModels;
 
 namespace SuggeBook.Api.Controllers
 {
-    [Route("user")]
+    [Route("api/user")]
     public class UserController : Controller
     {
         private readonly IGetUser _getUser;
@@ -33,8 +34,7 @@ namespace SuggeBook.Api.Controllers
             return new JsonResult(user);
         }
 
-        [HttpGet]
-        [Route("{userId}")]
+        [HttpGet("{id}")]
         public async Task<JsonResult> Get(string id)
         {
             var user = await _getUser.Get(id);
@@ -43,33 +43,25 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpPost]
-        [Route("create")]
         public async Task<JsonResult> Create([FromBody] CreateUserViewModel userToCreate)
         {
             try
             {
                 var user = _mapper.Map<User>(userToCreate);
                 user = await _createUser.Create(user);
-                return new JsonResult(_mapper.Map<UserViewModel>(user));
+                return new JsonResult(new HttpResultViewModel(HttpStatusCode.Created, string.Empty));
 
             }
             catch (Exception e)
             {
-                return new JsonResult(e.Message);
+                return new JsonResult(new HttpResultViewModel(HttpStatusCode.InternalServerError, e.InnerException.Message));
             }
         }
         [HttpPut]
-        [Route("connect")]
         public async Task<JsonResult> Connect([FromBody] UserToConnectViewModel userToConnect)
         {
-            try
-            {
-                return new JsonResult(await _connectUser.Connect(userToConnect.UsernameOrEmail, userToConnect.Password));
-            }
-            catch (Exception e)
-            {
-                return new JsonResult(e.Message);
-            }
+            var user = await _connectUser.Connect(userToConnect.UsernameOrEmail, userToConnect.Password);
+            return new JsonResult(user);
         }
 
 

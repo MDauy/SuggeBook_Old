@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
+using Suggebook.ViewModels;
 using SuggeBook.ViewModels;
 using System;
 using System.Configuration;
@@ -21,8 +22,8 @@ namespace SuggeBookScrapper
 
         public async Task ScrappAuthorPage(string name)
         {
-            var formattedName = Regex.Replace(await RemoveDiacritics(name), @"\.| ", "-");
-            var finalUrl = $"{ConfigurationManager.AppSettings["livraddict_author_url"]}{formattedName.ToLower()}.html";
+            var formattedName = Regex.Replace(RemoveDiacritics(name), @"\.| ", "-");
+            var finalUrl = $"{ConfigurationManager.AppSettings["livraddict_author_url"]}{formattedName?.ToLower()}.html";
             Console.Write($"fetching {finalUrl}");
             try
             {
@@ -79,7 +80,17 @@ namespace SuggeBookScrapper
 
                                         Console.WriteLine($"Saga {saga.Title} creation...");
                                         var jsonResult = await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.CREATE_SAGA, JsonConvert.SerializeObject(saga));
-                                        curentSagaId = JsonConvert.DeserializeObject<SagaViewModel>(jsonResult).Id;
+                                        var resultVm = JsonConvert.DeserializeObject<HttpResultViewModel>(jsonResult);
+                                        if (resultVm == null)
+                                        {
+                                            await LogHelper.LogSagaError(saga.Title, "Deserialization went wrong");
+                                            break;
+                                        }
+                                        if (resultVm.HttpStatus != HttpStatusCode.Created)
+                                        {
+                                           await LogHelper.LogSagaError(saga.Title, resultVm.Message);
+                                            break;
+                                        }
                                         sagaPosition = 1;
                                         continue;
                                     }
@@ -105,6 +116,7 @@ namespace SuggeBookScrapper
             catch (Exception e)
             {
                 await LogHelper.LogAuthorError(finalUrl, e.InnerException.Message);
+                await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.REGISTER_MISSED_AUTHOR, name);
             }
         }
 
@@ -172,10 +184,11 @@ namespace SuggeBookScrapper
             catch (Exception e)
             {
                 await LogHelper.LogBookError(url, e.InnerException.Message);
+                await UrlCallerHelper.CallUri_StringResult (HttpMethod.Post, ApiUrls.REGISTER_MISSED_BOOK, url);
             }
         }
 
-        private async Task<string> RemoveDiacritics(string text)
+        private string RemoveDiacritics(string text)
         {
             var normalizedString = text.Normalize(NormalizationForm.FormD);
             var stringBuilder = new StringBuilder();

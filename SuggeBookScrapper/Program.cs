@@ -4,7 +4,7 @@ namespace SuggeBookScrapper
 {
     public class Program
     {
-        private static readonly GoogleBooks _googleBooks = new GoogleBooks();
+        //private static readonly GoogleBooks _googleBooks = new GoogleBooks();
 
 
         static void Main(string[] args)

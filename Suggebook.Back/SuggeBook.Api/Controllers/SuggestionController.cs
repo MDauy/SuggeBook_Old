@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
-using SuggeBook.Framework;
-using System;
 using System.Threading.Tasks;
-using static SuggeBook.ViewModels.SuggestionViewModel;
 using AutoMapper;
+using System;
 
 namespace SuggeBook.Api.Controllers
 {
-    [Route("suggestion")]
+    [Route("api/suggestion")]
     public class SuggestionController : Controller
     {
         private readonly ICreateSuggestion _createSuggestion;
@@ -26,14 +23,13 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpPost]
-        [Route("create")]
         public async Task<JsonResult> Create([FromBody]CreateSuggestionViewModel suggestionToCreate)
         {
-            var suggestion = _mapper.Map<Suggestion>(suggestionToCreate);
-            suggestion.Book = await _getBook.Get(suggestionToCreate.BookId);
-            suggestion = await _createSuggestion.Create(suggestion);
-            var suggestionViewModel = _mapper.Map<SuggestionViewModel>(suggestion);
-            return new JsonResult(suggestionViewModel);
+                var suggestion = _mapper.Map<Suggestion>(suggestionToCreate);
+                suggestion.Book = await _getBook.Get(suggestionToCreate.BookId);
+                suggestion = await _createSuggestion.Create(suggestion);
+                var suggestionViewModel = _mapper.Map<SuggestionViewModel>(suggestion);
+                return new JsonResult(suggestionViewModel);            
         }
     }
 }

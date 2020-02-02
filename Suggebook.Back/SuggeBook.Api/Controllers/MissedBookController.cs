@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
-using SuggeBook.Framework;
 using AutoMapper;
 
 namespace SuggeBook.Api.Controllers
 {
     [Produces("application/json")]
-    [Route("missedBook")]
+    [Route("api/missedBook")]
     public class MissedBookController : Controller
     {
         private readonly IRegisterMissedBook _registerMissedBook;

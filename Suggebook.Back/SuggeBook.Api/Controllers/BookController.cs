@@ -6,10 +6,12 @@ using SuggeBook.Domain.UseCasesInterfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Suggebook.ViewModels;
+using System;
 
 namespace SuggeBook.Api.Controllers
 {
-    [Route("book")]
+    [Route("api/book")]
     public class BookController : Controller
     {
         private readonly IGetBook _getBook;
@@ -31,7 +33,7 @@ namespace SuggeBook.Api.Controllers
             _mapper = mapper;
         }
 
-        [Route("{bookId}")]
+        [HttpGet("{bookId}")]
         public async Task<JsonResult> Get(string bookId)
         {
             var book = await _getBook.Get(bookId);
@@ -41,9 +43,10 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpPost]
-        [Route("create")]
         public async Task<JsonResult> Create([FromBody] CreateBookViewModel book)
         {
+            try
+            {
             var bookModel = _mapper.Map<Book>(book);
             if (!string.IsNullOrEmpty(book.SagaId))
             {
@@ -56,19 +59,19 @@ namespace SuggeBook.Api.Controllers
                 {
                     Id = authorId
                 });
-            }
-            if (bookModel == null)
-            {
-                throw new ObjectCreationException("Book");
-            }
+            }            
             bookModel.Authors = authors;
             bookModel = await _createBook.Create(bookModel);
             var bookViewModel = _mapper.Map<BookViewModel>(bookModel);
-            return new JsonResult(bookViewModel);
+            return new JsonResult(new HttpResultViewModel(System.Net.HttpStatusCode.Created, bookViewModel.Id));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new HttpResultViewModel(System.Net.HttpStatusCode.InternalServerError, ex.InnerException.Message));
+            }
         }
 
-        [HttpGet]
-        [Route("home")]
+        [HttpGet("home")]
         public async Task<JsonResult> GetHomeBooks()
         {
             var booksModels = await _getHomeBooks.Get();
