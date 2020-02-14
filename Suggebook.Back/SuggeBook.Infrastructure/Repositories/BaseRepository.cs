@@ -28,10 +28,12 @@ namespace SuggeBook.Infrastructure.Repositories
                     return "Users";
                 case SagaDocument _:
                     return "Sagas";
-                    case MissedAuthorDocument _:
+                case MissedAuthorDocument _:
                     return "MissedAuthors";
-                    case MissedBookDocument _:
+                case MissedBookDocument _:
                     return "MissedBooks";
+                case MissedSagaDocument _:
+                    return "MissedSagas";
                 default:
                     return "Books";
 
@@ -70,7 +72,7 @@ namespace SuggeBook.Infrastructure.Repositories
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message, new Exception (
+                throw new Exception(e.Message, new Exception(
                     $"L'objet dans la collection {CollectionName} avec l'id {id} n'a pas été trouvé"));
             }
         }
@@ -126,7 +128,7 @@ namespace SuggeBook.Infrastructure.Repositories
         {
             var documents = await Collection.FindAsync<T>(expression);
             return documents.ToList();
-             
+
         }
     }
 }

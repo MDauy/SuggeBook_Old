@@ -18,6 +18,8 @@ namespace SuggeBook.Infrastructure.Profiles
                 .ForMember(document => document.Oid, opt => opt.MapFrom(dest => ObjectId.Parse(dest.Id)));
             CreateMap < BookAuthorDocument, Author > ()
                  .ForMember(model => model.Id, opt => opt.MapFrom(dest => dest.Oid.ToString()));
+            CreateMap<MissedAuthorDocument, MissedAuthor>();
+            CreateMap<MissedAuthor, MissedAuthorDocument>();
         }
     }
 }

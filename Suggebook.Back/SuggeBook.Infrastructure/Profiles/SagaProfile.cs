@@ -12,7 +12,9 @@ namespace SuggeBook.Infrastructure.Profiles
             CreateMap<Saga, SagaDocument>()
                 .ForMember(document => document.Oid, opt => opt.MapFrom(dest => ObjectId.Parse(dest.Id)));
             CreateMap<SagaDocument, Saga>()
-                .ForMember(author => author.Id, opt => opt.MapFrom(authorDocument => authorDocument.Oid.ToString()));;
+                .ForMember(author => author.Id, opt => opt.MapFrom(authorDocument => authorDocument.Oid.ToString()));
+            CreateMap<MissedSagaDocument, MissedSaga>();
+            CreateMap<MissedSaga, MissedSagaDocument>();
         }
     }
 }
