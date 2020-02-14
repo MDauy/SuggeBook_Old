@@ -4,10 +4,8 @@ using System.Text;
 
 namespace SuggeBook.Domain.Model
 {
-    public class MissedBook
+    public class MissedBook : MissedParsingObject
     {
-        public string Title { get; set; }
 
-        public string Url { get; set; }
     }
 }
