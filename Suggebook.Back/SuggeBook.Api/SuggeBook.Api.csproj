@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SuggeBook.IoC\SuggeBook.IoC.csproj" />
-    <ProjectReference Include="..\Suggebook.ViewModels\Suggebook.ViewModels.csproj" />
+    <ProjectReference Include="..\Suggebook.ViewModels\SuggeBook.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

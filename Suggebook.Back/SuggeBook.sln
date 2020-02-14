@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Domain", "SuggeBo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBookTests", "SuggeBookTests\SuggeBookTests.csproj", "{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suggebook.ViewModels", "Suggebook.ViewModels\Suggebook.ViewModels.csproj", "{24345523-2181-418C-AB57-38C2BE10464C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.ViewModels", "Suggebook.ViewModels\SuggeBook.ViewModels.csproj", "{24345523-2181-418C-AB57-38C2BE10464C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testapi", "testapi\testapi.csproj", "{32769C06-0690-4202-8CA2-AA1D210F63F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "testapi", "testapi\testapi.csproj", "{32769C06-0690-4202-8CA2-AA1D210F63F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

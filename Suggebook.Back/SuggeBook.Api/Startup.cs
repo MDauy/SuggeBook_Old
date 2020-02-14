@@ -37,6 +37,7 @@ namespace SuggeBook.Api
             });
             services.InjectRepositories();
             services.InjectUseCases();
+            services.InjectBaseRepositories();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
