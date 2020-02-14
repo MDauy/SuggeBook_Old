@@ -1,4 +1,5 @@
-﻿using SuggeBook.Domain.Repositories;
+﻿using SuggeBook.Domain.Model;
+using SuggeBook.Domain.Repositories;
 using SuggeBook.Domain.UseCasesInterfaces;
 using System.Threading.Tasks;
 
@@ -13,9 +14,9 @@ namespace SuggeBook.Domain.UseCases
             _missedSagaRepository= missedSagaRepository;
         }
 
-        public async Task Register(string title, string message)
+        public async Task<MissedSaga> Register(MissedSaga missedSaga)
         {
-            await _missedSagaRepository. Register(title, message);
+            return await _missedSagaRepository. Register(missedSaga);
         }
     }
 }
