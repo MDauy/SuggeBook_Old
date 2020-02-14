@@ -5,6 +5,7 @@ using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
 using AutoMapper;
+using System.Net;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -23,20 +24,13 @@ namespace SuggeBook.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Register([FromBody] MissedAuthorViewModel missedAuthorViewModel)
+        public async Task<StatusCodeResult> Register([FromBody] MissedAuthorViewModel missedAuthorViewModel)
         {
-            try
-            {
             var model = _mapper.Map<MissedAuthor> (missedAuthorViewModel);
 
-                model = await _registerMissedAuthor.Register(model);
+                 await _registerMissedAuthor.Register(model);
 
-                return new JsonResult ($"{model.Name} registered");
-            }
-            catch (Exception e)
-            {
-                return new JsonResult(e.Message);
-            }
+                return new StatusCodeResult((int)HttpStatusCode.Created);   
         }
     }
 }
