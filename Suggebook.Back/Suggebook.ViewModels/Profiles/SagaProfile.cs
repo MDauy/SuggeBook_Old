@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using SuggeBook.Domain.Model;
 using SuggeBook.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Suggebook.ViewModels.Profiles
 {
@@ -14,6 +11,7 @@ namespace Suggebook.ViewModels.Profiles
             CreateMap<Saga, SagaViewModel>();
             CreateMap<SagaViewModel, Saga>();
             CreateMap<CreateSagaViewModel, Saga>();
+            CreateMap<MissedSagaViewModel, MissedSaga>();
         }
     }
 }

@@ -13,7 +13,6 @@ namespace Suggebook.ViewModels.Profiles
             CreateMap<BookViewModel, Book>();
 
             CreateMap<MissedBookViewModel, MissedBook>();
-            CreateMap<MissedBook, MissedBookViewModel>();
         }
     }
 }

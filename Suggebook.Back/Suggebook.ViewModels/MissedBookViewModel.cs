@@ -1,9 +1,6 @@
 ﻿namespace SuggeBook.ViewModels
 {
-    public class MissedBookViewModel
+    public class MissedBookViewModel : MissedParsingObjectViewModel
     {
-        public string Title { get; set; }
-
-        public string Url { get; set; }
     }
 }

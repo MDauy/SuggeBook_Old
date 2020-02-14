@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Suggebook.ViewModels
+namespace SuggeBook.ViewModels
 {
     public class HttpResultViewModel
     {
