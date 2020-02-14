@@ -35,10 +35,9 @@ namespace SuggeBookScrapper
                     {
                         var missedAuthorViewModel = new MissedAuthorViewModel
                         {
-                            Name = name,
+                            Title = name,
                             Message = response.RequestMessage.ToString(),
-                            StatusCode = response.StatusCode.ToString(),
-                            TriedUrl = finalUrl
+                            Url = finalUrl
                         };
 
                         Console.WriteLine(await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.REGISTER_MISSED_AUTHOR, JsonConvert.SerializeObject(missedAuthorViewModel)));
@@ -115,8 +114,17 @@ namespace SuggeBookScrapper
             }
             catch (Exception e)
             {
-                await LogHelper.LogAuthorError(finalUrl, e.InnerException.Message);
-                await UrlCallerHelper.CallUri_StringResult(HttpMethod.Post, ApiUrls.REGISTER_MISSED_AUTHOR, name);
+             var vm = new MissedSagaViewModel
+             {
+                 Message = e.InnerException != null ? e.InnerException.Message : e.Message,
+                 Title = name
+             };
+
+              HttpResponseMessage result =  await UrlCallerHelper.CallUri_ReponseResult(HttpMethod.Post, ApiUrls.REGISTER_MISSED_AUTHOR, JsonConvert.SerializeObject(vm));
+                if (!result.IsSuccessStatusCode)
+                {
+                    await LogHelper.LogAuthorError(finalUrl, result.Content.ToString());
+                }
             }
         }
 
@@ -183,8 +191,12 @@ namespace SuggeBookScrapper
             }
             catch (Exception e)
             {
-                await LogHelper.LogBookError(url, e.InnerException.Message);
-                await UrlCallerHelper.CallUri_StringResult (HttpMethod.Post, ApiUrls.REGISTER_MISSED_BOOK, url);
+               // await LogHelper.LogBookError(url, e.InnerException.Message);
+                var result = await UrlCallerHelper.CallUri_ReponseResult (HttpMethod.Post, ApiUrls.REGISTER_MISSED_BOOK, url);
+                if (!result.IsSuccessStatusCode)
+                {
+                    await LogHelper.LogBookError(url, result.Content.ToString());
+                }
             }
         }
 
