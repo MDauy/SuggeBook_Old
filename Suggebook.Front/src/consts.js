@@ -1,3 +1,5 @@
+export const BASE_URL = 'http://localhost:5002/api/';
+
 export const ACTIONS = {
     ADD_SUGGESTION : "ADD_SUGGESTION",
     GET_BOOK : "GET_BOOK",
@@ -5,4 +7,7 @@ export const ACTIONS = {
     CONNECT_USER : "CONNECT_USER"
 }
 
-export const  BASE_URL = "http://localhost:5002/";
+export const URLS = {
+    GET_BOOK : BASE_URL + "book/",
+    GET_HOME_BOOKS : BASE_URL + "book/home"
+}

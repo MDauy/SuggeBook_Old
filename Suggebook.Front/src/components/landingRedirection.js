@@ -1,22 +1,15 @@
-import { React, Component } from "react";
+import React from "react";
 import HomeBooksContainer from "./book/homeBooksContainer";
-import LoginForm from "./user/loginForm";
 import { connect } from "react-redux";
-class LandingRedirection extends Component {
+class LandingRedirection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
-      toto : 'toto'
     };
   }
 
   render() {
-    if (this.state.user && this.state.user.isLoggedIn) {
-      return (<HomeBooksContainer />);
-    } else {
-      return (<LoginForm></LoginForm>);
-    }
+    return <HomeBooksContainer />;
   }
 }
 
@@ -26,7 +19,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(LandingRedirection);
+export default connect(mapStateToProps, null)(LandingRedirection);

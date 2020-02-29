@@ -141,6 +141,7 @@ namespace SuggeBook.Infrastructure.Repositories
             foreach (var document in booksDocuments)
             {
                var bookModel = _mapper.Map<BookDocument, Book>(document);
+                booksResults.Add(bookModel);
             }
 
             return booksResults;

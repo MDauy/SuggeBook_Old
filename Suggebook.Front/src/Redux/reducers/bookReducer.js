@@ -8,7 +8,7 @@ const bookReducer = (state, action)=>
         return {
             ...state,
             book : {
-                title : action.data.title
+                title : action.data
             }
         }
         case ACTIONS.GET_HOME_BOOKS:        

@@ -1,53 +1,37 @@
 import React from "react";
-import { connect } from "react-redux";
-import { getHomeBooks } from "../../redux/actions/bookActions";
-import PropTypes from "prop-types";
-import { BookThumbnail } from './bookThumbnail';
+import axios from 'axios';
+import {URLS} from '../../consts'
+import BookThumbnail from './bookThumbnail'
 
-class HomeBooksContainer extends React.Component {
+export default class HomeBooksContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      homeBooks : []
-    }
+      homeBooks: []
+    };
+  }
+
+  componentDidMount()
+  {
+    axios.get(URLS.GET_HOME_BOOKS)
+    .then(res => 
+      {
+        this.setState ( 
+          {
+            homeBooks : res.data
+          })
+      })
   }
 
   render() {
-    this.props.getHomeBooks();
     return (
       <div>
         <ul>
-          {this.props.homeBooks.map ((book) => 
-            
-            <BookThumbnail key={book.id} book={book}></BookThumbnail>
-            
-            )}
+          {this.state.homeBooks && this.state.homeBooks.map((book, index) => (
+            <BookThumbnail key={index} book={book}></BookThumbnail>
+          ))}
         </ul>
       </div>
     );
   }
 }
-
-HomeBooksContainer.propTYpes = {
-  homeBooks: PropTypes.array.isRequired
-};
-
-//les properties & actions mises dans mapDispatchToProps et mapStateToProps peuvent ensuite 
-//être accédés via this.props
-
-function mapDispatchToProps(dispatch) {
-  return {
-    getHomeBooks: () => getHomeBooks(dispatch)
-  };
-}
-
-function mapStateToProps(state) {
-  return {
-    homeBooks: state.homeBooks
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeBooksContainer);

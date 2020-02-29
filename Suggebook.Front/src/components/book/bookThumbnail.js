@@ -1,12 +1,12 @@
 import React from "react";
 
-export class BookThumbnail extends React.Component {
+export default class BookThumbnail extends React.Component {
   constructor(props) {
     super(props);
     const book = this.props.book;
     this.state = {
       title: book.title,
-      author: book.author,
+      authors: book.authors,
       id: book.id
     };
   }
@@ -14,7 +14,10 @@ export class BookThumbnail extends React.Component {
   render() {
     return (
       <div>
-        {this.state.title} {this.state.author.fullname}
+        {this.state.title} {this.state.authors.map((a, index) =>
+          {
+            return (<span key={index}>{a}</span>)
+          })}
       </div>
     );
   }

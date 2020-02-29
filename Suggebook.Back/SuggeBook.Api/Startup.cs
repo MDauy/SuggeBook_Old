@@ -23,10 +23,10 @@ namespace SuggeBook.Api
 
             services.AddCors(options =>
             {
-                options.AddPolicy(CorsSpecificOrigins,
+                options.AddPolicy(CorsSpecificOrigins, 
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:5002");
+                        builder.WithOrigins("http://localhost:3006");
                     });
             });
             services.AddCors();

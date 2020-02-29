@@ -1,5 +1,5 @@
 import {React, Component} from 'react'
-import {connectUser} from '../../redux/actions/userActions'
+import {connectUser} from '../../Redux/actions/userActions'
 import {connect} from 'react-redux'
 class LoginForm extends Component{
     constructor (props)

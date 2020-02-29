@@ -9,7 +9,7 @@ Contient tout le code Front
 - React
 - Redux
 
-branche develop. 
+branche bookpage. 
 
 Front : React
 Back : à définir suivant les branches
