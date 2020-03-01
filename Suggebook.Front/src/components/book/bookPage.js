@@ -1,11 +1,12 @@
 import React from "react";
 import {URLS} from '../../consts'
 import axios from 'axios'
+
 export default class BookPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        id : '5e5ab4e71dc47341d81184a5'
+      id : props.match.params.bookId
     };
   }
 
@@ -33,6 +34,7 @@ export default class BookPage extends React.Component {
   render() {
     return (
       <div>
+        BOOK PAGE
         <p>{this.state.title}</p>
         <div>
         {this.state.authors && this.state.authors.map((author, index) => 

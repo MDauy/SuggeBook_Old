@@ -8,6 +8,7 @@ Contient tout le code back
 Contient tout le code Front
 - React
 - Redux
+packages de components react : https://unpkg.com/browse/react-bootstrap@1.0.0-beta.17/
 
 branche bookpage. 
 

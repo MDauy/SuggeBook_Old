@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 export default class BookThumbnail extends React.Component {
   constructor(props) {
@@ -14,10 +15,7 @@ export default class BookThumbnail extends React.Component {
   render() {
     return (
       <div>
-        {this.state.title} {this.state.authors.map((a, index) =>
-          {
-            return (<span key={index}>{a}</span>)
-          })}
+        <Link to={`/book/${this.state.id}`}>{this.state.title}</Link>
       </div>
     );
   }
