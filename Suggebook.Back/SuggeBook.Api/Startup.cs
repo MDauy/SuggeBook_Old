@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using SuggeBook.IoC;
 
 namespace SuggeBook.Api
@@ -35,13 +36,23 @@ namespace SuggeBook.Api
             {
                 options.Filters.Add(typeof(ViewModelValidationFilter));
             });
+            services.AddMvc(options =>
+            {
+                options.EnableEndpointRouting = false;
+            });
             services.InjectRepositories();
             services.InjectUseCases();
             services.InjectBaseRepositories();
+
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
+            //Microsoft.AspNetCore.Mvc.MvcOptions.EnableEndpointRouting = false;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -49,7 +60,12 @@ namespace SuggeBook.Api
             }
 
             app.UseCors(CorsSpecificOrigins);
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}");
+            });
         }
 
     }

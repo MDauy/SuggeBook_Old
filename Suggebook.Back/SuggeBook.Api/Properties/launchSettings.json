@@ -1,7 +1,11 @@
 {
   "iisSettings": {
-    "windowsAuthentication": false,
+    "windowsAuthentication": true,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/SuggeBook.Api",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:5002/",
       "sslPort": 0
@@ -9,20 +13,22 @@
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "api/home",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "SuggeBook.Api": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "api/values",
+      "commandName": "IIS",
+      "workingDirectory": "D:\\Users\\Marion\\Documents\\SuggeBook\\SuggeBook\\Suggebook.Back\\SuggeBook.Api",
+      "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
+      "nativeDebugging": true
+    },
+    "SuggeBook.Api": {
+      "commandName": "IIS",
+      "workingDirectory": "D:\\Users\\Marion\\Documents\\SuggeBook\\SuggeBook\\Suggebook.Back\\SuggeBook.Api",
+      "launchUrl": "",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "ancmHostingModel": "InProcess",
       "applicationUrl": "http://localhost:5003/"
     }
   }
