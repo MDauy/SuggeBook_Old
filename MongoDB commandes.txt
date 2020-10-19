@@ -12,5 +12,5 @@ show collections
 db.createUser({
   user: "suggebook_admin",
   pwd: "sb_admin",
-  roles: ["readWrite"]
+  roles: [{role:"userAdmin", db:"suggebook"},{role:"dbAdmin", db:"suggebook"},{role:"readWrite", db:"suggebook"}]
 })
