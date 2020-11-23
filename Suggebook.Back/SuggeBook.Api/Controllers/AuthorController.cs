@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using SuggeBook.Domain.Model;
 using SuggeBook.ViewModels;
 using AutoMapper;
-using Suggebook.ViewModels;
+using System.Collections.Generic;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -25,13 +25,25 @@ namespace SuggeBook.Api.Controllers
 
 
         [HttpGet("{authorId}")]
-        public async Task<JsonResult> Get(string authorId)
+        public async Task<JsonResult> Author(string authorId)
         {
             var author = await _getAuthor.Get(authorId);
 
             var authorViewModel =_mapper.Map<AuthorViewModel>(author);
 
             return new JsonResult(authorViewModel);
+        }
+
+        [HttpGet("byname/{name}")]
+        public async Task<JsonResult> GetByName(string name)
+        {
+            var authors = await _getAuthor.GetByName(name);
+            var resultList = new List<AuthorViewModel>();
+            foreach (var author in authors)
+            {
+                resultList.Add(_mapper.Map<AuthorViewModel>(author));
+            }
+            return new JsonResult(resultList);
         }
 
         [HttpPost]

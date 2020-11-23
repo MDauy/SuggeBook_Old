@@ -2,6 +2,7 @@
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Domain.UseCasesInterfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Domain.UseCases
@@ -23,6 +24,11 @@ namespace SuggeBook.Domain.UseCases
             author.Books = await _bookRepository.GetFromAuthor(authorId);
 
             return author;
+        }
+
+        public async Task<List<Author>> GetByName(string name)
+        {
+            return await _authorRepository.GetByName(name);
         }
     }
 }

@@ -12,6 +12,7 @@
     <ApplicationIcon />
     <StartupObject>SuggeBook.Api.Program</StartupObject>
     <OutputType>Exe</OutputType>
+    <AssemblyName>suggebook.api</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

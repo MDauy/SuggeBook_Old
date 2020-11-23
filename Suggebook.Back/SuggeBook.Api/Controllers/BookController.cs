@@ -53,7 +53,7 @@ namespace SuggeBook.Api.Controllers
                 bookModel.Saga = await _getSaga.GetSaga(book.SagaId);
             }
             var authors = new List<Author>();
-            foreach (var authorId in book.AuthorsIds)
+            foreach (var authorId in book.AuthorsIds) 
             {
                 authors.Add(new Author
                 {
@@ -71,8 +71,7 @@ namespace SuggeBook.Api.Controllers
             }
         }
 
-        [HttpGet("home")]
-        public async Task<JsonResult> GetHomeBooks()
+        public async Task<JsonResult> Index()
         {
             var booksModels = await _getHomeBooks.Get();
             var viewModels = new List<BookViewModel>();
