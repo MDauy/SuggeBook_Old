@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 using MongoDB.Bson;
-using SuggeBook.Domain.Model;
 
 namespace SuggeBook.Infrastructure.Documents
 {
@@ -41,23 +40,5 @@ namespace SuggeBook.Infrastructure.Documents
 
         [BsonElement("Cover")]
         public byte[] Cover { get; set; }
-
-        public class BookAuthorDocument : BaseDocument
-        {
-            public BookAuthorDocument(Author author)
-            {
-                Oid = new ObjectId(author.Id);
-                Name = author.Name;
-            }
-
-            public BookAuthorDocument()
-            {
-
-            }
-
-            [BsonElement("Name")]
-            public string Name { get; set; }
-
-        }
     }
 }

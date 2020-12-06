@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SuggeBook.AutoMapperProfiles;
 using SuggeBook.IoC;
 
 namespace SuggeBook.Api
@@ -48,6 +49,7 @@ namespace SuggeBook.Api
             {
                 options.AutomaticAuthentication = false;
             });
+            
             //Microsoft.AspNetCore.Mvc.MvcOptions.EnableEndpointRouting = false;
         }
 
@@ -58,7 +60,6 @@ namespace SuggeBook.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseCors(CorsSpecificOrigins);
             app.UseMvc(routes =>
             {

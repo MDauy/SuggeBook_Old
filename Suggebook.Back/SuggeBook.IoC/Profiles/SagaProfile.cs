@@ -2,12 +2,13 @@
 using MongoDB.Bson;
 using SuggeBook.Domain.Model;
 using SuggeBook.Infrastructure.Documents;
+using SuggeBook.ViewModels;
 
-namespace SuggeBook.Infrastructure.Profiles
+namespace SuggeBook.IoC.Profiles
 {
     public class SagaProfile : Profile
     {
-        public SagaProfile ()
+        public SagaProfile()
         {
             CreateMap<Saga, SagaDocument>()
                 .ForMember(document => document.Oid, opt => opt.MapFrom(dest => ObjectId.Parse(dest.Id)));
@@ -15,6 +16,11 @@ namespace SuggeBook.Infrastructure.Profiles
                 .ForMember(author => author.Id, opt => opt.MapFrom(authorDocument => authorDocument.Oid.ToString()));
             CreateMap<MissedSagaDocument, MissedSaga>();
             CreateMap<MissedSaga, MissedSagaDocument>();
+
+            CreateMap<Saga, SagaViewModel>();
+            CreateMap<SagaViewModel, Saga>();
+            CreateMap<CreateSagaViewModel, Saga>();
+            CreateMap<MissedSagaViewModel, MissedSaga>();
         }
     }
 }

@@ -2,9 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using SuggeBook.Domain.Model;
 using SuggeBook.Infrastructure.Documents;
+using SuggeBook.IoC.Profiles;
 using SuggeBook.ViewModels;
-using System;
-using System.Reflection;
 
 namespace SuggeBook.IoC
 {
@@ -12,12 +11,8 @@ namespace SuggeBook.IoC
     {
         public static void DeclareMaps(this IServiceCollection services)
         {
-           services.AddAutoMapper(typeof(BaseModel), typeof(BaseViewModel), typeof(BaseDocument));
-        }
-
-        private static Assembly GetAssembly(Type type)
-        {
-            return Assembly.GetAssembly(type);
+            services.AddAutoMapper(typeof(BaseModel), typeof(BaseViewModel), typeof(BaseDocument));
+            services.AddAutoMapper(typeof(BookProfile), typeof(AuthorProfile), typeof(SuggestionProfile), typeof(UserProfile), typeof(SagaProfile));
         }
     }
 }

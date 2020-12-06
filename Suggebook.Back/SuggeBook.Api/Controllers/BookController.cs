@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SuggeBook.Api.Exceptions;
 using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Suggebook.ViewModels;
 using System;
 
 namespace SuggeBook.Api.Controllers
