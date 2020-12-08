@@ -29,7 +29,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "ancmHostingModel": "InProcess",
-      "applicationUrl": "http://localhost:5003/"
+      "applicationUrl": "http://localhost:5002/"
     }
   }
 }
