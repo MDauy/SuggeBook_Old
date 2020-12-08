@@ -1,10 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Touch Files="App_Offline.htm" AlwaysCreate="true" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Delete Files="App_Offline.htm" />
-  </Target>
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
@@ -12,11 +6,12 @@
     <ApplicationIcon />
     <StartupObject>SuggeBook.Api.Program</StartupObject>
     <OutputType>Exe</OutputType>
+    <AssemblyName>suggebook.api</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.IIS" Version="2.2.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />

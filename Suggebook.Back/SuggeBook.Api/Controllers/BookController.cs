@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SuggeBook.Api.Exceptions;
 using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Suggebook.ViewModels;
 using System;
 
 namespace SuggeBook.Api.Controllers
@@ -53,7 +51,7 @@ namespace SuggeBook.Api.Controllers
                 bookModel.Saga = await _getSaga.GetSaga(book.SagaId);
             }
             var authors = new List<Author>();
-            foreach (var authorId in book.AuthorsIds)
+            foreach (var authorId in book.AuthorsIds) 
             {
                 authors.Add(new Author
                 {
@@ -71,8 +69,7 @@ namespace SuggeBook.Api.Controllers
             }
         }
 
-        [HttpGet("home")]
-        public async Task<JsonResult> GetHomeBooks()
+        public async Task<JsonResult> Index()
         {
             var booksModels = await _getHomeBooks.Get();
             var viewModels = new List<BookViewModel>();

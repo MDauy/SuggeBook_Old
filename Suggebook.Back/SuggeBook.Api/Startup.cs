@@ -48,6 +48,7 @@ namespace SuggeBook.Api
             {
                 options.AutomaticAuthentication = false;
             });
+            
             //Microsoft.AspNetCore.Mvc.MvcOptions.EnableEndpointRouting = false;
         }
 
@@ -58,7 +59,6 @@ namespace SuggeBook.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseCors(CorsSpecificOrigins);
             app.UseMvc(routes =>
             {

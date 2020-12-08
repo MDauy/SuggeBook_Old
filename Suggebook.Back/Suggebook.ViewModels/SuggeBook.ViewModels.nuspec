@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package>
+  <metadata>
+    <id>SuggeBook.ViewModels</id>
+    <version>1.0.0</version>
+    <title>SuggeBook.ViewModels</title>
+    <authors>Marion Daussy</authors>
+    <owners>Marion Daussy</owners>
+    <description>Contains SuggeBook.Api ViewModels</description>
+    <tags>sample nuget</tags>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Newtonsoft.Json" version="12.0.3" />
+      </group>
+    </dependencies>
+    <summary> A summary of your package </summary>
+  </metadata>
+  <files>
+    <file src="bin\Debug\netcoreapp3.1\SuggeBook.ViewModels.dll" target="lib\netcoreapp3.1\SuggeBook.ViewModels.dll" />
+  </files>
+</package>

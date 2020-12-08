@@ -2,7 +2,7 @@
 using SuggeBook.Domain.Model;
 using SuggeBook.ViewModels;
 
-namespace Suggebook.ViewModels.Profiles
+namespace SuggeBook.IoC.Profiles
 {
     public class SuggestionProfile : Profile
     {

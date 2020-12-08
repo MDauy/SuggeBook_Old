@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Suggebook.ViewModels;
+using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
-using SuggeBook.ViewModels;
-using System;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Api.Controllers

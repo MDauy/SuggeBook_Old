@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using SuggeBook.Domain.Model;
 
 namespace SuggeBook.ViewModels
 {
@@ -21,15 +20,11 @@ namespace SuggeBook.ViewModels
 
         public struct UserBook
         {
-            public UserBook(Book book)
+            public UserBook(string id, string title)
             {
-                Id = book.Id;
-                Title = book.Title;
+                Id = id;
+                Title = title;
                 AuthorName = string.Empty;
-                foreach (var author in book.Authors)
-                {
-                    AuthorName += $"{author.Name} ";
-                }
             }
 
             public string Id { get; set; }
@@ -41,9 +36,9 @@ namespace SuggeBook.ViewModels
 
         public struct UserSuggestion
         {
-            public UserSuggestion(Suggestion suggestion)
+            public UserSuggestion(string title)
             {
-                Title = suggestion.Title;
+                Title = title;
             }
             public string Title { get; set; }
         }

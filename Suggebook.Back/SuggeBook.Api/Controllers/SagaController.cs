@@ -5,7 +5,6 @@ using SuggeBook.ViewModels;
 using SuggeBook.Domain.Model;
 using SuggeBook.Domain.UseCasesInterfaces;
 using AutoMapper;
-using Suggebook.ViewModels;
 
 namespace SuggeBook.Api.Controllers
 {

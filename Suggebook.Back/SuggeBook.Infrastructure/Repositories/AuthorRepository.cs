@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MongoDB.Bson;
@@ -79,5 +80,15 @@ namespace SuggeBook.Infrastructure.Repositories
             await _baseRepository.Update(author);
         }
 
+        public async Task<List<Author>> GetByName(string name)
+        {
+            var authorsDocuments = await _baseRepository.Get(a => a.Name.ToLower().Contains(name.ToLower()));
+            var resultList = new List<Author>();
+            foreach (var document in authorsDocuments)
+            {
+                resultList.Add(_mapper.Map<Author>(document));
+            }
+            return resultList;
+        }
     }
 }

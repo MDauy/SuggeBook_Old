@@ -1,4 +1,5 @@
 ﻿using SuggeBook.Domain.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SuggeBook.Domain.Repositories
@@ -8,6 +9,8 @@ namespace SuggeBook.Domain.Repositories
         Task UpdateNbSuggestions(string authorId, string suggestionId);
 
         Task<Author> Get(string authorId);
+
+        Task<List<Author>> GetByName(string name);
 
         Task<Author> Create(Author author);
 

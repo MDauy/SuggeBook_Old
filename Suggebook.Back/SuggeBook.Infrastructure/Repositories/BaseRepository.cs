@@ -21,21 +21,21 @@ namespace SuggeBook.Infrastructure.Repositories
             switch (document)
             {
                 case SuggestionDocument _:
-                    return "Suggestions";
+                    return "suggestions";
                 case AuthorDocument _:
-                    return "Authors";
+                    return "authors";
                 case UserDocument _:
-                    return "Users";
+                    return "users";
                 case SagaDocument _:
-                    return "Sagas";
+                    return "sagas";
                 case MissedAuthorDocument _:
-                    return "MissedAuthors";
+                    return "missed_authors";
                 case MissedBookDocument _:
-                    return "MissedBooks";
+                    return "missed_books";
                 case MissedSagaDocument _:
-                    return "MissedSagas";
+                    return "missed_sagas";
                 default:
-                    return "Books";
+                    return "books";
 
             }
         }
@@ -45,11 +45,12 @@ namespace SuggeBook.Infrastructure.Repositories
             {
                 if (_collection == null)
                 {
-                    _collection = Db.GetCollection<T>(CollectionName);
-                    if (_collection == null)
+                    var collections = Db.ListCollectionNames().ToList();
+                    if (!collections.Contains(CollectionName))
                     {
                         Db.CreateCollection(CollectionName);
                     }
+                    _collection = Db.GetCollection<T>(CollectionName);
                 }
                 return _collection;
 

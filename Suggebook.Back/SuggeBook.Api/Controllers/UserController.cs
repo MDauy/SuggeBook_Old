@@ -6,7 +6,6 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using System.Net;
-using Suggebook.ViewModels;
 
 namespace SuggeBook.Api.Controllers
 {
