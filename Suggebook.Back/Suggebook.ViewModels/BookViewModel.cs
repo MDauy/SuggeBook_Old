@@ -13,7 +13,7 @@ namespace SuggeBook.ViewModels
         public string Title { get; set; }
 
         [JsonProperty(PropertyName = "authors")]
-        public IEnumerable<string> Authors { get; set; }
+        public List<AuthorViewModel> Authors { get; set; }
 
         [JsonProperty(PropertyName = "nb_suggestions")]
         public int NbSuggestions { get; set; }
