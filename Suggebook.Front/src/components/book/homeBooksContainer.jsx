@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { URLS } from "../../consts";
-import { Link} from "react-router-dom";
+import BookThumbnail from "./bookThumbnail";
 
 export default class HomeBooksContainer extends React.Component {
   constructor(props) {
@@ -25,9 +25,7 @@ export default class HomeBooksContainer extends React.Component {
         <ul>
           {this.state.homeBooks &&
             this.state.homeBooks.map((book, index) => (
-              <Link key={index} to={`/book/${book.id}`}>
-                <p>{book.title}</p>
-              </Link>
+              <BookThumbnail book={book}></BookThumbnail>
             ))}
         </ul>
       </div>
