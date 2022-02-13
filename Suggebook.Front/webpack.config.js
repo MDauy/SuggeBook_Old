@@ -1,53 +1,70 @@
-var webpack = require("webpack");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-module.exports = {
-    entry: "./src/home.js",
-    output: {
-        path: "suggebook.front/content",
-        filename: "bundle.js",
-        publicPath: "/content/"
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.js$/,
-                exclude: /(node_modules)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ["latest", "stage-2", "react"]
-                }
-            },
-            {
-                test: /\.css$/,
-                loader: 'style-loader'
-            },
-            {
-                test: /\.css$/,
-                loader: combineLoaders([
-                  {
-                    loader: 'style-loader'
-                  }, {
-                    loader: 'css-loader',
-                    query: {
-                      modules: true,
-                      localIdentName: '[name]__[local]___[hash:base64:5]'
-                    }
-                  }
-                ])
-              },
-            {
-    test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: 'css-loader!autoprefixer-loader!sass-loader'
-        })
-},
-{
-    test: /\.(jpg|png)$/,
-        loader: 'url-loader'
-}
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+
+const config = {
+  entry: "./src/index.js",
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: ''
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: __dirname + '/public/index.html',
+      filename: 'index.html',
+      inject: 'body'
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'autoprefixer-loader'
+          },          
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'less-loader',
+          }        
         ]
-    },
-plugins: [new ExtractTextPlugin("bundle.css")]
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          }
+        ]
+      },
+      {
+        test: /\.(jpg|png)$/,
+        loader: 'url-loader'
+      }
+    ]
+  }
 };
+module.exports = config;

@@ -9,5 +9,5 @@ export const ACTIONS = {
 
 export const URLS = {
     GET_BOOK : BASE_URL + "book/",
-    GET_HOME_BOOKS : BASE_URL + "book/home"
+    GET_HOME_BOOKS : BASE_URL + "book/home-items"
 }

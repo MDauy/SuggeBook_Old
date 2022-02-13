@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using System;
+using System.Linq;
 
 namespace SuggeBook.Api.Controllers
 {
@@ -15,12 +16,14 @@ namespace SuggeBook.Api.Controllers
         private readonly IGetBook _getBook;
         private readonly ICreateBook _createBook;
         private readonly IGetHomeBooks _getHomeBooks;
+        private readonly IGetAuthor _getAuthor;
         private readonly IGetSaga _getSaga;
         private readonly IMapper _mapper;
 
         public BookController(IGetBook getBook,
             ICreateBook createBook,
             IGetHomeBooks getHomeBooks,
+            IGetAuthor getAuthor,
             IGetSaga getSaga,
             IMapper mapper)
         {
@@ -29,6 +32,7 @@ namespace SuggeBook.Api.Controllers
             _getHomeBooks = getHomeBooks;
             _getSaga = getSaga;
             _mapper = mapper;
+            _getAuthor = getAuthor;
         }
 
         [HttpGet("{bookId}")]
@@ -69,6 +73,7 @@ namespace SuggeBook.Api.Controllers
             }
         }
 
+        [HttpGet("home-items")]
         public async Task<JsonResult> Index()
         {
             var booksModels = await _getHomeBooks.Get();

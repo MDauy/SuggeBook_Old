@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 
 function CustomNavbar() {
   return (
-    <Navbar collapseOnSelect variant="dark" expand="lg">
+    <Navbar expand="lg">
       <Navbar.Brand href="/">SuggeBook</Navbar.Brand>
       <Nav className="mr-auto justify-content-center">
         <NavItem>

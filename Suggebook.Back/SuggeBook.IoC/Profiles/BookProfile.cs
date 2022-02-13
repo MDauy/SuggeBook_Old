@@ -4,6 +4,7 @@ using SuggeBook.Domain.Model;
 using SuggeBook.Infrastructure.Documents;
 using SuggeBook.ViewModels;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace SuggeBook.IoC.Profiles
 {
@@ -17,8 +18,7 @@ namespace SuggeBook.IoC.Profiles
                 .ForMember(author => author.Id, opt => opt.MapFrom(authorDocument => authorDocument.Oid.ToString())); ;
 
             CreateMap<CreateBookViewModel, Book>();
-            CreateMap<Book, BookViewModel>()
-                .ForMember(viewModel => viewModel.Authors, opt => opt.MapFrom(dest => dest.Authors.ToList().Select(a => a.Name)));
+            CreateMap<Book, BookViewModel>();
             CreateMap<BookViewModel, Book>();
 
             CreateMap<MissedBookViewModel, MissedBook>();
