@@ -9,7 +9,7 @@ namespace SuggeBook.Domain.Model
             WrongProperties = string.Empty;
         }
 
-        public IEnumerable<string> Categories { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
         public string Title { get; set; }
         public IEnumerable<Author> Authors { get; set; }
 
