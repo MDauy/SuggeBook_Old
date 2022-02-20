@@ -10,9 +10,8 @@ Contient tout le code Front
 - Redux
 packages de components react : https://unpkg.com/browse/react-bootstrap@1.0.0-beta.17/
 
-branche bookpage. 
-
 Front : React
-Back : à définir suivant les branches
+Back : 
+- develop : hexa
 
 le 23/04 : suppression de la couche back

@@ -21,15 +21,15 @@
       "nativeDebugging": true
     },
     "SuggeBook.Api": {
-      "commandName": "IIS",
-      "workingDirectory": "D:\\Users\\Marion\\Documents\\SuggeBook\\SuggeBook\\Suggebook.Back\\SuggeBook.Api",
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\mario\\Documents\\dev\\Suggebook.GitLab\\SuggeBook\\Suggebook.Back\\SuggeBook.Api",
       "launchBrowser": true,
       "launchUrl": "api/home",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "ancmHostingModel": "InProcess",
-      "applicationUrl": "http://localhost:5002/"
+      "applicationUrl": "http://localhost:4008"
     }
   }
 }

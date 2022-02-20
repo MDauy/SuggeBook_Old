@@ -15,7 +15,7 @@ namespace SuggeBook.Infrastructure.Repositories
 				if (_client == null)
 				{
                     var databseName = 
-					_client = new MongoClient("mongodb://suggebook_admin:sb_admin@localhost:27017/suggebook");
+					_client = new MongoClient("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false");
 				}
 				return _client;
 			}
