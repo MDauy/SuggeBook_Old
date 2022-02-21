@@ -2,7 +2,7 @@
 
 namespace SuggeBook.Domain.Model
 {
-    public class Author : BaseModel
+    public class Author : Oeuvre
     {
         public Author()
         {

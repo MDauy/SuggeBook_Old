@@ -15,7 +15,6 @@ namespace SuggeBook.IoC.Profiles
             CreateMap<Author, BookAuthorViewModel>();
             CreateMap<BookAuthorViewModel, Author>();
             CreateMap<CreateAuthorViewModel, Author>();
-            CreateMap<MissedAuthorViewModel, MissedAuthor>();
 
             CreateMap<Author, AuthorDocument>()
                 .ForMember(document => document.Oid, opt => opt.MapFrom(dest => ObjectId.Parse(dest.Id)));
@@ -25,8 +24,6 @@ namespace SuggeBook.IoC.Profiles
                 .ForMember(document => document.Oid, opt => opt.MapFrom(dest => ObjectId.Parse(dest.Id)));
             CreateMap<BookAuthorDocument, Author>()
                  .ForMember(model => model.Id, opt => opt.MapFrom(dest => dest.Oid.ToString()));
-            CreateMap<MissedAuthorDocument, MissedAuthor>();
-            CreateMap<MissedAuthor, MissedAuthorDocument>();
         }
     }
 }

@@ -14,13 +14,10 @@ namespace SuggeBook.IoC.Profiles
                 .ForMember(document => document.Oid, opt => opt.MapFrom(dest => ObjectId.Parse(dest.Id)));
             CreateMap<SagaDocument, Saga>()
                 .ForMember(author => author.Id, opt => opt.MapFrom(authorDocument => authorDocument.Oid.ToString()));
-            CreateMap<MissedSagaDocument, MissedSaga>();
-            CreateMap<MissedSaga, MissedSagaDocument>();
 
             CreateMap<Saga, SagaViewModel>();
             CreateMap<SagaViewModel, Saga>();
             CreateMap<CreateSagaViewModel, Saga>();
-            CreateMap<MissedSagaViewModel, MissedSaga>();
         }
     }
 }

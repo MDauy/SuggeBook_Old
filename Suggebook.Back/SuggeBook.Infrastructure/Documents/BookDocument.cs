@@ -4,7 +4,7 @@ using MongoDB.Bson;
 
 namespace SuggeBook.Infrastructure.Documents
 {
-    public class BookDocument : BaseDocument
+    public class BookDocument : OeuvreDocument
     {
         public BookDocument() { }
 

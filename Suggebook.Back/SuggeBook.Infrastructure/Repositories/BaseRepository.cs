@@ -27,13 +27,11 @@ namespace SuggeBook.Infrastructure.Repositories
                 case UserDocument _:
                     return "users";
                 case SagaDocument _:
-                    return "sagas";
-                case MissedAuthorDocument _:
-                    return "missed_authors";
-                case MissedBookDocument _:
-                    return "missed_books";
-                case MissedSagaDocument _:
-                    return "missed_sagas";
+                    return "sagas";              
+                case ShowDocument _:
+                    return "shows";
+                case BoundDocument _:
+                    return "bounds";
                 default:
                     return "books";
 

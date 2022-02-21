@@ -11,7 +11,7 @@ namespace SuggeBook.IoC
     {
         public static void DeclareMaps(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(BaseModel), typeof(BaseViewModel), typeof(BaseDocument));
+            services.AddAutoMapper(typeof(Oeuvre), typeof(BaseViewModel), typeof(BaseDocument));
             services.AddAutoMapper(typeof(BookProfile), typeof(AuthorProfile), typeof(SuggestionProfile), typeof(UserProfile), typeof(SagaProfile));
         }
     }
