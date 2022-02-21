@@ -4,7 +4,10 @@ using System.Text;
 
 namespace SuggeBook.Domain.Model
 {
-    public class Series: Show
+    public enum ShowType
     {
+        None,
+        Series,
+        Film
     }
 }

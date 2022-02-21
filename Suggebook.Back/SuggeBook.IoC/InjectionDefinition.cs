@@ -19,6 +19,7 @@ namespace SuggeBook.IoC
             services.AddTransient<IBaseRepository<UserDocument>, BaseRepository<UserDocument>>();
             services.AddTransient<IBaseRepository<SagaDocument>, BaseRepository<SagaDocument>>();
             services.AddTransient<IBaseRepository<MissedAuthorDocument>, BaseRepository<MissedAuthorDocument>>();
+            services.AddTransient<IBaseRepository<ShowDocument>, BaseRepository<ShowDocument>>();
             services.AddTransient<IBaseRepository<MissedSagaDocument>,
             BaseRepository<MissedSagaDocument>>();
             services.AddTransient<IBaseRepository<MissedBookDocument>,
@@ -35,6 +36,8 @@ namespace SuggeBook.IoC
             services.AddTransient<IMissedAuthorRepository, MissedAuthorRepository>();
             services.AddTransient<IMissedSagaRepository, MissedSagaRepository>();
             services.AddTransient<IMissedBookRepository, MissedBookRepository>();
+            services.AddTransient<IShowRepository, ShowRepository>();
+            services.AddTransient<IBoundRepository, BoundRepository>();
         }
 
         public static void InjectUseCases(this IServiceCollection services)
