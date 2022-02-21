@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SuggeBook.Domain.Model
 {
-    public class User : BaseModel
+    public class User : Oeuvre
     {
         public User()
         {

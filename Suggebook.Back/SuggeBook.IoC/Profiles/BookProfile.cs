@@ -21,7 +21,6 @@ namespace SuggeBook.IoC.Profiles
             CreateMap<Book, BookViewModel>();
             CreateMap<BookViewModel, Book>();
 
-            CreateMap<MissedBookViewModel, MissedBook>();
         }
     }
 }

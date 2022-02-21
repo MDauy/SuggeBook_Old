@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SuggeBook.Infrastructure.Documents
 {
-    public class ShowDocument : BaseDocument
+    public class ShowDocument : OeuvreDocument
     {
         [BsonElement("Title")]
         public string Title { get; set; }

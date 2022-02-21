@@ -2,15 +2,13 @@
 using System.Linq;
 
 namespace SuggeBook.Domain.Model
-{public class Book : BaseModel
+{public class Book : Oeuvre
     {
         public Book ()
         {
             WrongProperties = string.Empty;
         }
 
-        public IEnumerable<Category> Categories { get; set; }
-        public string Title { get; set; }
         public IEnumerable<Author> Authors { get; set; }
 
         public string Isbn10 { get; set; }

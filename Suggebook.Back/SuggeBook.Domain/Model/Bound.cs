@@ -2,9 +2,9 @@
 {
     public class Bound
     {
-        public Show Show { get; set; }
+        public Oeuvre FirstOeuvre { get; set; }
 
-        public Book Book { get; set; }
+        public Oeuvre SecondOeuvre { get; set; }
 
         public int Weight { get; set; }
     }
