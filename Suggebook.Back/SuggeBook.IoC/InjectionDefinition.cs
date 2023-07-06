@@ -44,6 +44,7 @@ namespace SuggeBook.IoC
             services.AddSingleton<IGetHomeBooks, GetHomeBooks>();
             services.AddSingleton<ICreateSaga, CreateSaga>();
             services.AddSingleton<IGetSaga, GetSaga>();
+            services.AddSingleton<IGetYouMightLikeSuggestions, GetYouMightLikeSuggestions>();
         }
     }
 }
