@@ -23,6 +23,10 @@ https://app.milanote.com/1Qg41p1ywbgkd2/recommander
 
 le 23/04 : suppression de la couche back
 
+06/06/2023
+Création d'un useCase YouMightLike. 
+Modifications apportées à la liste de catégories -> plus facile de manipuler des strings, mais validation mise dans la création du modèle (Book). A faire dans le User également 
+
 
 # Sources
 (02/07/23)
