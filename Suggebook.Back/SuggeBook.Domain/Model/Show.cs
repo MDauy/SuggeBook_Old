@@ -6,7 +6,7 @@ namespace SuggeBook.Domain.Model
     {
         public ShowType ShowType { get; set; }
 
-        public Show(string title, IEnumerable<Category> categories, ShowType showType)
+        public Show(string title, IEnumerable<string> categories, ShowType showType)
         {
             this.Categories = categories;
             this.Title = title;

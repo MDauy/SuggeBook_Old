@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SuggeBook.Domain.Model
 {
@@ -9,8 +8,8 @@ namespace SuggeBook.Domain.Model
         public Guid Guid { get; set; }
         public string Title { get; set; }
         public OeuvreType Type{ get; set; }
-
-        public IEnumerable<Category> Categories { get; set; }
+        public int Likes { get; }
+        public IEnumerable<string> Categories { get; set; }
 
     }
 }

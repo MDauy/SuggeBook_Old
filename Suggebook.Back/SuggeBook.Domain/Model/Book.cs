@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SuggeBook.Domain.Model
@@ -39,6 +40,14 @@ namespace SuggeBook.Domain.Model
             if (Authors == null)
             {
                 WrongProperties += "Author is null;";
+            }
+
+            foreach (var category in Categories)
+            {
+                if (!Enum.IsDefined(typeof(Category), category))
+                {
+                    WrongProperties += $"{category} doesn't exist";
+                }
             }
 
             return TestWrongProperties();
