@@ -2,8 +2,6 @@
 using SuggeBook.Domain.Repositories;
 using SuggeBook.Domain.UseCases;
 using SuggeBook.Domain.UseCasesInterfaces;
-using SuggeBook.Framework;
-using SuggeBook.Infrastructure;
 using SuggeBook.Infrastructure.Documents;
 using SuggeBook.Infrastructure.Repositories;
 

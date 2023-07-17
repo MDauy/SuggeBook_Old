@@ -16,7 +16,7 @@ namespace SuggeBook.Domain.UseCases
         }
         public async Task<User> Create(User user)
         {
-            user.TestCreationValidation();
+            user.IsValid();
             var alreadyUsedProperties = string.Empty;
             var similarUserMail =await  _userRepository.GetSimilarMail(user.Email);
             if (similarUserMail != null)

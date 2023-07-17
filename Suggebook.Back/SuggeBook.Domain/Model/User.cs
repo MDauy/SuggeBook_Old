@@ -15,7 +15,12 @@ namespace SuggeBook.Domain.Model
         public string Email{ get; set; }      
         public string Username { get; set; }
         public IList<string> FavoriteCategories { get; set; }
-        public override bool TestCreationValidation()
+        public IList<Book> LikedBooks { get; set; }
+        public IList<Show> LikedShows { get; set; }
+        // Users to whom user is subscribed
+        public IList<User> SubscribtionsTo{ get; set; }
+
+        public override void IsValid()
         {
             if (string.IsNullOrEmpty(Email))
             {
@@ -27,7 +32,7 @@ namespace SuggeBook.Domain.Model
                 WrongProperties += "UserName is null or empty";
             }
 
-            return TestWrongProperties();
+            TestWrongProperties();
         }
     }
 }

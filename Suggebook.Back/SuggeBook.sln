@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Framework", "Sugg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Domain", "SuggeBook.Domain\SuggeBook.Domain.csproj", "{4F02EDC7-564D-4B9B-9F3A-22108EAB9482}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBookTests", "SuggeBookTests\SuggeBookTests.csproj", "{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.Domain.Tests", "SuggeBook.Domain.Tests\SuggeBook.Domain.Tests.csproj", "{317D0AE9-A93C-47B2-9EAE-5DDAC571DF75}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuggeBook.ViewModels", "Suggebook.ViewModels\SuggeBook.ViewModels.csproj", "{24345523-2181-418C-AB57-38C2BE10464C}"
 EndProject

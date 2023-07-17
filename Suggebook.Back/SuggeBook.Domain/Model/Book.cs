@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace SuggeBook.Domain.Model
-{public class Book : Oeuvre
+{
+    public class Book : Oeuvre
     {
         public Book ()
         {
@@ -30,7 +31,7 @@ namespace SuggeBook.Domain.Model
             return Authors.ToList().Select(author => author.Id).ToList();
         }
 
-        public override bool TestCreationValidation()
+        public override void IsValid()
         {
             if (string.IsNullOrEmpty(Title))
             {
@@ -50,7 +51,7 @@ namespace SuggeBook.Domain.Model
                 }
             }
 
-            return TestWrongProperties();
+            TestWrongProperties();
         }
     }
 }

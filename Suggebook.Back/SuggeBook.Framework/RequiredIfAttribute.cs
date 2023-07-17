@@ -5,8 +5,8 @@ namespace SuggeBook.Framework
 {
     public class RequiredIfNotAttribute : RequiredAttribute
     {
-        public string PropertyName { get; set; }
-        public object DesiredValue { get; set; }
+        public string PropertyName { get;}
+        public object DesiredValue { get;}
 
         public RequiredIfNotAttribute(string propertyName, object desiredValue)
         {

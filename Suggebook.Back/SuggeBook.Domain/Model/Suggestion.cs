@@ -15,7 +15,7 @@ namespace SuggeBook.Domain.Model
         public Book Book { get; set; }
         public User User { get; set; }
 
-        public override bool TestCreationValidation()
+        public override void IsValid()
         {
             if (string.IsNullOrEmpty(Title))
             {
@@ -32,7 +32,7 @@ namespace SuggeBook.Domain.Model
                 WrongProperties += "User is null";
             }
 
-            return TestWrongProperties();
+            TestWrongProperties();
         }
     }
 }

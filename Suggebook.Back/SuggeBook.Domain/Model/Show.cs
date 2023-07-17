@@ -12,7 +12,7 @@ namespace SuggeBook.Domain.Model
             this.Title = title;
             this.ShowType = showType;
         }
-        public override bool TestCreationValidation()
+        public override void IsValid()
         {
             if (string.IsNullOrEmpty(Title))
                 WrongProperties += $"Title is null or empty;";
@@ -23,7 +23,7 @@ namespace SuggeBook.Domain.Model
             if (ShowType == ShowType.None)
                 WrongProperties += $"ShowType is None";
 
-            return TestWrongProperties();
+            TestWrongProperties();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace SuggeBook.Domain.UseCases
         }
         public async Task<Suggestion> Create(Suggestion suggestion)
         {
-            suggestion.TestCreationValidation();
+            suggestion.IsValid();
 
             var createdSuggestion = await _suggestionRepository.Insert(suggestion);
             createdSuggestion.Book = suggestion.Book;

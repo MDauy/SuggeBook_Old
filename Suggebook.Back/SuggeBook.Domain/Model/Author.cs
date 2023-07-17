@@ -14,7 +14,7 @@ namespace SuggeBook.Domain.Model
         public string Name { get; set; }
         public int NbSuggestions { get; set; }
         public IList<Book> Books { get; set; }
-        public override bool TestCreationValidation()
+        public override void IsValid()
         {
 
             if (string.IsNullOrEmpty(Name))
@@ -22,7 +22,7 @@ namespace SuggeBook.Domain.Model
                 WrongProperties += "Name is null or empty;";
             }
 
-            return this.TestWrongProperties();
+            this.TestWrongProperties();
         }
     }
 }

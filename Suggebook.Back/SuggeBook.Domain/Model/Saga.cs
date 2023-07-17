@@ -14,14 +14,14 @@ namespace SuggeBook.Domain.Model
 
         public IList<Book> Books{ get; set; }
 
-        public override bool TestCreationValidation()
+        public override void IsValid()
         {
             if (string.IsNullOrEmpty(Title))
             {
                 WrongProperties += "Title is null or empty";
             }
 
-            return TestWrongProperties();
+            TestWrongProperties();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace SuggeBook.Domain.UseCases
 
         public async Task<Book> Create(Book book)
         {
-            book.TestCreationValidation();
+            book.IsValid();
             var authors = new List<Author>();
             var authorsId = string.Empty;
             foreach (var author in book.Authors)
